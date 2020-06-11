@@ -9,88 +9,88 @@
 9        android:targetSdkVersion="28" />
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\debug\AndroidManifest.xml:5:5-77
-11-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\debug\AndroidManifest.xml:5:22-75
+11-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\debug\AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:4:5-67
-12-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:4:22-64
+12-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:4:22-64
 13    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-13-->[com.facebook.flipper:flipper:0.33.1] C:\Users\giakh\.gradle\caches\transforms-2\files-2.1\98ae6a28411c5ee45f6f79ef5d1264cf\jetified-flipper-0.33.1\AndroidManifest.xml:16:5-76
-13-->[com.facebook.flipper:flipper:0.33.1] C:\Users\giakh\.gradle\caches\transforms-2\files-2.1\98ae6a28411c5ee45f6f79ef5d1264cf\jetified-flipper-0.33.1\AndroidManifest.xml:16:22-73
+13-->[com.facebook.flipper:flipper:0.33.1] C:\Users\Duyen Rice\.gradle\caches\transforms-2\files-2.1\0e0ab74c178e3e5bfee4bf0b1a6d64a2\jetified-flipper-0.33.1\AndroidManifest.xml:16:5-76
+13-->[com.facebook.flipper:flipper:0.33.1] C:\Users\Duyen Rice\.gradle\caches\transforms-2\files-2.1\0e0ab74c178e3e5bfee4bf0b1a6d64a2\jetified-flipper-0.33.1\AndroidManifest.xml:16:22-73
 14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-14-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-81
-14-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:10:22-78
+14-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-81
+14-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:10:22-78
 15
 16    <application
-16-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:6:5-25:19
+16-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:6:5-25:19
 17        android:name="com.doan.MainApplication"
-17-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:7:7-38
+17-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:7:7-38
 18        android:allowBackup="false"
-18-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:11:7-34
+18-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:11:7-34
 19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-19-->[androidx.core:core:1.1.0] C:\Users\giakh\.gradle\caches\transforms-2\files-2.1\4f509a65121478d6153615d7ef5b7c5f\core-1.1.0\AndroidManifest.xml:24:18-86
+19-->[androidx.core:core:1.1.0] C:\Users\Duyen Rice\.gradle\caches\transforms-2\files-2.1\4f509a65121478d6153615d7ef5b7c5f\core-1.1.0\AndroidManifest.xml:24:18-86
 20        android:debuggable="true"
 21        android:icon="@mipmap/ic_launcher"
-21-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:9:7-41
+21-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:9:7-41
 22        android:label="@string/app_name"
-22-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:8:7-39
+22-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:8:7-39
 23        android:roundIcon="@mipmap/ic_launcher_round"
-23-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:10:7-52
+23-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:10:7-52
 24        android:theme="@style/AppTheme"
-24-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:12:7-38
+24-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:12:7-38
 25        android:usesCleartextTraffic="true" >
-25-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\debug\AndroidManifest.xml:7:18-53
+25-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\debug\AndroidManifest.xml:7:18-53
 26        <activity
-26-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:13:7-23:18
+26-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:13:7-23:18
 27            android:name="com.doan.MainActivity"
-27-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:14:9-37
+27-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:14:9-37
 28            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-28-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:16:9-86
+28-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:16:9-86
 29            android:label="@string/app_name"
-29-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:15:9-41
+29-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:15:9-41
 30            android:launchMode="singleTask"
-30-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:17:9-40
+30-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:17:9-40
 31            android:windowSoftInputMode="adjustResize" >
-31-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:18:9-51
+31-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:18:9-51
 32            <intent-filter>
-32-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:19:9-22:25
+32-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:19:9-22:25
 33                <action android:name="android.intent.action.MAIN" />
-33-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:20:13-65
-33-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:20:21-62
+33-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:20:13-65
+33-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:20:21-62
 34
 35                <category android:name="android.intent.category.LAUNCHER" />
-35-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:21:13-73
-35-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:21:23-70
+35-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:21:13-73
+35-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:21:23-70
 36            </intent-filter>
 37        </activity>
 38        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-38-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:24:7-84
-38-->D:\Lap Trinh\Web development\SourceCode\React native\doan\android\app\src\main\AndroidManifest.xml:24:17-81
+38-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:24:7-84
+38-->E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\android\app\src\main\AndroidManifest.xml:24:17-81
 39
 40        <provider
-40-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-21:20
+40-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-21:20
 41            android:name="androidx.core.content.FileProvider"
-41-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-62
+41-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-62
 42            android:authorities="com.doan.provider"
-42-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-60
+42-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-60
 43            android:exported="false"
-43-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-37
+43-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-37
 44            android:grantUriPermissions="true" >
-44-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-47
+44-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-47
 45            <meta-data
-45-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:13-20:58
+45-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:13-20:58
 46                android:name="android.support.FILE_PROVIDER_PATHS"
-46-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-67
+46-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-67
 47                android:resource="@xml/provider_paths" />
-47-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:17-55
+47-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:17-55
 48        </provider>
 49
 50        <activity
-50-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:9-25:72
+50-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:9-25:72
 51            android:name="com.yalantis.ucrop.UCropActivity"
-51-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:13-60
+51-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:13-60
 52            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-52-->[:react-native-image-crop-picker] D:\Lap Trinh\Web development\SourceCode\React native\doan\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:13-69
+52-->[:react-native-image-crop-picker] E:\IT\hk2nam4\DACNPM\React-Native\beHOME\HeThong_TimKiem_PhongTro_Mobile_App\node_modules\react-native-image-crop-picker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:13-69
 53    </application>
 54
 55</manifest>

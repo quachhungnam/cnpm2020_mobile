@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Lap Trinh\\Web development\\SourceCode\\React native\\doan\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ko\\values-ko.xml",
+            "outputFile": "E:\\IT\\hk2nam4\\DACNPM\\React-Native\\beHOME\\HeThong_TimKiem_PhongTro_Mobile_App\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ko\\values-ko.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\giakh\\.gradle\\caches\\transforms-2\\files-2.1\\a80b19b8e359d24e0051b96cecaea174\\ucrop-2.2.5-native\\res\\values-ko\\values-ko.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,112,164",
-                        "endColumns": "56,51,46",
-                        "endOffsets": "107,159,206"
-                    },
-                    "to": {
-                        "startLines": "31,32,33",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "2864,2921,2973",
-                        "endColumns": "56,51,46",
-                        "endOffsets": "2916,2968,3015"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\giakh\\.gradle\\caches\\transforms-2\\files-2.1\\2b7e6ebaa515cd43f42fb356f0d1941c\\appcompat-1.1.0\\res\\values-ko\\values-ko.xml",
+                    "source": "C:\\Users\\Duyen Rice\\.gradle\\caches\\transforms-2\\files-2.1\\2b7e6ebaa515cd43f42fb356f0d1941c\\appcompat-1.1.0\\res\\values-ko\\values-ko.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -31,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\giakh\\.gradle\\caches\\transforms-2\\files-2.1\\4f509a65121478d6153615d7ef5b7c5f\\core-1.1.0\\res\\values-ko\\values-ko.xml",
+                    "source": "C:\\Users\\Duyen Rice\\.gradle\\caches\\transforms-2\\files-2.1\\4f509a65121478d6153615d7ef5b7c5f\\core-1.1.0\\res\\values-ko\\values-ko.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -45,6 +28,23 @@
                         "startOffsets": "2763",
                         "endColumns": "100",
                         "endOffsets": "2859"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Duyen Rice\\.gradle\\caches\\transforms-2\\files-2.1\\a80b19b8e359d24e0051b96cecaea174\\ucrop-2.2.5-native\\res\\values-ko\\values-ko.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,112,164",
+                        "endColumns": "56,51,46",
+                        "endOffsets": "107,159,206"
+                    },
+                    "to": {
+                        "startLines": "31,32,33",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "2864,2921,2973",
+                        "endColumns": "56,51,46",
+                        "endOffsets": "2916,2968,3015"
                     }
                 }
             ]
