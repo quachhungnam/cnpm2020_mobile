@@ -58,10 +58,16 @@ export default class YourAccount extends Component {
             <Text style={{fontSize: 18}}>Nguyễn Văn A</Text>
           </View>
 
-          <Image
-            source={require('../images/room.jpg')}
-            style={{width: 60, height: 60, borderRadius: 30}}
-          />
+          <TouchableHighlight
+            style={{borderRadius: 30}}
+            onPress={() => {
+              this.props.navigation.navigate('EditAvatarAccount');
+            }}>
+            <Image
+              source={require('../images/room.jpg')}
+              style={{width: 60, height: 60, borderRadius: 30}}
+            />
+          </TouchableHighlight>
         </View>
 
         <View
