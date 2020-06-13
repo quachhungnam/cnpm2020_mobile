@@ -12,7 +12,10 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
+  AsyncStorage,
 } from 'react-native';
+
+import {uuidv4} from 'uuidv4';
 
 const width = Dimensions.get('window').width;
 
@@ -26,6 +29,104 @@ export default class Login extends Component {
       password: '',
     };
   }
+
+  // handleSignIn = async data => {
+  //   await AsyncStorage.setItem(
+  //     'authentication_data',
+  //     JSON.stringify({
+  //       authToken: data.token,
+  //       deviceId: data.deviceId,
+  //       timestamp: data.timestamp,
+  //     }),
+  //   );
+  //   this.props.setSignIn({...data});
+  //   console.log('data=' + data);
+  // };
+
+  // onSubmit = async values => {
+  //   const deviceId = uuidv4();
+  //   fetch('http://192.168.1.8:3000/accounts/login', {
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       username: values.username,
+  //       password: values.password,
+  //       deviceId: deviceId,
+  //     }),
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       if (data.success === true) {
+  //         this.handleSignIn(data.response);
+  //       } else {
+  //         this.setState({
+  //           error: true,
+  //         });
+  //       }
+  //     })
+  //     .catch(e => {
+  //       this.setState({
+  //         error: true,
+  //       });
+  //     });
+  // };
+
+  // initAuthToken = async () => {
+  //   const authData = await AsyncStorage.getItem('authentication_data');
+
+  //   if (authData !== null) {
+  //     const authDataJson = JSON.parse(authData);
+
+  //     // get user data
+  //     fetch('http://192.168.1.8:3000/accounts/login', {
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         authToken: authData.authToken,
+  //         deviceId: authData.deviceId,
+  //       }),
+  //       method: 'POST',
+  //     })
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         if (data.success === true) {
+  //           this.populateUserSettings(data.response);
+  //         } else {
+  //           //this.props.navigation.navigate('SignIn');
+  //           alert('Login');
+  //         }
+  //       })
+  //       .catch(e => {
+  //         this.setState({
+  //           error: true,
+  //         });
+  //       });
+  //   } else {
+  //     //this.props.navigation.navigate('SignIn');
+  //     alert('Login');
+  //   }
+  // };
+
+  // componentDidUpdate() {
+  //   if (this.props.userSettings !== undefined) {
+  //     //this.props.navigate('Home');
+  //     alert('Home');
+  //   }
+  //   if (this.props.signedIn !== undefined) {
+  //     //this.props.navigate("Home");
+  //     alert('Home');
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   this.initAuthToken();
+  // }
+
   storeData = async user => {
     try {
       await AsyncStorage.setItem('user', user);
@@ -98,16 +199,7 @@ export default class Login extends Component {
                 />
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => {
-                    if (
-                      this.state.username === info.username &&
-                      this.state.password === info.password
-                    ) {
-                      alert('Login successfully');
-                      this.storeData(this.state.username);
-                      this.retrieveData();
-                    }
-                  }}>
+                  onPress={this.onSubmit}>
                   <Text style={styles.buttonText}>Đăng nhập</Text>
                 </TouchableOpacity>
                 <View style={styles.regContainer}>

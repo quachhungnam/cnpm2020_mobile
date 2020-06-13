@@ -13,6 +13,7 @@ import PostYouBookDetail from '../screens/PostYouBookDetail';
 import AddPostScreen from '../screens/AddPostScreen';
 import EditPostScreen from '../screens/EditPostScreen';
 import YourAccountScreen from '../screens/YourAccount';
+import EditAvatarAccount from '../screens/EditAvatarAccount';
 import EditAccountScreen from '../screens/EditAccountScreen';
 import EditPasswordAccountScreen from '../screens/EditPasswordAccountScreen';
 import FeedbackScreen from '../screens/Feedback';
@@ -130,7 +131,7 @@ class ListYourPostStackScreen extends Component {
               }}
             />
             <ListYourPostStack.Screen
-              name="Details"
+              name="YourPostDetails"
               component={YourPostDetail}
               options={{
                 title: 'Chi tiết phòng',
@@ -245,7 +246,7 @@ const ListPostYouBookStackScreen = ({navigation}) => (
       }}
     />
     <ListPostYouBookStack.Screen
-      name="Details"
+      name="PostYouBookDetails"
       component={PostYouBookDetail}
       options={{
         headerTintColor: '#333',
@@ -292,6 +293,17 @@ const YourAccountStackScreen = ({navigation}) => (
       options={{
         title: 'Overview',
         headerShown: false,
+      }}
+    />
+    <YourAccountStack.Screen
+      name="EditAvatarAccount"
+      component={EditAvatarAccount}
+      options={{
+        headerTintColor: '#333',
+        title: 'Chỉnh sửa ảnh đại diện',
+        headerStyle: {
+          backgroundColor: '#fff',
+        },
       }}
     />
     <YourAccountStack.Screen
