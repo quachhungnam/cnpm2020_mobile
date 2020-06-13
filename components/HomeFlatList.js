@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import FlatListItem from './FlatListItem';
+import HomeFlatListItem from './HomeFlatListItem';
 
 import {getPostsFromServer} from '../networking/Server';
 // import Snackbar from 'react-native-snackbar';
@@ -41,7 +41,9 @@ export default class HomeFlatList extends Component {
     getPostsFromServer()
       .then(posts => {
         this.setState({
-          postsFromServer: posts,
+          postsFromServer: posts.filter(
+            item => item.status_id.code === 1 || item.status_id.code === 2,
+          ),
         });
         this.setState({refreshing: false});
       })
@@ -170,7 +172,7 @@ export default class HomeFlatList extends Component {
             data={this.state.postsFromServer}
             renderItem={({item, index}) => {
               return (
-                <FlatListItem
+                <HomeFlatListItem
                   navigation={this.props.navigation}
                   item={item}
                   index={index}

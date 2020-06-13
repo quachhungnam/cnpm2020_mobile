@@ -16,7 +16,7 @@ function formatDate(date) {
 }
 
 function calStarAverage(rate) {
-  const starSum = rate.reduce((sum, item) => sum + item.start, 0);
+  const starSum = rate.reduce((sum, item) => sum + item.star, 0);
   return starSum / rate.length;
 }
 
@@ -30,7 +30,7 @@ export default class PostYouBookDetail extends Component {
         'https://images.pexels.com/photos/1562/italian-landscape-mountains-nature.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         'https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // Network image
       ],
-      post: [],
+      post: {},
       rate: [],
     };
   }
@@ -49,7 +49,7 @@ export default class PostYouBookDetail extends Component {
       })
       .catch(error => {
         this.setState({
-          post: [],
+          post: {},
         });
       });
     getRateOfPost(id)
@@ -67,7 +67,7 @@ export default class PostYouBookDetail extends Component {
 
   render() {
     const {post, rate} = this.state;
-    if (post.length !== 0 && rate.length !== 0) {
+    if (Object.keys(post).length !== 0 && rate !== undefined) {
       return (
         <ScrollView
           style={{backgroundColor: '#fff'}}
@@ -87,7 +87,7 @@ export default class PostYouBookDetail extends Component {
                 fontSize: 12,
                 marginBottom: 10,
               }}>
-              {post[0].post_type[0].name}
+              {post.post_type_id.name}
             </Text>
             <Text
               style={{
@@ -95,7 +95,7 @@ export default class PostYouBookDetail extends Component {
                 fontWeight: 'bold',
                 marginBottom: 10,
               }}>
-              {post[0].title}
+              {post.title}
             </Text>
             <Text
               style={{
@@ -104,7 +104,7 @@ export default class PostYouBookDetail extends Component {
                 borderBottomWidth: 1,
                 borderBottomColor: '#ccc',
               }}>
-              {`Giá: ${post[0].price} VND / tháng`}
+              {`Giá: ${post.price} VND / tháng`}
             </Text>
             <View
               style={{
@@ -130,7 +130,7 @@ export default class PostYouBookDetail extends Component {
                     color: '#e88a59',
                     marginTop: 6,
                   }}>
-                  {`${post[0].square} m2`}
+                  {`${post.square} m2`}
                 </Text>
               </View>
               <View
@@ -150,7 +150,7 @@ export default class PostYouBookDetail extends Component {
                     color: '#e88a59',
                     marginTop: 6,
                   }}>
-                  {`${post[0].status === true ? 'Đã đặt' : 'Chưa đặt'}`}
+                  {`${post.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
                 </Text>
               </View>
             </View>
@@ -165,7 +165,7 @@ export default class PostYouBookDetail extends Component {
             <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
               Mô tả chi tiết
             </Text>
-            <Text>{post[0].description}</Text>
+            <Text>{post.description}</Text>
           </View>
           <View
             style={{
@@ -197,7 +197,7 @@ export default class PostYouBookDetail extends Component {
                     fontSize: 14,
                     color: '#e88a59',
                   }}>
-                  K05/47 Lê Trọng Tấn
+                  {post.address_detail.split(',')[0]}
                 </Text>
               </View>
               <View
@@ -215,7 +215,7 @@ export default class PostYouBookDetail extends Component {
                     fontSize: 14,
                     color: '#e88a59',
                   }}>
-                  {post[0].district[0].name}
+                  {post.district_id.name}
                 </Text>
               </View>
               <View
@@ -233,7 +233,7 @@ export default class PostYouBookDetail extends Component {
                     fontSize: 14,
                     color: '#e88a59',
                   }}>
-                  {post[0].province[0].name}
+                  {post.province_id.name}
                 </Text>
               </View>
             </View>
@@ -249,7 +249,7 @@ export default class PostYouBookDetail extends Component {
               Số điện thoại liên hệ
             </Text>
 
-            <Text>{post[0].user[0].mobile}</Text>
+            <Text>{post.host_id.mobile}</Text>
           </View>
           <View
             style={{
@@ -261,7 +261,11 @@ export default class PostYouBookDetail extends Component {
             <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
               Ngày đăng
             </Text>
-            <Text>{formatDate(new Date(post[0].updated_at))}</Text>
+            <Text>
+              {post.updated_at === null
+                ? formatDate(new Date(post.created_at))
+                : formatDate(new Date(post.updated_at))}
+            </Text>
           </View>
           <TouchableHighlight
             style={{
@@ -279,7 +283,7 @@ export default class PostYouBookDetail extends Component {
                   }}>
                   Người đăng
                 </Text>
-                <Text>{post[0].user[0].name}</Text>
+                <Text>{post.host_id.name}</Text>
               </View>
             </View>
           </TouchableHighlight>
@@ -314,7 +318,7 @@ export default class PostYouBookDetail extends Component {
                 backgroundColor: '#ffceb5',
               }}
               onPress={() => {
-                Linking.openURL(`tel:${post[0].user[0].mobile}`);
+                Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
               <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
             </TouchableHighlight>
@@ -335,16 +339,16 @@ export default class PostYouBookDetail extends Component {
                 <View>
                   <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
                     <Text style={{marginRight: 10, fontSize: 16}}>
-                      {`${item.account[0].username} đã đánh giá:`}
+                      {`${item.account_id.name} đã đánh giá:`}
                     </Text>
-                    <Text style={{fontSize: 16}}>{item.start}</Text>
+                    <Text style={{fontSize: 16}}>{item.star}</Text>
                     <Image
                       source={require('../images/star.png')}
                       style={{width: 10, height: 10}}
                     />
                   </View>
                   <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
-                    {formatDate(new Date(item.updated_at))}
+                    {formatDate(new Date(item.created_at))}
                   </Text>
                   <Text
                     style={{
@@ -361,7 +365,7 @@ export default class PostYouBookDetail extends Component {
         </ScrollView>
       );
     }
-    if (post.length !== 0 && rate.length === 0) {
+    if (Object.keys(post).length !== 0 && rate === undefined) {
       return (
         <ScrollView
           style={{backgroundColor: '#fff'}}
@@ -381,7 +385,7 @@ export default class PostYouBookDetail extends Component {
                 fontSize: 12,
                 marginBottom: 10,
               }}>
-              {post[0].post_type[0].name}
+              {post.post_type_id.name}
             </Text>
             <Text
               style={{
@@ -389,7 +393,7 @@ export default class PostYouBookDetail extends Component {
                 fontWeight: 'bold',
                 marginBottom: 10,
               }}>
-              {post[0].title}
+              {post.title}
             </Text>
             <Text
               style={{
@@ -398,7 +402,7 @@ export default class PostYouBookDetail extends Component {
                 borderBottomWidth: 1,
                 borderBottomColor: '#ccc',
               }}>
-              {`Giá: ${post[0].price} VND / tháng`}
+              {`Giá: ${post.price} VND / tháng`}
             </Text>
             <View
               style={{
@@ -424,7 +428,7 @@ export default class PostYouBookDetail extends Component {
                     color: '#e88a59',
                     marginTop: 6,
                   }}>
-                  {`${post[0].square} m2`}
+                  {`${post.square} m2`}
                 </Text>
               </View>
               <View
@@ -444,7 +448,7 @@ export default class PostYouBookDetail extends Component {
                     color: '#e88a59',
                     marginTop: 6,
                   }}>
-                  {`${post[0].status === true ? 'Đã đặt' : 'Chưa đặt'}`}
+                  {`${post.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
                 </Text>
               </View>
             </View>
@@ -459,7 +463,7 @@ export default class PostYouBookDetail extends Component {
             <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
               Mô tả chi tiết
             </Text>
-            <Text>{post[0].description}</Text>
+            <Text>{post.description}</Text>
           </View>
           <View
             style={{
@@ -491,7 +495,7 @@ export default class PostYouBookDetail extends Component {
                     fontSize: 14,
                     color: '#e88a59',
                   }}>
-                  K05/47 Lê Trọng Tấn
+                  {post.address_detail.split(',')[0]}
                 </Text>
               </View>
               <View
@@ -509,7 +513,7 @@ export default class PostYouBookDetail extends Component {
                     fontSize: 14,
                     color: '#e88a59',
                   }}>
-                  {post[0].district[0].name}
+                  {post.district_id.name}
                 </Text>
               </View>
               <View
@@ -527,7 +531,7 @@ export default class PostYouBookDetail extends Component {
                     fontSize: 14,
                     color: '#e88a59',
                   }}>
-                  {post[0].province[0].name}
+                  {post.province_id.name}
                 </Text>
               </View>
             </View>
@@ -543,7 +547,7 @@ export default class PostYouBookDetail extends Component {
               Số điện thoại liên hệ
             </Text>
 
-            <Text>{post[0].user[0].mobile}</Text>
+            <Text>{post.host_id.mobile}</Text>
           </View>
           <View
             style={{
@@ -555,7 +559,11 @@ export default class PostYouBookDetail extends Component {
             <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
               Ngày đăng
             </Text>
-            <Text>{formatDate(new Date(post[0].updated_at))}</Text>
+            <Text>
+              {post.updated_at === null
+                ? formatDate(new Date(post.created_at))
+                : formatDate(new Date(post.updated_at))}
+            </Text>
           </View>
           <TouchableHighlight
             style={{
@@ -573,7 +581,7 @@ export default class PostYouBookDetail extends Component {
                   }}>
                   Người đăng
                 </Text>
-                <Text>{post[0].user[0].name}</Text>
+                <Text>{post.host_id.name}</Text>
               </View>
             </View>
           </TouchableHighlight>
@@ -595,7 +603,7 @@ export default class PostYouBookDetail extends Component {
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
               }}>
-              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
+              <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -608,7 +616,7 @@ export default class PostYouBookDetail extends Component {
                 backgroundColor: '#ffceb5',
               }}
               onPress={() => {
-                Linking.openURL(`tel:${post[0].user[0].mobile}`);
+                Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
               <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
             </TouchableHighlight>

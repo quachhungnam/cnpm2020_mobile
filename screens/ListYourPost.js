@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableHighlight, ScrollView} from 'react-native';
-import PostFlatList from '../components/PostFlatList';
+import PostYouBookFlatList from '../components/PostYouBookFlatList';
 export default class ListYourPost extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +9,7 @@ export default class ListYourPost extends Component {
     return (
       <ScrollView
         style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
-        <PostFlatList
+        <PostYouBookFlatList
           navigation={this.props.navigation}
           title="Danh sách tin đăng của bạn"
         />
