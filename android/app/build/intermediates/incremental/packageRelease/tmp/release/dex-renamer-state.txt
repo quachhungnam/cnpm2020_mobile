@@ -1,4 +1,0 @@
-#Mon May 11 23:09:13 ICT 2020
-base.0=D\:\\Lap Trinh\\Web development\\SourceCode\\React native\\doan\\android\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\out\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
