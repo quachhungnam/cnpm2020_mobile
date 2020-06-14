@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -14,10 +15,103 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-
+import {
+  signup
+} from '../networking/Server';
 const width = Dimensions.get('window').width;
 
 export default class Signup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password1: '',
+      password2: '',
+      email: '',
+      name: '',
+      mobile: '',
+      address: ''
+    };
+    //this.add = this.add.bind(this);
+  }
+
+  post_signup = () => {
+    if (this.state.password1 !== this.state.password2) {
+      alert('Xác nhận mật khẩu không đúng')
+      return
+    }
+
+    const new_user = {
+      username: this.state.username,
+      password: this.state.password1,
+      email: this.state.email,
+      name: this.state.name,
+      mobile: this.state.mobile,
+      address: this.state.address,
+    }
+    for (const [key, value] of Object.entries(new_user)) {
+      if (new_user[key] == '') {
+        Alert.alert(
+          "Cảnh báo",
+          "Vui lòng điền đầy đủ thông tin",
+          [
+            {
+              text: "Cancel",
+              onPress: () => { console.log("Cancel Pressed") },
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => { console.log("OK Pressed") } }
+          ],
+          { cancelable: false }
+        )
+        return
+      }
+    }
+    //gui du lieu dang ky den api
+    signup(new_user).then(res => {
+      if (res.success == true) {
+        Alert.alert(
+          "Cảnh báo",
+          "Tạo tài khoản thành công, chuyển hướng đến màn hình đăng nhập",
+          [
+            {
+              text: "Cancel",
+              onPress: () => { console.log("Cancel Pressed") },
+              style: "cancel"
+            },
+            {
+              text: "OK", onPress: () => {
+                this.props.navigation.navigate('SignIn')
+              }
+            }
+          ],
+          { cancelable: false }
+        )
+        return true
+      }
+      if (res.success == false) {
+        Alert.alert(
+          "Lỗi",
+          `${res.message}`,
+          [
+            {
+              text: "Cancel",
+              onPress: () => { console.log("Cancel Pressed") },
+              style: "cancel"
+            },
+            {
+              text: "OK", onPress: () => {
+                this.props.navigation.navigate('SignIn')
+              }
+            }
+          ],
+          { cancelable: false }
+        )
+        return false
+      }
+    })
+
+  }
   render() {
     const { navigation } = this.props;
     return (
@@ -34,6 +128,9 @@ export default class Signup extends Component {
             style={styles.input}
             returnKeyType="next"
             autoCorrect={false}
+            onChangeText={(text) => {
+              this.setState({ username: text })
+            }}
             onSubmitEditing={() => this.refs.txtName.focus()}
           />
           <Text style={styles.label}>Họ tên</Text>
@@ -41,6 +138,9 @@ export default class Signup extends Component {
             style={styles.input}
             returnKeyType="next"
             autoCorrect={false}
+            onChangeText={(text) => {
+              this.setState({ name: text })
+            }}
             onSubmitEditing={() => this.refs.txtEmail.focus()}
             ref={'txtName'}
           />
@@ -52,6 +152,9 @@ export default class Signup extends Component {
             autoCorrect={false}
             onSubmitEditing={() => this.refs.txtMobile.focus()}
             ref={'txtEmail'}
+            onChangeText={(text) => {
+              this.setState({ email: text })
+            }}
           />
           <Text style={styles.label}>Số điện thoại</Text>
           <TextInput
@@ -61,15 +164,21 @@ export default class Signup extends Component {
             autoCorrect={false}
             onSubmitEditing={() => this.refs.txtAddress.focus()}
             ref={'txtMobile'}
+            onChangeText={(text) => {
+              this.setState({ mobile: text })
+            }}
           />
           <Text style={styles.label}>Địa chỉ</Text>
           <TextInput
             style={styles.input}
             returnKeyType="next"
             autoCorrect={false}
-            onSubmitEditing={() => this.refs.txtPassword.focus()}
+            // onSubmitEditing={() => this.refs.txtPassword.focus()}
             ref={'txtAddress'}
             multiline={true}
+            onChangeText={(text) => {
+              this.setState({ address: text })
+            }}
           />
           <Text style={styles.label}>Mật khẩu</Text>
           <TextInput
@@ -78,6 +187,9 @@ export default class Signup extends Component {
             secureTextEntry
             autoCorrect={false}
             ref={'txtPassword'}
+            onChangeText={(pass1) => {
+              this.setState({ password1: pass1 })
+            }}
             onSubmitEditing={() => this.refs.txtConfirmPassword.focus()}
           />
           <Text style={styles.label}>Xác nhận mật khẩu</Text>
@@ -86,12 +198,20 @@ export default class Signup extends Component {
             returnKeyType="go"
             secureTextEntry
             autoCorrect={false}
+            onChangeText={(pass2) => {
+              this.setState({ password2: pass2 })
+            }}
             ref={'txtConfirmPassword'}
           />
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => {
-              this.props.navigation.navigate('SignUp');
+              // this.props.navigation.navigate('SignUp');
+              //goi ham dang ky
+              let result = this.post_signup()
+              if (result) {
+                this.props.navigation.navigate('SignIn');
+              }
             }}>
             <Text style={styles.buttonText}>Đăng ký</Text>
           </TouchableOpacity>
@@ -99,7 +219,7 @@ export default class Signup extends Component {
             <Text style={styles.regText}>Bạn đã có tài khoản?</Text>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('SignIn');
+                this.props.navigation.navigate('SignIn')
               }}>
               <Text style={styles.regButtonText}>Đăng nhập</Text>
             </TouchableOpacity>

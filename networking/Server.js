@@ -5,6 +5,7 @@ const apiGetAllRates = `${yourIP}:3000/rates`
 const api_provinces = `${yourIP}:3000/provinces`
 const api_districts = `${yourIP}:3000/districts`
 const api_posttypes = `${yourIP}:3000/posttypes`
+const api_account = `${yourIP}:3000/accounts`
 
 async function getPostsFromServer() {
   try {
@@ -65,6 +66,57 @@ async function get_district_with_province(provinceCode) {
     console.error(`Error is: ${error}`)
   }
 }
+async function login(user, password) {
+  try {
+    let result = await fetch(`${api_account}/login`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: user.username,
+        username: user.password
+      })
+    })
+    let resultJson = await result.json()
+    return resultJson
+  } catch (err) {
+    console.error(`Error is: ${error}`)
+    return err
+  }
+}
+
+async function signup(user) {
+  try {
+    let result = await fetch(`${api_account}/signup`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: user.username,
+        password: user.password,
+        email: user.email,
+        name: user.name,
+        mobile: user.mobile,
+        address: user.address
+      })
+    })
+    // console.log(result)
+    // console.log('chay toi day roi')
+    let resultJson = await result.json()
+    return resultJson
+    // console.log(resultJson)
+    // console.log("resultJson")
+    // console.log(resultJson)
+    return 1
+  } catch (err) {
+    console.log(`Error is: ${err}`)
+  }
+}
+
 
 
 
@@ -74,3 +126,5 @@ export { getRateOfPost }
 export { get_all_province }
 export { get_district_with_province }
 export { get_all_posttypes }
+export { login }
+export { signup }

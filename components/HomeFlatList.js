@@ -62,17 +62,17 @@ export default class HomeFlatList extends Component {
       });
   }
   get_province = () => {
-    this.setState({ refreshing: true })
+    // this.setState({ refreshing: true })
     get_all_province()
       .then((all_province) => {
         this.setState({ provinces: all_province })
         // this.setState({ seleted_province: all_province[0].code })
-        this.setState({ refreshing: false });
+        // this.setState({ refreshing: false });
       }).catch(err => {
         console.log(err)
         this.setState({ provinces: [] })
       })
-    this.setState({ refreshing: false })
+    // this.setState({ refreshing: false })
   }
 
 
@@ -203,11 +203,12 @@ export default class HomeFlatList extends Component {
               style={styles.InputSearch}
               returnKeyType="go"
               autoCorrect={false}
-              placeholder="Nhập tên đường"
+              placeholder="Nhập địa chỉ"
               placeholderTextColor="#000"
             />
             <TouchableHighlight
-              style={styles.buttonSearch}>
+              style={styles.buttonSearch}            
+            >
               <Text style={{ textAlign: 'center', color: '#333', fontSize: 16 }}>
                 Tìm kiếm
               </Text>
