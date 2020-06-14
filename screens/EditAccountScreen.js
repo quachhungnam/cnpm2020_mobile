@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  StyleSheet,
   TextInput,
   Text,
   View,
@@ -12,45 +13,31 @@ export default class EditAccountScreen extends Component {
   constructor(props) {
     super(props);
   }
+
+  update_infor = () => {
+    alert('canh bao')
+
+  }
   render() {
     var options = ['Đà Nẵng', 'Savings', 'Car', 'GirlFriend'];
     return (
       <ScrollView
         style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
+        <Text style={styles.text_infor}>
           Tên chủ tài khoản
         </Text>
         <TextInput
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            padding: 10,
-            marginTop: 10,
-            borderRadius: 8,
-            backgroundColor: '#fff',
-            borderColor: '#333',
-            borderWidth: 1,
-            fontSize: 18,
-          }}
+          style={styles.input_infor}
           returnKeyType="next"
           autoCorrect={false}
           onSubmitEditing={() => this.refs.txtEmail.focus()}
         />
 
-        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
+        <Text style={styles.text_infor}>
           Email
         </Text>
         <TextInput
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            padding: 10,
-            marginTop: 10,
-            borderRadius: 8,
-            backgroundColor: '#fff',
-            borderColor: '#333',
-            borderWidth: 1,
-          }}
+          style={styles.input_infor}
           returnKeyType="next"
           keyboardType="email-address"
           autoCorrect={false}
@@ -58,20 +45,11 @@ export default class EditAccountScreen extends Component {
           onSubmitEditing={() => this.refs.txtMobile.focus()}
         />
 
-        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
+        <Text style={styles.text_infor}>
           Số điện thoại
         </Text>
         <TextInput
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            padding: 10,
-            marginTop: 10,
-            borderRadius: 8,
-            backgroundColor: '#fff',
-            borderColor: '#333',
-            borderWidth: 1,
-          }}
+          style={styles.input_infor}
           returnKeyType="next"
           keyboardType="numeric"
           autoCorrect={false}
@@ -79,58 +57,22 @@ export default class EditAccountScreen extends Component {
           onSubmitEditing={() => this.refs.txtAddress.focus()}
         />
 
-        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
+        <Text style={styles.text_infor}>
           Địa chỉ
         </Text>
         <TextInput
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            padding: 10,
-            marginTop: 10,
-            borderRadius: 8,
-            backgroundColor: '#fff',
-            borderColor: '#333',
-            borderWidth: 1,
-          }}
+          style={styles.input_infor}
           multiline={true}
           returnKeyType="go"
           autoCorrect={false}
           ref={'txtAddress'}
         />
 
-        {/* <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
-          Khu vực của bạn
-        </Text>
-        <Picker
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            flex: 1,
-            alignItems: 'center',
-          }}
-          mode="dropdown"
-          //selectedValue={this.state.selected}
-          //onValueChange={()=>{}}
-        >
-          {Object.keys(options).map(key => {
-            return <Picker.Item label={options[key]} value={key} key={key} />; //if you have a bunch of keys value pair
-          })}
-        </Picker> */}
-
         <TouchableHighlight
-          style={{
-            marginBottom: 10,
-            marginTop: 20,
-            marginLeft: 10,
-            marginRight: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            backgroundColor: '#ffceb5',
-            borderRadius: 8,
-          }}
+          style={styles.button_update}
           onPress={() => {
-            this.props.navigation.navigate('AddPostScreen');
+            this.update_infor()
+            // this.props.navigation.navigate('AddPostScreen');
           }}>
           <Text style={{ textAlign: 'center' }}>Cập nhật</Text>
         </TouchableHighlight>
@@ -138,3 +80,29 @@ export default class EditAccountScreen extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  text_infor: { marginRight: 10, marginLeft: 10, marginTop: 10 },
+  input_infor: {
+    marginRight: 10,
+    marginLeft: 10,
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    borderColor: '#333',
+    borderWidth: 1,
+    fontSize: 18,
+  },
+  button_update:
+  {
+    marginBottom: 10,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: '#ffceb5',
+    borderRadius: 8,
+  }
+
+})

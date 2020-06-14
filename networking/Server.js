@@ -66,7 +66,7 @@ async function get_district_with_province(provinceCode) {
     console.error(`Error is: ${error}`)
   }
 }
-async function login(user, password) {
+async function login(user) {
   try {
     let result = await fetch(`${api_account}/login`, {
       method: 'POST',
@@ -76,7 +76,7 @@ async function login(user, password) {
       },
       body: JSON.stringify({
         username: user.username,
-        username: user.password
+        password: user.password
       })
     })
     let resultJson = await result.json()
@@ -104,14 +104,8 @@ async function signup(user) {
         address: user.address
       })
     })
-    // console.log(result)
-    // console.log('chay toi day roi')
     let resultJson = await result.json()
     return resultJson
-    // console.log(resultJson)
-    // console.log("resultJson")
-    // console.log(resultJson)
-    return 1
   } catch (err) {
     console.log(`Error is: ${err}`)
   }

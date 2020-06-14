@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import {
   signup
-} from '../networking/Server';
+} from '../networking/Server'
 const width = Dimensions.get('window').width;
 
 export default class Signup extends Component {

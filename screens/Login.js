@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -16,146 +17,98 @@ import {
 } from 'react-native';
 
 import { uuidv4 } from 'uuidv4';
-
+import {
+  login
+} from '../networking/Server';
 const width = Dimensions.get('window').width;
 
-const info = { username: 'a', password: 'a' };
+// const info = { username: 'a', password: 'a' };
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'quachhungnam',
+      password: '123456',
     };
   }
 
-  // handleSignIn = async data => {
-  //   await AsyncStorage.setItem(
-  //     'authentication_data',
-  //     JSON.stringify({
-  //       authToken: data.token,
-  //       deviceId: data.deviceId,
-  //       timestamp: data.timestamp,
-  //     }),
-  //   );
-  //   this.props.setSignIn({...data});
-  //   console.log('data=' + data);
-  // };
-
-  // onSubmit = async values => {
-  //   const deviceId = uuidv4();
-  //   fetch('http://192.168.1.8:3000/accounts/login', {
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       username: values.username,
-  //       password: values.password,
-  //       deviceId: deviceId,
-  //     }),
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       if (data.success === true) {
-  //         this.handleSignIn(data.response);
-  //       } else {
-  //         this.setState({
-  //           error: true,
-  //         });
-  //       }
-  //     })
-  //     .catch(e => {
-  //       this.setState({
-  //         error: true,
-  //       });
-  //     });
-  // };
-
-  // initAuthToken = async () => {
-  //   const authData = await AsyncStorage.getItem('authentication_data');
-
-  //   if (authData !== null) {
-  //     const authDataJson = JSON.parse(authData);
-
-  //     // get user data
-  //     fetch('http://192.168.1.8:3000/accounts/login', {
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         authToken: authData.authToken,
-  //         deviceId: authData.deviceId,
-  //       }),
-  //       method: 'POST',
-  //     })
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         if (data.success === true) {
-  //           this.populateUserSettings(data.response);
-  //         } else {
-  //           //this.props.navigation.navigate('SignIn');
-  //           alert('Login');
-  //         }
-  //       })
-  //       .catch(e => {
-  //         this.setState({
-  //           error: true,
-  //         });
-  //       });
-  //   } else {
-  //     //this.props.navigation.navigate('SignIn');
-  //     alert('Login');
-  //   }
-  // };
-
-  // componentDidUpdate() {
-  //   if (this.props.userSettings !== undefined) {
-  //     //this.props.navigate('Home');
-  //     alert('Home');
-  //   }
-  //   if (this.props.signedIn !== undefined) {
-  //     //this.props.navigate("Home");
-  //     alert('Home');
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   this.initAuthToken();
-  // }
-
-  storeData = async user => {
-    try {
-      await AsyncStorage.setItem('user', user);
-      alert('da lưu');
-    } catch (error) {
-      // Error saving data
+  //xu ly dang nhap
+  process_login = () => {
+    let user = {
+      username: this.state.username,
+      password: this.state.password,
     }
-  };
-  retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('user');
-      console.log('try');
-      alert(value);
-      if (value != null) {
-        this.setState({
-          isLogged: true,
-          user: value,
-        });
+    login(user).then(res => {
+      if (res.success == true) {
+        if (res.token) {
+          try {
+            AsyncStorage.setItem('user', res.token)
+          } catch (error) {
+            console.log('AsyncStorage Error: ')
+          }
+        }
+        Alert.alert(
+          "Cảnh báo",
+          "Đăng nhập thành công",
+          [
+            {
+              text: "Cancel",
+              onPress: () => { console.log("Cancel Pressed") },
+              style: "cancel"
+            },
+            {
+              text: "OK", onPress: () => {
+              }
+            }
+          ],
+          { cancelable: false }
+        )
       }
-      this.setState({
-        isLogged: false,
-        user: null,
-      });
-      return value;
-    } catch (error) {
-      console.log('catch');
-      return null;
-    }
-  };
+      if (res.success == false) {
+        alert('Vui lòng kiểm tra lại tài khoản hoặc mật khẩu!')
+      }
+    })
+  }
+  //luu tru vào syncstor
+
+
+  // async saveItem(value) {
+  //   try {
+  //     await AsyncStorage.setItem('user', value);
+  //   } catch (error) {
+  //     alert('loi roi ban')
+  //     console.log('AsyncStorage Error: ' + error.message);
+  //   }
+  // }
+
+
+  // retrieve_user_token = async () => {
+  //   const token_value = await AsyncStorage.getItem('user')
+  //   return token_value
+  // }
+
+  // retrieveData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('user')
+  //     console.log('try');
+  //     alert(value);
+  //     if (value != null) {
+  //       this.setState({
+  //         isLogged: true,
+  //         user: value,
+  //       });
+  //     }
+  //     this.setState({
+  //       isLogged: false,
+  //       user: null,
+  //     });
+  //     return value;
+  //   } catch (error) {
+  //     console.log('catch');
+  //     return null;
+  //   }
+  // };
 
   render() {
     const { navigation } = this.props;
@@ -195,11 +148,12 @@ export default class Login extends Component {
                   secureTextEntry
                   autoCorrect={false}
                   ref={'txtPassword'}
-                  onChangeText={text => this.setState({ password: text })}
+                  onChangeText={password => this.setState({ password: password })}
                 />
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={this.onSubmit}>
+                  onPress={() => { this.process_login() }}
+                >
                   <Text style={styles.buttonText}>Đăng nhập</Text>
                 </TouchableOpacity>
                 <View style={styles.regContainer}>
