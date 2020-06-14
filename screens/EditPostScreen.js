@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   TextInput,
   Text,
@@ -15,9 +15,9 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 
 var postTypes = [
-  {label: 'Phòng cho thuê', value: 0},
-  {label: 'Nhà nguyên căn', value: 1},
-  {label: 'Căn hộ', value: 2},
+  { label: 'Phòng cho thuê', value: 0 },
+  { label: 'Nhà nguyên căn', value: 1 },
+  { label: 'Căn hộ', value: 2 },
 ];
 
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
@@ -36,7 +36,7 @@ export default class EditPostScreen extends Component {
     var options2 = ['Loại tin', 'Savings', 'Car', 'GirlFriend'];
     return (
       <ScrollView
-        style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
+        style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
         <Text
           style={{
             marginHorizontal: 10,
@@ -100,7 +100,7 @@ export default class EditPostScreen extends Component {
                       value3Index: i,
                     });
                   }}
-                  labelStyle={{fontSize: 16, color: '#333'}}
+                  labelStyle={{ fontSize: 16, color: '#333' }}
                   labelWrapStyle={{}}
                 />
               </RadioButton>
@@ -226,8 +226,8 @@ export default class EditPostScreen extends Component {
             alignItems: 'center',
           }}
           mode="dropdown"
-          //selectedValue={this.state.selected}
-          //onValueChange={()=>{}}
+        //selectedValue={this.state.selected}
+        //onValueChange={()=>{}}
         >
           {Object.keys(options).map(key => {
             return <Picker.Item label={options[key]} value={key} key={key} />; //if you have a bunch of keys value pair
@@ -242,8 +242,8 @@ export default class EditPostScreen extends Component {
             alignItems: 'center',
           }}
           mode="dropdown"
-          //selectedValue={this.state.selected}
-          //onValueChange={()=>{}}
+        //selectedValue={this.state.selected}
+        //onValueChange={()=>{}}
         >
           {Object.keys(options1).map(key => {
             return <Picker.Item label={options1[key]} value={key} key={key} />; //if you have a bunch of keys value pair
@@ -313,7 +313,7 @@ export default class EditPostScreen extends Component {
           onPress={() => {
             this.props.navigation.navigate('EditPostScreen2');
           }}>
-          <Text style={{textAlign: 'center', fontSize: 18}}>Tiếp theo</Text>
+          <Text style={{ textAlign: 'center', fontSize: 18 }}>Tiếp theo</Text>
         </TouchableHighlight>
       </ScrollView>
     );

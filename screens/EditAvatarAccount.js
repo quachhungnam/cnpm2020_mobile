@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Dimensions,
   Alert,
@@ -33,7 +33,7 @@ export default class EditAvatarAccount extends Component {
         id: Date.now(),
       };
       newData.push(item);
-      this.setState({images: newData});
+      this.setState({ images: newData });
       console.log(this.state.images);
     });
   }
@@ -44,16 +44,16 @@ export default class EditAvatarAccount extends Component {
     if (this.state.images.length != 0) {
       a = (
         <Image
-          style={{width: 100, height: 70}}
-          source={{uri: this.state.images[0]}}
+          style={{ width: 100, height: 70 }}
+          source={{ uri: this.state.images[0] }}
         />
       );
     }
     return (
-      <ScrollView style={{backgroundColor: '#fff'}}>
+      <ScrollView style={{ backgroundColor: '#fff' }}>
         <FlatList
           data={this.state.images}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableHighlight
                 onLongPress={() => {
@@ -61,7 +61,7 @@ export default class EditAvatarAccount extends Component {
                     'Thông báo',
                     'Bạn có chắc chắn muốn xóa ảnh này?',
                     [
-                      {text: 'Không', onPress: () => {}, style: 'cancel'},
+                      { text: 'Không', onPress: () => { }, style: 'cancel' },
                       {
                         text: 'có',
                         onPress: () => {
@@ -71,7 +71,7 @@ export default class EditAvatarAccount extends Component {
                               newData.splice(i, 1);
                             }
                           }
-                          this.setState({images: newData});
+                          this.setState({ images: newData });
                         },
                         style: 'cancel',
                       },
@@ -91,7 +91,7 @@ export default class EditAvatarAccount extends Component {
                     height: (item.height * 1 * width1) / item.width,
                     width: 0.95 * width1,
                   }}
-                  source={{uri: item.uri}}
+                  source={{ uri: item.uri }}
                 />
               </TouchableHighlight>
             );
@@ -111,7 +111,7 @@ export default class EditAvatarAccount extends Component {
             borderRadius: 8,
           }}
           onPress={this.openImagePicker}>
-          <Text style={{textAlign: 'center'}}>Chọn ảnh</Text>
+          <Text style={{ textAlign: 'center' }}>Chọn ảnh</Text>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor={'#ffceb56e'}
@@ -130,7 +130,7 @@ export default class EditAvatarAccount extends Component {
             //alert(JSON.stringify(this.getMyStringValue()));
             this.getMyStringValue();
           }}>
-          <Text style={{textAlign: 'center'}}>Cập nhật</Text>
+          <Text style={{ textAlign: 'center' }}>Cập nhật</Text>
         </TouchableHighlight>
         {/* <TouchableHighlight
                         disabled={this.state.images.length == 0 ? true : false}

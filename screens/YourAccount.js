@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   TextInput,
   Text,
@@ -52,20 +52,20 @@ export default class YourAccount extends Component {
             justifyContent: 'space-between',
           }}>
           <View>
-            <Text style={{fontSize: 15, marginBottom: 10}}>
+            <Text style={{ fontSize: 15, marginBottom: 10 }}>
               Tên chủ tài khoản
             </Text>
-            <Text style={{fontSize: 18}}>Nguyễn Văn A</Text>
+            <Text style={{ fontSize: 18 }}>Nguyễn Văn A</Text>
           </View>
 
           <TouchableHighlight
-            style={{borderRadius: 30}}
+            style={{ borderRadius: 30 }}
             onPress={() => {
               this.props.navigation.navigate('EditAvatarAccount');
             }}>
             <Image
               source={require('../images/room.jpg')}
-              style={{width: 60, height: 60, borderRadius: 30}}
+              style={{ width: 60, height: 60, borderRadius: 30 }}
             />
           </TouchableHighlight>
         </View>
@@ -79,8 +79,8 @@ export default class YourAccount extends Component {
             borderBottomWidth: 1,
             borderBottomColor: '#ccc',
           }}>
-          <Text style={{fontSize: 15, marginBottom: 10}}>Email</Text>
-          <Text style={{fontSize: 18}}>test@gmail.com</Text>
+          <Text style={{ fontSize: 15, marginBottom: 10 }}>Email</Text>
+          <Text style={{ fontSize: 18 }}>test@gmail.com</Text>
         </View>
 
         <View
@@ -92,8 +92,8 @@ export default class YourAccount extends Component {
             borderBottomWidth: 1,
             borderBottomColor: '#ccc',
           }}>
-          <Text style={{fontSize: 15, marginBottom: 10}}>Số điện thoại</Text>
-          <Text style={{fontSize: 18}}>0335941792</Text>
+          <Text style={{ fontSize: 15, marginBottom: 10 }}>Số điện thoại</Text>
+          <Text style={{ fontSize: 18 }}>0335941792</Text>
         </View>
 
         <View
@@ -105,8 +105,8 @@ export default class YourAccount extends Component {
             borderBottomWidth: 1,
             borderBottomColor: '#ccc',
           }}>
-          <Text style={{fontSize: 15, marginBottom: 10}}>Địa chỉ</Text>
-          <Text style={{fontSize: 18}}>Đà Nẵng</Text>
+          <Text style={{ fontSize: 15, marginBottom: 10 }}>Địa chỉ</Text>
+          <Text style={{ fontSize: 18 }}>Đà Nẵng</Text>
         </View>
 
         <TouchableHighlight
@@ -124,12 +124,12 @@ export default class YourAccount extends Component {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{color: '#e88a59', fontWeight: 'bold', fontSize: 16}}>
+            <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Chỉnh sửa tài khoản
             </Text>
             <Image
               source={require('../images/next.png')}
-              style={{width: 15, height: 15}}
+              style={{ width: 15, height: 15 }}
             />
           </View>
         </TouchableHighlight>
@@ -148,12 +148,12 @@ export default class YourAccount extends Component {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{color: '#e88a59', fontWeight: 'bold', fontSize: 16}}>
+            <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Chỉnh sửa mật khẩu
             </Text>
             <Image
               source={require('../images/next.png')}
-              style={{width: 15, height: 15}}
+              style={{ width: 15, height: 15 }}
             />
           </View>
         </TouchableHighlight>
@@ -172,12 +172,12 @@ export default class YourAccount extends Component {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{color: '#e88a59', fontWeight: 'bold', fontSize: 16}}>
+            <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Phản hồi cho quản trị viên
             </Text>
             <Image
               source={require('../images/next.png')}
-              style={{width: 15, height: 15}}
+              style={{ width: 15, height: 15 }}
             />
           </View>
         </TouchableHighlight>
@@ -196,7 +196,7 @@ export default class YourAccount extends Component {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{color: '#e88a59', fontWeight: 'bold', fontSize: 16}}>
+            <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Đăng xuất
             </Text>
           </View>

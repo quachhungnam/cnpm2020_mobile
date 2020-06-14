@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 export default class YourPostFlatListItem extends Component {
   constructor(props) {
@@ -10,11 +10,11 @@ export default class YourPostFlatListItem extends Component {
   }
 
   render() {
-    const {item} = this.props;
+    const { item } = this.props;
     return (
       <>
         <TouchableOpacity
-          style={{backgroundColor: 'white'}}
+          style={{ backgroundColor: 'white' }}
           onPress={() => {
             this.props.navigation.navigate('YourPostDetails', {
               id: item._id,
@@ -86,7 +86,7 @@ export default class YourPostFlatListItem extends Component {
                 }}>
                 {`${item.district_id.name_with_type}, ${
                   item.province_id.name_with_type
-                }`}
+                  }`}
               </Text>
             </View>
           </View>

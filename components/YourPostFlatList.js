@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {FlatList, View, Text, StyleSheet, RefreshControl} from 'react-native';
+import React, { Component } from 'react';
+import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
 
 import YourPostFlatListItem from './YourPostFlatListItem';
 
-import {getPostsFromServer} from '../networking/Server';
+import { getPostsFromServer } from '../networking/Server';
 // import Snackbar from 'react-native-snackbar';
 // import Button from 'react-native-button';
 // import AddModal from './AddModal';
@@ -27,19 +27,19 @@ export default class YourPostFlatList extends Component {
   }
 
   refreshDataFromServer = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     getPostsFromServer()
       .then(posts => {
         this.setState({
           postsFromServer: posts,
         });
-        this.setState({refreshing: false});
+        this.setState({ refreshing: false });
       })
       .catch(error => {
         this.setState({
           postsFromServer: [],
         });
-        this.setState({refreshing: false});
+        this.setState({ refreshing: false });
       });
   };
 
@@ -77,11 +77,11 @@ export default class YourPostFlatList extends Component {
           {/* <Text style={{textAlign: 'center', marginBottom: 10, marginTop: 10, fontSize: 18, letterSpacing: 2}}>{this.props.title}</Text> */}
 
           <FlatList
-            style={{marginTop: 0, marginBottom: 20}}
+            style={{ marginTop: 0, marginBottom: 20 }}
             ref={'flatList'}
             // data={[1, 2, 3, 4, 5]}
             data={this.state.postsFromServer}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <YourPostFlatListItem
                   navigation={this.props.navigation}

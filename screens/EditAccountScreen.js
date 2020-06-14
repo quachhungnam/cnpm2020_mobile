@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   TextInput,
   Text,
@@ -16,8 +16,8 @@ export default class EditAccountScreen extends Component {
     var options = ['Đà Nẵng', 'Savings', 'Car', 'GirlFriend'];
     return (
       <ScrollView
-        style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+        style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Tên chủ tài khoản
         </Text>
         <TextInput
@@ -37,7 +37,7 @@ export default class EditAccountScreen extends Component {
           onSubmitEditing={() => this.refs.txtEmail.focus()}
         />
 
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Email
         </Text>
         <TextInput
@@ -58,7 +58,7 @@ export default class EditAccountScreen extends Component {
           onSubmitEditing={() => this.refs.txtMobile.focus()}
         />
 
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Số điện thoại
         </Text>
         <TextInput
@@ -79,7 +79,7 @@ export default class EditAccountScreen extends Component {
           onSubmitEditing={() => this.refs.txtAddress.focus()}
         />
 
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Địa chỉ
         </Text>
         <TextInput
@@ -132,7 +132,7 @@ export default class EditAccountScreen extends Component {
           onPress={() => {
             this.props.navigation.navigate('AddPostScreen');
           }}>
-          <Text style={{textAlign: 'center'}}>Cập nhật</Text>
+          <Text style={{ textAlign: 'center' }}>Cập nhật</Text>
         </TouchableHighlight>
       </ScrollView>
     );

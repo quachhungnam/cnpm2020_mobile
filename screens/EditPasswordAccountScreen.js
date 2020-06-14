@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {TextInput, Text, View, TouchableHighlight} from 'react-native';
+import React, { Component } from 'react';
+import { TextInput, Text, View, TouchableHighlight } from 'react-native';
 export default class EditPasswordAccountScreen extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Mật khẩu cũ
         </Text>
         <TextInput
@@ -27,7 +27,7 @@ export default class EditPasswordAccountScreen extends Component {
           autoCorrect={false}
           onSubmitEditing={() => this.refs.txtNewPassword.focus()}
         />
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Mật khẩu mới
         </Text>
         <TextInput
@@ -48,7 +48,7 @@ export default class EditPasswordAccountScreen extends Component {
           ref={'txtNewPassword'}
           onSubmitEditing={() => this.refs.txtConfirmPassword.focus()}
         />
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Xác nhận mật khẩu mới
         </Text>
         <TextInput
@@ -79,7 +79,7 @@ export default class EditPasswordAccountScreen extends Component {
             backgroundColor: '#ffceb5',
             borderRadius: 8,
           }}>
-          <Text style={{textAlign: 'center'}}>Đổi mật khẩu</Text>
+          <Text style={{ textAlign: 'center' }}>Đổi mật khẩu</Text>
         </TouchableHighlight>
       </View>
     );

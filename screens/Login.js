@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,11 +15,11 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import {uuidv4} from 'uuidv4';
+import { uuidv4 } from 'uuidv4';
 
 const width = Dimensions.get('window').width;
 
-const info = {username: 'a', password: 'a'};
+const info = { username: 'a', password: 'a' };
 
 export default class Login extends Component {
   constructor(props) {
@@ -158,7 +158,7 @@ export default class Login extends Component {
   };
 
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     return (
       // vùng an toàn tránh tai thỏ trong iphone
       // StatusBar thanh giờ wifi
@@ -185,7 +185,7 @@ export default class Login extends Component {
                   returnKeyType="next"
                   autoCorrect={false}
                   onSubmitEditing={() => this.refs.txtPassword.focus()}
-                  onChangeText={text => this.setState({username: text})}
+                  onChangeText={text => this.setState({ username: text })}
                 />
                 <TextInput
                   style={styles.input}
@@ -195,7 +195,7 @@ export default class Login extends Component {
                   secureTextEntry
                   autoCorrect={false}
                   ref={'txtPassword'}
-                  onChangeText={text => this.setState({password: text})}
+                  onChangeText={text => this.setState({ password: text })}
                 />
                 <TouchableOpacity
                   style={styles.buttonContainer}

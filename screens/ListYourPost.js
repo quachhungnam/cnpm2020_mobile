@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableHighlight, ScrollView} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TouchableHighlight, ScrollView } from 'react-native';
 import PostYouBookFlatList from '../components/PostYouBookFlatList';
 export default class ListYourPost extends Component {
   constructor(props) {
@@ -8,7 +8,7 @@ export default class ListYourPost extends Component {
   render() {
     return (
       <ScrollView
-        style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
+        style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
         <PostYouBookFlatList
           navigation={this.props.navigation}
           title="Danh sách tin đăng của bạn"
@@ -27,7 +27,7 @@ export default class ListYourPost extends Component {
           onPress={() => {
             this.props.navigation.navigate('AddPostScreen');
           }}>
-          <Text style={{textAlign: 'center'}}>Thêm tin đăng</Text>
+          <Text style={{ textAlign: 'center' }}>Thêm tin đăng</Text>
         </TouchableHighlight>
       </ScrollView>
     );

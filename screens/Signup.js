@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,7 +19,7 @@ const width = Dimensions.get('window').width;
 
 export default class Signup extends Component {
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     return (
       <ScrollView style={styles.container}>
         <View style={styles.iconContainer}>

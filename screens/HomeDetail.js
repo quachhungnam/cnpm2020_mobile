@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Text, View, Image, ScrollView, Linking, TextInput} from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
-import {SliderBox} from 'react-native-image-slider-box';
+import React, { Component } from 'react';
+import { Text, View, Image, ScrollView, Linking, TextInput } from 'react-native';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { SliderBox } from 'react-native-image-slider-box';
 import StarRating from 'react-native-star-rating';
 
-import {getPost} from '../networking/Server';
-import {getRateOfPost} from '../networking/Server';
+import { getPost } from '../networking/Server';
+import { getRateOfPost } from '../networking/Server';
 
 //import { Dropdown } from 'react-native-material-dropdown';
 
@@ -47,7 +47,7 @@ export default class HomeDetail extends Component {
   }
 
   refreshDataFromServer = () => {
-    const {id} = this.props.route.params;
+    const { id } = this.props.route.params;
     getPost(id)
       .then(post => {
         this.setState({
@@ -73,11 +73,11 @@ export default class HomeDetail extends Component {
   };
 
   render() {
-    const {post, rate} = this.state;
+    const { post, rate } = this.state;
     if (Object.keys(post).length !== 0 && rate !== undefined) {
       return (
         <ScrollView
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: '#fff' }}
           showsVerticalScrollIndicator={true}>
           <SliderBox images={this.state.images} />
           <View
@@ -129,7 +129,7 @@ export default class HomeDetail extends Component {
                 }}>
                 <Image
                   source={require('../images/cube.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -149,7 +149,7 @@ export default class HomeDetail extends Component {
                 }}>
                 <Image
                   source={require('../images/question.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -169,7 +169,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Mô tả chi tiết
             </Text>
             <Text>{post.description}</Text>
@@ -180,7 +180,7 @@ export default class HomeDetail extends Component {
               paddingHorizontal: 10,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Địa chỉ chi tiết
             </Text>
             <View
@@ -195,7 +195,7 @@ export default class HomeDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Số nhà, Đường
                 </Text>
                 <Text
@@ -213,7 +213,7 @@ export default class HomeDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Quận / Huyện
                 </Text>
                 <Text
@@ -231,7 +231,7 @@ export default class HomeDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Tỉnh / Thành phố
                 </Text>
                 <Text
@@ -252,7 +252,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Số điện thoại liên hệ
             </Text>
 
@@ -265,7 +265,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Ngày đăng
             </Text>
             <Text>
@@ -280,8 +280,8 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Text
                   style={{
                     fontSize: 18,
@@ -313,7 +313,7 @@ export default class HomeDetail extends Component {
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
               }}>
-              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
+              <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -328,7 +328,7 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
+              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
 
@@ -339,23 +339,23 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
               {`Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
             </Text>
             {rate.map(item => {
               return (
                 <View>
-                  <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
-                    <Text style={{marginRight: 10, fontSize: 16}}>
+                  <View style={{ paddingTop: 10, flex: 1, flexDirection: 'row' }}>
+                    <Text style={{ marginRight: 10, fontSize: 16 }}>
                       {`${item.account_id.name} đã đánh giá:`}
                     </Text>
-                    <Text style={{fontSize: 16}}>{item.star}</Text>
+                    <Text style={{ fontSize: 16 }}>{item.star}</Text>
                     <Image
                       source={require('../images/star.png')}
-                      style={{width: 10, height: 10}}
+                      style={{ width: 10, height: 10 }}
                     />
                   </View>
-                  <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
+                  <Text style={{ fontSize: 12, color: 'gray', marginBottom: 7 }}>
                     {formatDate(new Date(item.created_at))}
                   </Text>
                   <Text
@@ -378,7 +378,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Đánh giá của bạn
             </Text>
             <StarRating
@@ -413,7 +413,7 @@ export default class HomeDetail extends Component {
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
               }}>
-              <Text style={{textAlign: 'center'}}>Đánh giá</Text>
+              <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>
@@ -422,7 +422,7 @@ export default class HomeDetail extends Component {
     if (Object.keys(post).length !== 0 && rate === undefined) {
       return (
         <ScrollView
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: '#fff' }}
           showsVerticalScrollIndicator={true}>
           <SliderBox images={this.state.images} />
           <View
@@ -474,7 +474,7 @@ export default class HomeDetail extends Component {
                 }}>
                 <Image
                   source={require('../images/cube.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -494,7 +494,7 @@ export default class HomeDetail extends Component {
                 }}>
                 <Image
                   source={require('../images/question.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -514,7 +514,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Mô tả chi tiết
             </Text>
             <Text>{post.description}</Text>
@@ -525,7 +525,7 @@ export default class HomeDetail extends Component {
               paddingHorizontal: 10,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Địa chỉ chi tiết
             </Text>
             <View
@@ -540,7 +540,7 @@ export default class HomeDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Số nhà, Đường
                 </Text>
                 <Text
@@ -558,7 +558,7 @@ export default class HomeDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Quận / Huyện
                 </Text>
                 <Text
@@ -576,7 +576,7 @@ export default class HomeDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Tỉnh / Thành phố
                 </Text>
                 <Text
@@ -597,7 +597,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Số điện thoại liên hệ
             </Text>
 
@@ -610,7 +610,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Ngày đăng
             </Text>
             <Text>
@@ -625,8 +625,8 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Text
                   style={{
                     fontSize: 18,
@@ -658,7 +658,7 @@ export default class HomeDetail extends Component {
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
               }}>
-              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
+              <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -673,7 +673,7 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
+              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
 
@@ -684,7 +684,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
               Chưa có đánh giá nào
             </Text>
           </View>
@@ -696,7 +696,7 @@ export default class HomeDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Đánh giá của bạn
             </Text>
             <StarRating
@@ -731,7 +731,7 @@ export default class HomeDetail extends Component {
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
               }}>
-              <Text style={{textAlign: 'center'}}>Đánh giá</Text>
+              <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>

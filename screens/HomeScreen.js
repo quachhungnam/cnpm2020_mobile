@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Text, View, Picker, Button, ScrollView} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, Picker, Button, ScrollView } from 'react-native';
 import Carousel from '../components/Carousel';
-import {dummyData} from '../data/DataCarousel';
+import { dummyData } from '../data/DataCarousel';
 import HomeFlatList from '../components/HomeFlatList';
 //import { Dropdown } from 'react-native-material-dropdown';
 export default class HomeScreen extends Component {
@@ -11,7 +11,7 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
+      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
         <Carousel data={dummyData} />
         <HomeFlatList
           navigation={this.props.navigation}

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Dimensions,
   Alert,
@@ -32,7 +32,7 @@ export default class EditPostScreen2 extends Component {
         id: Date.now(),
       };
       newData.push(item);
-      this.setState({images: newData});
+      this.setState({ images: newData });
       console.log(this.state.images);
     });
   }
@@ -42,21 +42,21 @@ export default class EditPostScreen2 extends Component {
     if (this.state.images.length != 0) {
       a = (
         <Image
-          style={{width: 100, height: 70}}
-          source={{uri: this.state.images[0]}}
+          style={{ width: 100, height: 70 }}
+          source={{ uri: this.state.images[0] }}
         />
       );
     }
     return (
-      <ScrollView style={{backgroundColor: '#fff'}}>
+      <ScrollView style={{ backgroundColor: '#fff' }}>
         <FlatList
           data={this.state.images}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableHighlight
                 onLongPress={() => {
                   Alert.alert('Alert', 'Are you sure to delete this image?', [
-                    {text: 'no', onPress: () => {}, style: 'cancel'},
+                    { text: 'no', onPress: () => { }, style: 'cancel' },
                     {
                       text: 'yes',
                       onPress: () => {
@@ -66,7 +66,7 @@ export default class EditPostScreen2 extends Component {
                             newData.splice(i, 1);
                           }
                         }
-                        this.setState({images: newData});
+                        this.setState({ images: newData });
                       },
                       style: 'cancel',
                     },
@@ -85,7 +85,7 @@ export default class EditPostScreen2 extends Component {
                     height: (item.height * 1 * width1) / item.width,
                     width: 0.95 * width1,
                   }}
-                  source={{uri: item.uri}}
+                  source={{ uri: item.uri }}
                 />
               </TouchableHighlight>
             );
@@ -105,7 +105,7 @@ export default class EditPostScreen2 extends Component {
             borderRadius: 8,
           }}
           onPress={this.openImagePicker}>
-          <Text style={{textAlign: 'center'}}>{`Thêm ảnh (Còn lại: ${5 -
+          <Text style={{ textAlign: 'center' }}>{`Thêm ảnh (Còn lại: ${5 -
             this.state.images.length} ảnh)`}</Text>
         </TouchableHighlight>
         <TouchableHighlight
@@ -124,7 +124,7 @@ export default class EditPostScreen2 extends Component {
           onPress={() => {
             alert('arr');
           }}>
-          <Text style={{textAlign: 'center'}}>Cập nhật</Text>
+          <Text style={{ textAlign: 'center' }}>Cập nhật</Text>
         </TouchableHighlight>
       </ScrollView>
     );

@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {TextInput, Text, View, TouchableHighlight, Button} from 'react-native';
+import React, { Component } from 'react';
+import { TextInput, Text, View, TouchableHighlight, Button } from 'react-native';
 export default class Feedback extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
-        <Text style={{marginRight: 10, marginLeft: 10, marginTop: 10}}>
+      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+        <Text style={{ marginRight: 10, marginLeft: 10, marginTop: 10 }}>
           Vấn đề bạn cần phản hồi
         </Text>
         <TextInput
@@ -36,7 +36,7 @@ export default class Feedback extends Component {
             backgroundColor: '#ffceb5',
             borderRadius: 8,
           }}>
-          <Text style={{textAlign: 'center'}}>Gửi phản hồi</Text>
+          <Text style={{ textAlign: 'center' }}>Gửi phản hồi</Text>
         </TouchableHighlight>
       </View>
     );

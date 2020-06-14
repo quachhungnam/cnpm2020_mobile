@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HomeScreen from '../screens/HomeScreen';
 import HomeDetail from '../screens/HomeDetail';
@@ -20,7 +20,7 @@ import FeedbackScreen from '../screens/Feedback';
 import AddPostScreen2 from '../screens/AddPostScreen2';
 import EditPostScreen2 from '../screens/EditPostScreen2';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
 
 const HomeStack = createStackNavigator();
@@ -28,7 +28,7 @@ const ListYourPostStack = createStackNavigator();
 const ListPostYouBookStack = createStackNavigator();
 const YourAccountStack = createStackNavigator();
 
-const HomeStackScreen = ({navigation}) => (
+const HomeStackScreen = ({ navigation }) => (
   <HomeStack.Navigator
     screenOptions={{
       headerStyle: {
@@ -96,10 +96,10 @@ class ListYourPostStackScreen extends Component {
       console.log(value);
       if (value != null) {
         console.log('ngu');
-        this.setState({isLogged: true, user: value});
+        this.setState({ isLogged: true, user: value });
       } else {
         console.log('ad');
-        this.setState({isLogged: false, user: null});
+        this.setState({ isLogged: false, user: null });
       }
     } catch (error) {
       console.log('catch');
@@ -107,7 +107,7 @@ class ListYourPostStackScreen extends Component {
     }
   };
   render() {
-    const {isLogged} = this.state;
+    const { isLogged } = this.state;
     if (isLogged === true) {
       return (
         <>
@@ -225,7 +225,7 @@ class ListYourPostStackScreen extends Component {
   }
 }
 
-const ListPostYouBookStackScreen = ({navigation}) => (
+const ListPostYouBookStackScreen = ({ navigation }) => (
   <ListPostYouBookStack.Navigator
     screenOptions={{
       headerStyle: {
@@ -275,7 +275,7 @@ const ListPostYouBookStackScreen = ({navigation}) => (
   </ListPostYouBookStack.Navigator>
 );
 
-const YourAccountStackScreen = ({navigation}) => (
+const YourAccountStackScreen = ({ navigation }) => (
   <YourAccountStack.Navigator
     screenOptions={{
       headerStyle: {
@@ -362,16 +362,16 @@ export default class MyTabs extends Component {
   render() {
     return (
       <Tab.Navigator
-        style={{marginBottom: 0}}
+        style={{ marginBottom: 0 }}
         initialRouteName="Home"
         activeColor="#e91e63"
-        style={{backgroundColor: 'tomato'}}>
+        style={{ backgroundColor: 'tomato' }}>
         <Tab.Screen
           name="Home"
           component={HomeStackScreen}
           options={{
             //tabBarLabel: 'Home',
-            tabBarIcon: ({color}) => (
+            tabBarIcon: ({ color }) => (
               <Icon name="home" size={20} color="#e88a59" />
             ),
           }}
@@ -381,7 +381,7 @@ export default class MyTabs extends Component {
           component={ListYourPostStackScreen}
           options={{
             //tabBarLabel: 'Updates',
-            tabBarIcon: ({color}) => (
+            tabBarIcon: ({ color }) => (
               <Icon name="newspaper-o" size={20} color="#e88a59" />
             ),
           }}
@@ -391,7 +391,7 @@ export default class MyTabs extends Component {
           component={ListPostYouBookStackScreen}
           options={{
             //tabBarLabel: 'Updates',
-            tabBarIcon: ({color}) => (
+            tabBarIcon: ({ color }) => (
               <Icon name="inbox" size={20} color="#e88a59" />
             ),
           }}
@@ -401,7 +401,7 @@ export default class MyTabs extends Component {
           component={YourAccountStackScreen}
           options={{
             //tabBarLabel: 'Updates',
-            tabBarIcon: ({color}) => (
+            tabBarIcon: ({ color }) => (
               <Icon name="user" size={20} color="#e88a59" />
             ),
           }}
