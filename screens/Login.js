@@ -13,10 +13,8 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
-  AsyncStorage,
 } from 'react-native';
-
-import { uuidv4 } from 'uuidv4';
+import AsyncStorage from '@react-native-community/async-storage'
 import {
   login
 } from '../networking/Server';

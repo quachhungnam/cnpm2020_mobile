@@ -82,7 +82,7 @@ async function login(user) {
     let resultJson = await result.json()
     return resultJson
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${err}`)
     return err
   }
 }
@@ -110,7 +110,25 @@ async function signup(user) {
     console.log(`Error is: ${err}`)
   }
 }
-
+//GET INFOR
+async function get_account_infor(user_token) {
+  try {
+    let result = await fetch(`${api_account}/usertoken/yes`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
+   
+    })
+    let resultJson = await result.json()
+    return resultJson
+  } catch (err) {
+    console.error(`Error is: ${err}`)
+    return err
+  }
+}
 
 
 
@@ -122,3 +140,4 @@ export { get_district_with_province }
 export { get_all_posttypes }
 export { login }
 export { signup }
+export { get_account_infor }

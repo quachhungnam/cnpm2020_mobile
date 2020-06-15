@@ -21,8 +21,9 @@ import AddPostScreen2 from '../screens/AddPostScreen2';
 import EditPostScreen2 from '../screens/EditPostScreen2';
 
 import { createStackNavigator } from '@react-navigation/stack';
-const Tab = createBottomTabNavigator();
+import { get_account_infor } from '../networking/Server'
 
+const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ListYourPostStack = createStackNavigator();
 const ListPostYouBookStack = createStackNavigator();
@@ -82,33 +83,35 @@ class ListYourPostStackScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogged: false,
-      user: null,
+      is_login: false
     };
   }
-  componentWillMount() {
-    this.retrieveData();
+
+  componentDidMount() {
+    this.get_infor()
   }
-  retrieveData = async () => {
+
+  get_infor = async () => {
     try {
-      const value = await AsyncStorage.getItem('user');
-      console.log('try');
-      console.log(value);
-      if (value != null) {
-        console.log('ngu');
-        this.setState({ isLogged: true, user: value });
-      } else {
-        console.log('ad');
-        this.setState({ isLogged: false, user: null });
+      const value_token = await AsyncStorage.getItem('user')
+      if (value_token) {
+        get_account_infor(value_token).then(res => {
+          if (res.success == false) {
+            this.setState({ is_login: false })
+          }
+          if (res.success == true) {
+            this.setState({ is_login: true })
+          }
+        })
       }
-    } catch (error) {
-      console.log('catch');
-      return null;
+    } catch (err) {
+      console.log(err)
     }
-  };
+  }
+
+
   render() {
-    const { isLogged } = this.state;
-    if (isLogged === true) {
+    if (this.state.is_login === true) {
       return (
         <>
           <ListYourPostStack.Navigator
@@ -188,7 +191,8 @@ class ListYourPostStackScreen extends Component {
           </ListYourPostStack.Navigator>
         </>
       );
-    } else {
+    }
+    if (this.state.is_login === false) {
       return (
         <>
           <ListYourPostStack.Navigator
@@ -379,6 +383,7 @@ export default class MyTabs extends Component {
         <Tab.Screen
           name="Tin của bạn"
           component={ListYourPostStackScreen}
+
           options={{
             //tabBarLabel: 'Updates',
             tabBarIcon: ({ color }) => (

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight, ScrollView, AsyncStorage, } from 'react-native';
+import { Text, View, TouchableHighlight, ScrollView } from 'react-native';
 import PostYouBookFlatList from '../components/PostYouBookFlatList';
+import AsyncStorage from '@react-native-community/async-storage'
 export default class ListYourPost extends Component {
   constructor(props) {
     super(props);
@@ -10,14 +11,11 @@ export default class ListYourPost extends Component {
     };
   }
   add_post = () => {
-    AsyncStorage.getItem('user').then(value =>
-    //AsyncStorage returns a promise so adding a callback to get the value
-    {
+    AsyncStorage.getItem('user').then(value => {
       this.setState({ tokenz: value })
       console.log(this.state.tokenz)
       alert(this.state.tokenz)
     }
-      //Setting the value in Text
     );
   }
   render() {
@@ -40,8 +38,8 @@ export default class ListYourPost extends Component {
             marginBottom: 30,
           }}
           onPress={() => {
-            this.add_post()
-            // this.props.navigation.navigate('AddPostScreen');
+            // this.add_post()
+            this.props.navigation.navigate('AddPostScreen');
           }}>
           <Text style={{ textAlign: 'center' }}>Thêm tin đăng</Text>
         </TouchableHighlight>

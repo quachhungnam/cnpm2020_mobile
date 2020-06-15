@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  StyleSheet,
   TextInput,
   Text,
   View,
@@ -7,21 +8,57 @@ import {
   Button,
   Image,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-
+import AsyncStorage from '@react-native-community/async-storage'
+import { get_account_infor } from '../networking/Server'
 export default class YourAccount extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      tokenz: '',
+      user_in: {},
+      is_fresh: false
+    };
   }
-  removeItemValue = async () => {
+  componentDidMount() {
+    this.get_infor()
+  }
+
+  get_infor = async () => {
     try {
-      await AsyncStorage.removeItem('user');
-      alert('â');
-      return true;
-    } catch (exception) {
-      console.log(exception);
+      const value_token = await AsyncStorage.getItem('user')
+      if (value_token) {
+        get_account_infor(value_token).then(res => {
+          if (res.success == false) {
+            this.setState({ user_in: { "name": "", "email": "", "mobile": "", "address": "" } })
+            alert('Vui lòng đăng nhập để tiếp tục')
+            // this.props.navigation.navigate('SignIn');
+          }
+          if (res.success == true) {
+            this.setState({ user_in: res.data.account })
+            alert('Bạn đang đăng nhập')
+          }
+        })
+      }
+      if (!value_token) {
+        alert('user not found')
+      }
+    } catch (err) {
+      console.log(err)
     }
-  };
+
+
+  }
+
+  logout_user = async () => {
+    try {
+      await AsyncStorage.removeItem('user')
+      this.props.navigation.navigate('SignIn')
+      return true;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
     return (
       <View
@@ -31,31 +68,16 @@ export default class YourAccount extends Component {
           backgroundColor: '#fff',
         }}>
         <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            paddingVertical: 10,
-            letterSpacing: 1,
-            backgroundColor: '#eee',
-          }}>
-          Tài khoản
+          style={styles.text_account}>
+          Thông tin tài khoản
         </Text>
         <View
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            borderBottomWidth: 1,
-            borderBottomColor: '#ccc',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
+          style={styles.view_account}>
           <View>
             <Text style={{ fontSize: 15, marginBottom: 10 }}>
               Tên chủ tài khoản
             </Text>
-            <Text style={{ fontSize: 18 }}>Nguyễn Văn A</Text>
+            <Text style={{ fontSize: 18 }}>{this.state.user_in.name}</Text>
           </View>
 
           <TouchableHighlight
@@ -71,42 +93,21 @@ export default class YourAccount extends Component {
         </View>
 
         <View
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            marginTop: 10,
-            paddingBottom: 10,
-            borderBottomWidth: 1,
-            borderBottomColor: '#ccc',
-          }}>
+          style={styles.view_email}>
           <Text style={{ fontSize: 15, marginBottom: 10 }}>Email</Text>
-          <Text style={{ fontSize: 18 }}>test@gmail.com</Text>
+          <Text style={{ fontSize: 18 }}>{this.state.user_in.email}</Text>
         </View>
 
         <View
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            marginTop: 10,
-            paddingBottom: 10,
-            borderBottomWidth: 1,
-            borderBottomColor: '#ccc',
-          }}>
+          style={styles.view_phone}>
           <Text style={{ fontSize: 15, marginBottom: 10 }}>Số điện thoại</Text>
-          <Text style={{ fontSize: 18 }}>0335941792</Text>
+          <Text style={{ fontSize: 18 }}>{this.state.user_in.mobile}</Text>
         </View>
 
         <View
-          style={{
-            marginRight: 10,
-            marginLeft: 10,
-            marginTop: 10,
-            paddingBottom: 10,
-            borderBottomWidth: 1,
-            borderBottomColor: '#ccc',
-          }}>
+          style={styles.view_email}>
           <Text style={{ fontSize: 15, marginBottom: 10 }}>Địa chỉ</Text>
-          <Text style={{ fontSize: 18 }}>Đà Nẵng</Text>
+          <Text style={{ fontSize: 18 }}>{this.state.user_in.address}</Text>
         </View>
 
         <TouchableHighlight
@@ -118,12 +119,7 @@ export default class YourAccount extends Component {
             this.props.navigation.navigate('EditAccountScreen');
           }}>
           <View
-            style={{
-              marginHorizontal: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            style={styles.view_option_edit}>
             <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Chỉnh sửa tài khoản
             </Text>
@@ -142,12 +138,7 @@ export default class YourAccount extends Component {
             this.props.navigation.navigate('EditPasswordAccountScreen');
           }}>
           <View
-            style={{
-              marginHorizontal: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            style={styles.view_option_edit}>
             <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Chỉnh sửa mật khẩu
             </Text>
@@ -166,12 +157,7 @@ export default class YourAccount extends Component {
             this.props.navigation.navigate('FeedbackScreen');
           }}>
           <View
-            style={{
-              marginHorizontal: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            style={styles.view_option_edit}>
             <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Phản hồi cho quản trị viên
             </Text>
@@ -187,21 +173,68 @@ export default class YourAccount extends Component {
             marginVertical: 10,
           }}
           onPress={() => {
-            this.removeItemValue();
+            this.logout_user();
           }}>
           <View
-            style={{
-              marginHorizontal: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            style={styles.view_option_edit}>
             <Text style={{ color: '#e88a59', fontWeight: 'bold', fontSize: 16 }}>
               Đăng xuất
             </Text>
           </View>
         </TouchableHighlight>
-      </View>
+        <Button
+          onPress={() => {
+            // this.get_token()
+            this.get_infor()
+            // alert(this.state.tokenz)
+          }}
+          title="Test Token"
+          color="#f194ff"
+          accessibilityLabel="Learn more about this purple button"
+        ></Button>
+      </View >
     );
   }
 }
+
+const styles = StyleSheet.create({
+  view_account: {
+    marginRight: 10,
+    marginLeft: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  view_email: {
+    marginRight: 10,
+    marginLeft: 10,
+    marginTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  view_phone: {
+    marginRight: 10,
+    marginLeft: 10,
+    marginTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  view_option_edit: {
+    marginHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text_account: {
+    fontSize: 18,
+    textAlign: 'center',
+    paddingVertical: 10,
+    letterSpacing: 1,
+    backgroundColor: '#eee',
+  }
+})
