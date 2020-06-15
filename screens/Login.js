@@ -57,6 +57,7 @@ export default class Login extends Component {
             },
             {
               text: "OK", onPress: () => {
+
               }
             }
           ],
@@ -68,46 +69,7 @@ export default class Login extends Component {
       }
     })
   }
-  //luu tru vào syncstor
-
-
-  // async saveItem(value) {
-  //   try {
-  //     await AsyncStorage.setItem('user', value);
-  //   } catch (error) {
-  //     alert('loi roi ban')
-  //     console.log('AsyncStorage Error: ' + error.message);
-  //   }
-  // }
-
-
-  // retrieve_user_token = async () => {
-  //   const token_value = await AsyncStorage.getItem('user')
-  //   return token_value
-  // }
-
-  // retrieveData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('user')
-  //     console.log('try');
-  //     alert(value);
-  //     if (value != null) {
-  //       this.setState({
-  //         isLogged: true,
-  //         user: value,
-  //       });
-  //     }
-  //     this.setState({
-  //       isLogged: false,
-  //       user: null,
-  //     });
-  //     return value;
-  //   } catch (error) {
-  //     console.log('catch');
-  //     return null;
-  //   }
-  // };
-
+  
   render() {
     const { navigation } = this.props;
     return (

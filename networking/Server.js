@@ -1,7 +1,7 @@
 const axios = require('axios')
 const yourIP = 'http://192.168.0.102'
-const apiGetAllPosts = `${yourIP}:3000/posts`
-const apiGetAllRates = `${yourIP}:3000/rates`
+const api_posts = `${yourIP}:3000/posts`
+const api_rates = `${yourIP}:3000/rates`
 const api_provinces = `${yourIP}:3000/provinces`
 const api_districts = `${yourIP}:3000/districts`
 const api_posttypes = `${yourIP}:3000/posttypes`
@@ -9,7 +9,7 @@ const api_account = `${yourIP}:3000/accounts`
 
 async function getPostsFromServer() {
   try {
-    let response = await fetch(apiGetAllPosts)
+    let response = await fetch(api_posts)
     let responseJson = await response.json()
     return responseJson.post
   } catch (error) {
@@ -19,7 +19,7 @@ async function getPostsFromServer() {
 
 async function getPost(postId) {
   try {
-    let response = await fetch(`${apiGetAllPosts}/${postId}`)
+    let response = await fetch(`${api_posts}/${postId}`)
     let responseJson = await response.json()
     return responseJson.post
   } catch (error) {
@@ -29,7 +29,7 @@ async function getPost(postId) {
 
 async function getRateOfPost(postId) {
   try {
-    let response = await fetch(`${apiGetAllRates}/rateofpost/${postId}`)
+    let response = await fetch(`${api_rates}/rateofpost/${postId}`)
     let responseJson = await response.json()
     return responseJson.rate
   } catch (error) {
@@ -120,7 +120,7 @@ async function get_account_infor(user_token) {
         Authorization: user_token,
         'Content-Type': 'application/json',
       },
-   
+
     })
     let resultJson = await result.json()
     return resultJson
@@ -130,7 +130,31 @@ async function get_account_infor(user_token) {
   }
 }
 
-
+async function post_post(new_post) {
+  try {
+    let result = await fetch(`${api_posts}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: new_post.title,
+        province_id: new_post.province_id,
+        district_id: new_post.district_id,
+        post_type_id: new_post.post_type_id,
+        address_detail: new_post.address_detail,
+        description: new_post.description,
+        price: new_post.price,
+        square: new_post.square
+      })
+    })
+    let resultJson = await result.json()
+    return resultJson
+  } catch (err) {
+    console.log(`Error is: ${err}`)
+  }
+}
 
 export { getPostsFromServer }
 export { getPost }
@@ -141,3 +165,4 @@ export { get_all_posttypes }
 export { login }
 export { signup }
 export { get_account_infor }
+export { post_post }

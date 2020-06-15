@@ -12,8 +12,17 @@ import {
 export default class EditAccountScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      account: {}
+    }
   }
-
+  componentDidMount() {
+    this.get_account_infor()
+  }
+  get_account_infor() {
+    const { account } = this.props.route.params
+    this.setState({ account: account })
+  }
   update_infor = () => {
     alert('canh bao')
 
@@ -27,6 +36,7 @@ export default class EditAccountScreen extends Component {
           Tên chủ tài khoản
         </Text>
         <TextInput
+          value={this.state.account.name}
           style={styles.input_infor}
           returnKeyType="next"
           autoCorrect={false}
@@ -37,6 +47,7 @@ export default class EditAccountScreen extends Component {
           Email
         </Text>
         <TextInput
+          value={this.state.account.email}
           style={styles.input_infor}
           returnKeyType="next"
           keyboardType="email-address"
@@ -50,6 +61,7 @@ export default class EditAccountScreen extends Component {
         </Text>
         <TextInput
           style={styles.input_infor}
+          value={this.state.account.mobile}
           returnKeyType="next"
           keyboardType="numeric"
           autoCorrect={false}
@@ -61,6 +73,7 @@ export default class EditAccountScreen extends Component {
           Địa chỉ
         </Text>
         <TextInput
+          value={this.state.account.address}
           style={styles.input_infor}
           multiline={true}
           returnKeyType="go"

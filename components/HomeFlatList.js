@@ -100,7 +100,11 @@ export default class HomeFlatList extends Component {
           console.log(err)
           this.setState({ districts: [] })
         })
+    } else {
+      this.setState({ selected_district: -1 })
+      this.setState({ districts: [] })
     }
+
 
   }
   change_district = (district_code) => {
@@ -207,7 +211,7 @@ export default class HomeFlatList extends Component {
               placeholderTextColor="#000"
             />
             <TouchableHighlight
-              style={styles.buttonSearch}            
+              style={styles.buttonSearch}
             >
               <Text style={{ textAlign: 'center', color: '#333', fontSize: 16 }}>
                 Tìm kiếm

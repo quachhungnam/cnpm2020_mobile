@@ -12,7 +12,7 @@ import ListPostYouBookScreen from '../screens/ListPostYouBook';
 import PostYouBookDetail from '../screens/PostYouBookDetail';
 import AddPostScreen from '../screens/AddPostScreen';
 import EditPostScreen from '../screens/EditPostScreen';
-import YourAccountScreen from '../screens/YourAccount';
+import YourAccount from '../screens/YourAccount';
 import EditAvatarAccount from '../screens/EditAvatarAccount';
 import EditAccountScreen from '../screens/EditAccountScreen';
 import EditPasswordAccountScreen from '../screens/EditPasswordAccountScreen';
@@ -293,7 +293,7 @@ const YourAccountStackScreen = ({ navigation }) => (
     }}>
     <YourAccountStack.Screen
       name="YourAccountScreen"
-      component={YourAccountScreen}
+      component={YourAccount}
       options={{
         title: 'Overview',
         headerShown: false,
