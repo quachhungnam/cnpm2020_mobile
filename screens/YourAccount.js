@@ -12,16 +12,15 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { get_account_infor } from '../networking/Server'
 
 export default function YourAccount(props) {
-
+  // const [is_screen, set_is_screen] = useState(false)
   const [is_login, set_is_login] = useState(false)
   const [user_infor, set_user_infor] = useState({})
   const [user_token, set_user_token] = useState('')
-  const { navigation } = props;
-  useEffect(() => {
-    // alert('effect')
-    let x = check_login()
 
+  useEffect(() => {
+    let x = check_login()
   }, []);
+
 
   const check_login = async () => {
     try {
@@ -49,6 +48,7 @@ export default function YourAccount(props) {
       set_is_login(false)
       set_user_token('')
       set_user_infor({})
+      // set_is_screen(true)
       props.navigation.navigate('SignIn')
       return true;
     } catch (err) {
@@ -80,7 +80,8 @@ export default function YourAccount(props) {
           style={{ borderRadius: 30 }}
           onPress={() => {
             if (is_login === true) {
-              this.props.navigation.navigate('EditAvatarAccount');
+              props.navigation.navigate('EditAvatarAccount',
+                { account: user_infor, user_token: user_token });
             }
           }}
         >
@@ -116,7 +117,8 @@ export default function YourAccount(props) {
         }}
         onPress={() => {
           if (is_login === true) {
-            props.navigation.navigate('EditAccountScreen', { account: user_infor })
+            props.navigation.navigate('EditAccountScreen',
+              { account: user_infor, user_token: user_token })
           }
         }}>
         <View
@@ -137,7 +139,8 @@ export default function YourAccount(props) {
         }}
         onPress={() => {
           if (is_login === true) {
-            props.navigation.navigate('EditPasswordAccountScreen')
+            props.navigation.navigate('EditPasswordAccountScreen',
+              { account: user_infor, user_token: user_token })
           }
         }}>
         <View
@@ -158,7 +161,8 @@ export default function YourAccount(props) {
         }}
         onPress={() => {
           if (is_login === true) {
-            props.navigation.navigate('FeedbackScreen');
+            props.navigation.navigate('FeedbackScreen',
+              { account: user_infor, user_token: user_token });
           }
         }}>
         <View
@@ -196,7 +200,7 @@ export default function YourAccount(props) {
           // alert(props.route.params.islogin)
           // alert(user_token)
           // alert(props.navigation.route)
-          check_login()          // alert(this.state.tokenz)
+          check_login()
         }}
         title="Test Token"
         color="#f194ff"
@@ -206,7 +210,8 @@ export default function YourAccount(props) {
         onPress={() => {
           // if (!check_login()) {
           // alert('Bạn đã đăng nhập')
-          props.navigation.navigate('SignIn')
+          // update_account()
+          // props.navigation.navigate('SignIn')
           // }
         }}
         title="Dang nhap"

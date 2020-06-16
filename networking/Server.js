@@ -156,6 +156,32 @@ async function post_post(new_post) {
   }
 }
 
+async function update_account_infor(user, user_token) {
+  try {
+    let result = await fetch(`${api_account}/${user._id}`, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        address: user.address
+      })
+    })
+    let resultJson = await result.json()
+    return resultJson
+  } catch (err) {
+    console.log(`Error is: ${err}`)
+  }
+}
+
+
+
+
 export { getPostsFromServer }
 export { getPost }
 export { getRateOfPost }
@@ -166,3 +192,5 @@ export { login }
 export { signup }
 export { get_account_infor }
 export { post_post }
+export { update_account_infor }
+
