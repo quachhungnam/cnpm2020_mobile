@@ -1,5 +1,5 @@
 const axios = require('axios')
-const yourIP = 'http://192.168.0.102'
+const yourIP = 'http://192.168.0.104'
 const api_posts = `${yourIP}:3000/posts`
 const api_rates = `${yourIP}:3000/rates`
 const api_provinces = `${yourIP}:3000/provinces`
@@ -7,11 +7,31 @@ const api_districts = `${yourIP}:3000/districts`
 const api_posttypes = `${yourIP}:3000/posttypes`
 const api_account = `${yourIP}:3000/accounts`
 
+async function getPostsFromServerByType(typeId) {
+  try {
+    let response = await fetch(`${api_posts}/type/${typeId}/account`)
+    let responseJson = await response.json()
+    return responseJson.post
+  } catch (error) {
+    console.error(`Error is: ${error}`)
+  }
+}
+
 async function getPostsFromServer() {
   try {
     let response = await fetch(api_posts)
     let responseJson = await response.json()
     return responseJson.post
+  } catch (error) {
+    console.error(`Error is: ${error}`)
+  }
+}
+
+async function getPostsFromServerWithPage(pageNumber) {
+  try {
+    let response = await fetch(`${api_posts}/page/${pageNumber}`)
+    let responseJson = await response.json()
+    return responseJson
   } catch (error) {
     console.error(`Error is: ${error}`)
   }
@@ -47,6 +67,33 @@ async function get_all_province() {
   }
 }
 
+async function get_one_province(provinceCode) {
+  try {
+    let res = await fetch(`${api_provinces}/${provinceCode}`)
+    let resJson = await res.json()
+    return resJson.province //tat ca mang province
+  } catch (err) {
+    console.error(`Error is: ${error}`)
+  }
+}
+async function get_one_district(districtCode) {
+  try {
+    let res = await fetch(`${api_districts}/one/${districtCode}`)
+    let resJson = await res.json()
+    return resJson.districts //tat ca mang province
+  } catch (err) {
+    console.error(`Error is: ${error}`)
+  }
+}
+async function get_one_posttype(posttypeId) {
+  try {
+    let res = await fetch(`${api_posttypes}/${posttypeId}`)
+    let resJson = await res.json()
+    return resJson.post_type //tat ca mang province
+  } catch (err) {
+    console.error(`Error is: ${error}`)
+  }
+}
 async function get_all_posttypes() {
   try {
     let res = await fetch(`${api_posttypes}`)
@@ -156,6 +203,26 @@ async function post_post(new_post) {
   }
 }
 
+async function searchByAddress(address) {
+  try {
+    let result = await fetch(`${api_posts}/finds/address`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        address: address
+      })
+    })
+    let resultJson = await result.json()
+    return resultJson
+  } catch (err) {
+    console.error(`Error is: ${err}`)
+    return err
+  }
+}
+
 export { getPostsFromServer }
 export { getPost }
 export { getRateOfPost }
@@ -166,3 +233,9 @@ export { login }
 export { signup }
 export { get_account_infor }
 export { post_post }
+export { getPostsFromServerByType }
+export { searchByAddress }
+export { get_one_posttype }
+export { get_one_district }
+export { get_one_province }
+export {getPostsFromServerWithPage}

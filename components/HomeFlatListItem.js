@@ -85,7 +85,7 @@ export default class HomeFlatListItem extends Component {
                   color: 'black',
                   fontSize: 13,
                 }}>
-                {`${item.district_id.name_with_type}, ${
+                {`${item.address_detail}, ${item.district_id.name_with_type}, ${
                   item.province_id.name_with_type
                   }`}
               </Text>

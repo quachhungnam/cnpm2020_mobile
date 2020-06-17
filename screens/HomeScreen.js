@@ -11,13 +11,13 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-        <Carousel data={dummyData} />
+      <ScrollView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+        <Carousel style={{flex: 1}} data={dummyData} />
         <HomeFlatList
           navigation={this.props.navigation}
           title="Phòng trọ HOT"
         />
-      </View>
+      </ScrollView>
     );
   }
 }
