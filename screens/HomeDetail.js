@@ -1,10 +1,23 @@
-import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, Linking, TextInput, StyleSheet } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import { SliderBox } from 'react-native-image-slider-box';
+import React, {Component} from 'react';
+import {
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Linking,
+  TextInput,
+  StyleSheet,
+  Alert,
+} from 'react-native';
+import {TouchableHighlight} from 'react-native-gesture-handler';
+import {SliderBox} from 'react-native-image-slider-box';
 import StarRating from 'react-native-star-rating';
-import { getPost } from '../networking/Server';
-import { getRateOfPost } from '../networking/Server';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import {getPost} from '../networking/Server';
+import {getRateOfPost} from '../networking/Server';
+import {addTransaction} from '../networking/Server';
+import {get_account_infor} from '../networking/Server';
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -31,6 +44,9 @@ export default class HomeDetail extends Component {
       starCount: 0,
       post: {},
       rate: [],
+      is_login: false,
+      user_infor: {},
+      user_token: '',
     };
   }
   onStarRatingPress(rating) {
@@ -40,11 +56,12 @@ export default class HomeDetail extends Component {
   }
 
   componentDidMount() {
+    this.check_login();
     this.refreshDataFromServer();
   }
 
   refreshDataFromServer = () => {
-    const { id } = this.props.route.params;
+    const {id} = this.props.route.params;
     getPost(id)
       .then(post => {
         this.setState({
@@ -69,53 +86,148 @@ export default class HomeDetail extends Component {
       });
   };
 
+  check_login = async () => {
+    try {
+      const value_token = await AsyncStorage.getItem('user');
+      if (value_token !== null) {
+        this.setState({
+          user_token: value_token,
+        });
+        this.setState({
+          is_login: true,
+        });
+        get_account_infor(value_token)
+          .then(res => {
+            this.setState({
+              user_infor: res.data.account,
+            });
+          })
+          .catch(err => {
+            this.setState({
+              user_infor: {},
+            });
+          });
+      }
+    } catch (err) {
+      this.setState({
+        user_token: '',
+      });
+      this.setState({
+        user_infor: {},
+      });
+      this.setState({
+        is_login: false,
+      });
+    }
+  };
+
+  addTran = () => {
+    if (this.state.is_login === true) {
+      addTransaction(
+        this.state.user_infor,
+        this.state.user_token,
+        this.props.route.params.id,
+      ).then(res => {
+        if (res.message === 'transaction created') {
+          Alert.alert(
+            'Thông báo',
+            'Đặt thành công',
+            [
+              {
+                text: 'OK',
+                onPress: () => {},
+              },
+            ],
+            {cancelable: false},
+          );
+          return;
+        }
+        if (res.error === 'transaction exist') {
+          Alert.alert(
+            'Thông báo',
+            'Tin này đã có chủ, bạn không thể đặt',
+            [
+              {
+                text: 'OK',
+                onPress: () => {},
+              },
+            ],
+            {cancelable: false},
+          );
+        }
+      });
+    } else {
+      Alert.alert(
+        'Thông báo',
+        'Bạn cần đăng nhập để đặt',
+        [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  };
+
+  bookPost = () => {
+    try {
+      Alert.alert(
+        'Thông báo',
+        'Bạn muốn đặt tin này chứ?',
+        [
+          {
+            text: 'Không',
+            onPress: () => {},
+            style: 'cancel',
+          },
+          {
+            text: 'Có',
+            onPress: () => {
+              this.addTran();
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
-    const { post, rate } = this.state;
+    const {post, rate} = this.state;
     if (Object.keys(post).length !== 0 && rate !== undefined) {
       return (
         <ScrollView
-          style={{ backgroundColor: '#fff' }}
+          style={{backgroundColor: '#fff'}}
           showsVerticalScrollIndicator={true}>
           {/* hoat anh */}
           <SliderBox images={this.state.images} />
           {/* view 2 hang dau */}
-          <View
-            style={styles.view_2rowdau}>
+          <View style={styles.view_2rowdau}>
             {/* tieu de post, loai post, va gia */}
-            <Text
-              style={styles.txt_posttype}>
-              {post.post_type_id.name}
-            </Text>
-            <Text
-              style={styles.txt_title}>
-              {post.title}
-            </Text>
-            <Text
-              style={styles.txt_price}>
+            <Text style={styles.txt_posttype}>{post.post_type_id.name}</Text>
+            <Text style={styles.txt_title}>{post.title}</Text>
+            <Text style={styles.txt_price}>
               {`Giá: ${post.price} VND / tháng`}
             </Text>
             {/* view dien tich va trang thai da dat  */}
-            <View
-              style={styles.view_square_status}>
-              <View
-                style={styles.view_square}>
+            <View style={styles.view_square_status}>
+              <View style={styles.view_square}>
                 <Image
                   source={require('../images/cube.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
-                <Text
-                  style={styles.txt_square}>
-                  {`${post.square} m2`}
-                </Text>
+                <Text style={styles.txt_square}>{`${post.square} m2`}</Text>
               </View>
-              <View
-                style={styles.view_status}>
+              <View style={styles.view_status}>
                 <Image
                   source={require('../images/question.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
-                <Text
-                  style={styles.txt_square}>
+                <Text style={styles.txt_square}>
                   {`${post.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
                 </Text>
               </View>
@@ -123,67 +235,44 @@ export default class HomeDetail extends Component {
           </View>
 
           {/* view mo ta chi tiet */}
-          <View
-            style={styles.view_contact}>
-            <Text style={styles.txt_detail}>
-              Mô tả chi tiết
-            </Text>
+          <View style={styles.view_contact}>
+            <Text style={styles.txt_detail}>Mô tả chi tiết</Text>
             <Text>{post.description}</Text>
           </View>
           {/* view dia chi chi tiet gom 3 phan */}
-          <View
-            style={styles.view_addressdetail}>
-            <Text style={styles.txt_detail}>
-              Địa chỉ chi tiết
-            </Text>
-            <View
-              style={styles.view_diachichitiet}>
-              <View
-                style={styles.view_province}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+          <View style={styles.view_addressdetail}>
+            <Text style={styles.txt_detail}>Địa chỉ chi tiết</Text>
+            <View style={styles.view_diachichitiet}>
+              <View style={styles.view_province}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Số nhà, Đường
                 </Text>
-                <Text
-                  style={styles.txt_address_detail}>
+                <Text style={styles.txt_address_detail}>
                   {post.address_detail.split(',')[0]}
                 </Text>
               </View>
-              <View
-                style={styles.view_province}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+              <View style={styles.view_province}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Quận / Huyện
                 </Text>
-                <Text
-                  style={styles.txt_province}>
-                  {post.district_id.name}
-                </Text>
+                <Text style={styles.txt_province}>{post.district_id.name}</Text>
               </View>
-              <View
-                style={styles.view_province}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+              <View style={styles.view_province}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Tỉnh / Thành phố
                 </Text>
-                <Text
-                  style={styles.txt_province}>
-                  {post.province_id.name}
-                </Text>
+                <Text style={styles.txt_province}>{post.province_id.name}</Text>
               </View>
             </View>
           </View>
           {/* view so dien thoai lien he */}
-          <View
-            style={styles.view_contact}>
-            <Text style={styles.txt_detail}>
-              Số điện thoại liên hệ
-            </Text>
+          <View style={styles.view_contact}>
+            <Text style={styles.txt_detail}>Số điện thoại liên hệ</Text>
             <Text>{post.host_id.mobile}</Text>
           </View>
           {/* view ngay dang */}
-          <View
-            style={styles.view_datepost}>
-            <Text style={styles.txt_detail}>
-              Ngày đăng
-            </Text>
+          <View style={styles.view_datepost}>
+            <Text style={styles.txt_detail}>Ngày đăng</Text>
             <Text>
               {post.updated_at === null
                 ? formatDate(new Date(post.created_at))
@@ -192,28 +281,25 @@ export default class HomeDetail extends Component {
           </View>
 
           {/* nguoi dang*/}
-          <TouchableHighlight
-            style={styles.touch_hostid}>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1, flexDirection: 'column' }}>
-                <Text
-                  style={styles.txt_nguoidang}>
-                  Người đăng
-                </Text>
+          <TouchableHighlight style={styles.touch_hostid}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text style={styles.txt_nguoidang}>Người đăng</Text>
                 <Text>{post.host_id.name}</Text>
               </View>
             </View>
           </TouchableHighlight>
 
           {/* dat ngauy va goi dien */}
-          <View
-            style={styles.view_bookandcall}>
-
+          <View style={styles.view_bookandcall}>
             <TouchableHighlight
               disabled={this.props.route.params.statusCode === 2 ? true : false}
               underlayColor="#ffceb588"
-              style={styles.touch_datngay}>
-              <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
+              style={styles.touch_datngay}
+              onPress={() => {
+                this.bookPost();
+              }}>
+              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -228,29 +314,28 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
+              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
           {/* danh gia cua nguoi dung */}
-          <View
-            style={styles.view_danhgiauser}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+          <View style={{paddingHorizontal: 10}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               {`Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
             </Text>
             {rate.map(item => {
               return (
                 <View>
-                  <View style={{ paddingTop: 10, flex: 1, flexDirection: 'row' }}>
-                    <Text style={{ marginRight: 10, fontSize: 16 }}>
+                  <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
+                    <Text style={{marginRight: 10, fontSize: 16}}>
                       {`${item.account_id.name} đã đánh giá:`}
                     </Text>
-                    <Text style={{ fontSize: 16 }}>{item.star}</Text>
+                    <Text style={{fontSize: 16}}>{item.star}</Text>
                     <Image
                       source={require('../images/star.png')}
-                      style={{ width: 10, height: 10 }}
+                      style={{width: 10, height: 10}}
                     />
                   </View>
-                  <Text style={{ fontSize: 12, color: 'gray', marginBottom: 7 }}>
+                  <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
                     {formatDate(new Date(item.created_at))}
                   </Text>
                   <Text
@@ -266,11 +351,8 @@ export default class HomeDetail extends Component {
             })}
           </View>
           {/* danh gia cua ban */}
-          <View
-            style={styles.view_contact}>
-            <Text style={styles.txt_detail}>
-              Đánh giá của bạn
-            </Text>
+          <View style={styles.view_contact}>
+            <Text style={styles.txt_detail}>Đánh giá của bạn</Text>
             <StarRating
               disabled={false}
               maxStars={5}
@@ -289,9 +371,8 @@ export default class HomeDetail extends Component {
               placeholder="Nhập đánh giá của bạn"
               placeholderTextColor="#333"
             />
-            <TouchableHighlight
-              style={styles.touch_rate}>
-              <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
+            <TouchableHighlight style={styles.touch_rate}>
+              <Text style={{textAlign: 'center'}}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>
@@ -301,137 +382,98 @@ export default class HomeDetail extends Component {
     if (Object.keys(post).length !== 0 && rate === undefined) {
       return (
         <ScrollView
-          style={{ backgroundColor: '#fff' }}
+          style={{backgroundColor: '#fff'}}
           showsVerticalScrollIndicator={true}>
           <SliderBox images={this.state.images} />
-          <View
-            style={styles.view_2rowdau}>
-            <Text
-              style={styles.txt_posttype}>
-              {post.post_type_id.name}
-            </Text>
-            <Text
-              style={styles.txt_title}>
-              {post.title}
-            </Text>
-            <Text
-              style={styles.txt_price}>
+          <View style={styles.view_2rowdau}>
+            <Text style={styles.txt_posttype}>{post.post_type_id.name}</Text>
+            <Text style={styles.txt_title}>{post.title}</Text>
+            <Text style={styles.txt_price}>
               {`Giá: ${post.price} VND / tháng`}
             </Text>
-            <View
-              style={styles.view_square_status}>
-              <View
-                style={styles.view_img}>
+            <View style={styles.view_square_status}>
+              <View style={styles.view_img}>
                 <Image
                   source={require('../images/cube.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
-                <Text
-                  style={styles.txt_square2}>
-                  {`${post.square} m2`}
-                </Text>
+                <Text style={styles.txt_square2}>{`${post.square} m2`}</Text>
               </View>
-              <View
-                style={styles.view_img}>
+              <View style={styles.view_img}>
                 <Image
                   source={require('../images/question.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
-                <Text
-                  style={styles.txt_square2}>
+                <Text style={styles.txt_square2}>
                   {`${post.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
                 </Text>
               </View>
             </View>
           </View>
-          <View
-            style={styles.view_contact}>
-            <Text style={styles.txt_detail}>
-              Mô tả chi tiết
-            </Text>
+          <View style={styles.view_contact}>
+            <Text style={styles.txt_detail}>Mô tả chi tiết</Text>
             <Text>{post.description}</Text>
           </View>
-          <View
-            style={styles.view_diachichitiet2}>
-            <Text style={styles.txt_detail}>
-              Địa chỉ chi tiết
-            </Text>
+          <View style={styles.view_diachichitiet2}>
+            <Text style={styles.txt_detail}>Địa chỉ chi tiết</Text>
             <View
               style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <View
-                style={styles.view_diachi}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+              <View style={styles.view_diachi}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Số nhà, Đường
                 </Text>
-                <Text
-                  style={styles.txt_province}>
+                <Text style={styles.txt_province}>
                   {post.address_detail.split(',')[0]}
                 </Text>
               </View>
-              <View
-                style={styles.view_diachi}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+              <View style={styles.view_diachi}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Quận / Huyện
                 </Text>
-                <Text
-                  style={styles.txt_province}>
-                  {post.district_id.name}
-                </Text>
+                <Text style={styles.txt_province}>{post.district_id.name}</Text>
               </View>
-              <View
-                style={styles.view_diachi}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+              <View style={styles.view_diachi}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Tỉnh / Thành phố
                 </Text>
-                <Text
-                  style={styles.txt_province}>
-                  {post.province_id.name}
-                </Text>
+                <Text style={styles.txt_province}>{post.province_id.name}</Text>
               </View>
             </View>
           </View>
-          <View
-            style={styles.view_contact}>
-            <Text style={styles.txt_detail}>
-              Số điện thoại liên hệ
-            </Text>
+          <View style={styles.view_contact}>
+            <Text style={styles.txt_detail}>Số điện thoại liên hệ</Text>
 
             <Text>{post.host_id.mobile}</Text>
           </View>
-          <View
-            style={styles.view_ngaydang}>
-            <Text style={styles.txt_detail}>
-              Ngày đăng
-            </Text>
+          <View style={styles.view_ngaydang}>
+            <Text style={styles.txt_detail}>Ngày đăng</Text>
             <Text>
               {post.updated_at === null
                 ? formatDate(new Date(post.created_at))
                 : formatDate(new Date(post.updated_at))}
             </Text>
           </View>
-          <TouchableHighlight
-            style={styles.touch_nguoidang}>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1, flexDirection: 'column' }}>
-                <Text
-                  style={styles.txt_nguoidang}>
-                  Người đăng
-                </Text>
+          <TouchableHighlight style={styles.touch_nguoidang}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text style={styles.txt_nguoidang}>Người đăng</Text>
                 <Text>{post.host_id.name}</Text>
               </View>
             </View>
           </TouchableHighlight>
-          <View
-            style={styles.view_bookandcall}>
+          <View style={styles.view_bookandcall}>
             <TouchableHighlight
               disabled={this.props.route.params.statusCode === 2 ? true : false}
               underlayColor="#ffceb588"
-              style={styles.touch_datngay}>
-              <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
+              style={styles.touch_datngay}
+              onPress={() => {
+                this.bookPost();
+              }}>
+              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -439,22 +481,18 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
+              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
 
-          <View
-            style={styles.view_contact}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+          <View style={styles.view_contact}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               Chưa có đánh giá nào
             </Text>
           </View>
 
-          <View
-            style={styles.view_contact}>
-            <Text style={styles.txt_detail}>
-              Đánh giá của bạn
-            </Text>
+          <View style={styles.view_contact}>
+            <Text style={styles.txt_detail}>Đánh giá của bạn</Text>
             <StarRating
               disabled={false}
               maxStars={5}
@@ -473,9 +511,8 @@ export default class HomeDetail extends Component {
               placeholder="Nhập đánh giá của bạn"
               placeholderTextColor="#333"
             />
-            <TouchableHighlight
-              style={styles.touch_rate}>
-              <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
+            <TouchableHighlight style={styles.touch_rate}>
+              <Text style={{textAlign: 'center'}}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>
@@ -484,7 +521,6 @@ export default class HomeDetail extends Component {
     return <View />;
   }
 }
-
 
 const styles = StyleSheet.create({
   view_img: {
@@ -579,6 +615,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   view_contact: {
+    marginTop: 10,
     marginBottom: 10,
     padding: 10,
     borderRadius: 20,
@@ -611,7 +648,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingLeft: 0,
   },
-  txt_detail: { fontSize: 18, marginBottom: 10, fontWeight: 'bold' },
+  txt_detail: {fontSize: 18, marginBottom: 10, fontWeight: 'bold'},
   txt_posttype: {
     color: 'gray',
     textTransform: 'uppercase',
@@ -650,6 +687,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#e88a59',
   },
-
-})
-
+});
