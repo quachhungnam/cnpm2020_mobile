@@ -18,6 +18,7 @@ export default class PostYouBookFlatListItem extends Component {
           onPress={() => {
             this.props.navigation.navigate('PostYouBookDetails', {
               id: item.post_id._id,
+              tranId: item._id,
             });
           }}>
           <View

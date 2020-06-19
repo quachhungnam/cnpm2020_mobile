@@ -392,10 +392,15 @@ async function getTransactions() {
   }
 }
 
-async function delTransaction(tranId) {
+async function delTransaction(user_token, tranId) {
   try {
     let response = await fetch(`${api_transactions}/${tranId}`, {
       method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
     });
     let responseJson = await response.json();
     return responseJson;
