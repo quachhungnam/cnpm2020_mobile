@@ -15,14 +15,13 @@ export default function ListYourPost(props) {
 
   }, [])
   return (
-    <View
-      style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-      <ScrollView>
+    <>
+      <View
+        style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
         <PostYouBookFlatList
           title="Danh sách tin đăng của bạn"
         />
-      </ScrollView>
-
+      </View>
       <TouchableHighlight
         underlayColor="#ffceb588"
         style={styles.touch_view}
@@ -31,7 +30,7 @@ export default function ListYourPost(props) {
         }}>
         <Text style={{ textAlign: 'center' }}>Thêm tin đăng</Text>
       </TouchableHighlight>
-    </View>
+    </>
   );
 }
 
@@ -44,6 +43,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: '#ffceb5',
     borderRadius: 8,
-    marginBottom: 30,
+    marginBottom: 10,
   }
 })

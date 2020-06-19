@@ -87,8 +87,6 @@ export default class PostYouBookFlatList extends Component {
               />
             }
           />
-          {/* <AddModal ref={'addModal'} parents={this}></AddModal>
-            <EditModal ref={'editModal'} parents={this}></EditModal> */}
         </View>
       </>
     );

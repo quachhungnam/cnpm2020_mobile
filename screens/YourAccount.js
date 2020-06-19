@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   Button,
   Image,
+  RefreshControl,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage'
 import { get_account_infor } from '../networking/Server'
@@ -15,10 +16,24 @@ import { AuthContext } from '../components/MyTabs';
 
 // import { ScrollView } from 'react-native-gesture-handler';
 
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
+
 export default function YourAccount(props) {
   const { signOut, token } = React.useContext(AuthContext)
   const [user_infor, set_user_infor] = useState({})
   const [user_token, set_user_token] = useState(null)
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    check_login()
+    wait(2000).then(() => setRefreshing(false));
+  }, [refreshing]);
+
 
   useEffect(() => {
     check_login()
@@ -42,6 +57,10 @@ export default function YourAccount(props) {
 
   return (
     <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing}
+          onRefresh={onRefresh} />
+      }
       style={{
         flex: 1,
         flexDirection: 'column',
@@ -175,23 +194,6 @@ export default function YourAccount(props) {
             </Text>
         </View>
       </TouchableHighlight>
-      <Button
-        onPress={() => {
-          check_login()
-        }}
-        title="Tải lại"
-        color="#f194ff"
-        accessibilityLabel="Learn more about this purple button"
-      ></Button>
-      <Button
-        onPress={() => {
-          test2()
-          // alert('dang nhap')
-        }}
-        title="Test 2"
-        color="#f194ff"
-        accessibilityLabel="Learn more about this purple button"
-      ></Button>
     </ScrollView >
   );
 
