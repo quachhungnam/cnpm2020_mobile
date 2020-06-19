@@ -19,7 +19,7 @@ import EditPasswordAccountScreen from '../screens/EditPasswordAccountScreen';
 import FeedbackScreen from '../screens/Feedback';
 import AddPostScreen2 from '../screens/AddPostScreen2';
 import EditPostScreen2 from '../screens/EditPostScreen2';
-
+import SearchScreen from '../screens/SearchScreen'
 import { createStackNavigator } from '@react-navigation/stack';
 import { get_account_infor, login } from '../networking/Server'
 
@@ -50,6 +50,14 @@ function HomeStackScreen({ navigation }) {
         component={HomeScreen}
         options={{
           title: 'Overview',
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          title: 'Chi tiết phòng',
           headerShown: false,
         }}
       />

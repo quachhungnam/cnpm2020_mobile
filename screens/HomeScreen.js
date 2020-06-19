@@ -8,7 +8,7 @@ export default function HomeScreen(props) {
   return (
     <ScrollView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
       <Carousel data={dummyData} />
-      
+
       <HomeFlatList
         navigation={props.navigation}
         title="Phòng trọ HOT"
