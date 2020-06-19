@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 export default class PostYouBookFlatListItem extends Component {
   constructor(props) {
@@ -10,14 +10,14 @@ export default class PostYouBookFlatListItem extends Component {
   }
 
   render() {
-    const { item } = this.props;
+    const {item} = this.props;
     return (
       <>
         <TouchableOpacity
-          style={{ backgroundColor: 'white' }}
+          style={{backgroundColor: 'white'}}
           onPress={() => {
             this.props.navigation.navigate('PostYouBookDetails', {
-              id: item._id,
+              id: item.post_id._id,
             });
           }}>
           <View
@@ -57,7 +57,7 @@ export default class PostYouBookFlatListItem extends Component {
                   textTransform: 'uppercase',
                   fontSize: 12,
                 }}>
-                {item.post_type_id.name}
+                {item.post_id.post_type_id.name}
               </Text>
               <Text
                 style={{
@@ -67,7 +67,7 @@ export default class PostYouBookFlatListItem extends Component {
                   color: 'black',
                   fontSize: 15,
                 }}>
-                {item.title}
+                {item.post_id.title}
               </Text>
               <Text
                 style={{
@@ -75,7 +75,7 @@ export default class PostYouBookFlatListItem extends Component {
                   color: '#e88a59',
                   fontSize: 13,
                 }}>
-                {`Giá: ${item.price} VND / tháng`}
+                {`Giá: ${item.post_id.price} VND / tháng`}
               </Text>
               <Text
                 style={{
@@ -84,9 +84,9 @@ export default class PostYouBookFlatListItem extends Component {
                   color: 'black',
                   fontSize: 13,
                 }}>
-                {`${item.district_id.name_with_type}, ${
-                  item.province_id.name_with_type
-                  }`}
+                {`${item.post_id.district_id.name_with_type}, ${
+                  item.post_id.province_id.name_with_type
+                }`}
               </Text>
             </View>
           </View>

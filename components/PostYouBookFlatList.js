@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
+import React, {Component} from 'react';
+import {FlatList, View, Text, StyleSheet, RefreshControl} from 'react-native';
 import PostYouBookFlatListItem from './PostYouBookFlatListItem';
-import { getPostsFromServer } from '../networking/Server';
+import {getTransactions} from '../networking/Server';
 // import Snackbar from 'react-native-snackbar';
 // import Button from 'react-native-button';
 // import AddModal from './AddModal';
@@ -15,7 +15,7 @@ export default class PostYouBookFlatList extends Component {
     this.state = {
       deleted1: true,
       refreshing: false,
-      postsFromServer: [],
+      transactions: [],
     };
     //this.add = this.add.bind(this);
   }
@@ -25,26 +25,27 @@ export default class PostYouBookFlatList extends Component {
   }
 
   refreshDataFromServer = () => {
-    this.setState({ refreshing: true });
-    getPostsFromServer()
-      .then(posts => {
+    this.setState({refreshing: true});
+    getTransactions()
+      .then(trans => {
         this.setState({
-          postsFromServer: posts.filter(item => item.status_id.code === 2),
+          transactions: trans.filter(
+            item => item.client_id._id === this.props.account._id,
+          ),
         });
-        this.setState({ refreshing: false });
+        this.setState({refreshing: false});
       })
       .catch(error => {
         this.setState({
-          postsFromServer: [],
+          transactions: [],
         });
-        this.setState({ refreshing: false });
+        this.setState({refreshing: false});
       });
   };
 
   onRefresh = () => {
     this.refreshDataFromServer();
   };
-
 
   render() {
     return (
@@ -65,11 +66,11 @@ export default class PostYouBookFlatList extends Component {
           {/* <Text style={{textAlign: 'center', marginBottom: 10, marginTop: 10, fontSize: 18, letterSpacing: 2}}>{this.props.title}</Text> */}
 
           <FlatList
-            style={{ marginTop: 0, marginBottom: 20 }}
+            style={{marginTop: 0, marginBottom: 20}}
             ref={'flatList'}
             // data={[1, 2, 3, 4, 5]}
-            data={this.state.postsFromServer}
-            renderItem={({ item, index }) => {
+            data={this.state.transactions}
+            renderItem={({item, index}) => {
               return (
                 <PostYouBookFlatListItem
                   navigation={this.props.navigation}
