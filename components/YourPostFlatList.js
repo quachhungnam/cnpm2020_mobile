@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
-
 import YourPostFlatListItem from './YourPostFlatListItem';
-
 import { getPostsFromServer } from '../networking/Server';
-// import Snackbar from 'react-native-snackbar';
-// import Button from 'react-native-button';
-// import AddModal from './AddModal';
-// import EditModal from './EditModal';
-
-const styles = StyleSheet.create({});
 
 export default class YourPostFlatList extends Component {
   constructor(props) {
@@ -47,34 +39,16 @@ export default class YourPostFlatList extends Component {
     this.refreshDataFromServer();
   };
 
-  // refreshFlatList = () => {
-  //     this.setState((prev) => {
-  //         return {
-  //             deleted1: !prev.deleted1
-  //         }
-  //     })
-  //     //this.refs.flatList.scrollToEnd();
-  // }
-  // add() {
-  //     this.refs.addModal.showAddModal();
-  // }
   render() {
     return (
       <>
         <View style={{}}>
           <View style={{}}>
             <Text
-              style={{
-                fontSize: 18,
-                textAlign: 'center',
-                paddingVertical: 10,
-                letterSpacing: 1,
-                backgroundColor: '#eee',
-              }}>
+              style={styles.view_txt}>
               {this.props.title}
             </Text>
           </View>
-          {/* <Text style={{textAlign: 'center', marginBottom: 10, marginTop: 10, fontSize: 18, letterSpacing: 2}}>{this.props.title}</Text> */}
 
           <FlatList
             style={{ marginTop: 0, marginBottom: 20 }}
@@ -99,10 +73,20 @@ export default class YourPostFlatList extends Component {
               />
             }
           />
-          {/* <AddModal ref={'addModal'} parents={this}></AddModal>
-            <EditModal ref={'editModal'} parents={this}></EditModal> */}
         </View>
       </>
     );
   }
 }
+
+
+
+const styles = StyleSheet.create({
+  view_txt: {
+    fontSize: 18,
+    textAlign: 'center',
+    paddingVertical: 10,
+    letterSpacing: 1,
+    backgroundColor: '#eee',
+  }
+});

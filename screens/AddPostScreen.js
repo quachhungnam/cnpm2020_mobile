@@ -1,309 +1,289 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
-  StyleSheet,
-  TextInput,
+  StyleSheet, TextInput,
   Text,
   View,
   TouchableHighlight,
   Button,
   Picker,
   ScrollView,
-} from 'react-native';
+} from 'react-native'
 import {
   getPostsFromServer,
-  get_all_province,
+  get_all_province2,
   get_district_with_province,
-  get_all_posttypes
+  get_all_posttypes2
 } from '../networking/Server'
-import AddPostScreen2 from './AddPostScreen2';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
 
-var postTypes = [
-  { label: 'Phòng cho thuê', value: 0 },
-  { label: 'Nhà nguyên căn', value: 1 },
-  { label: 'Căn hộ', value: 2 },
-];
+import { AuthContext } from '../components/MyTabs'
 
-export default class AddPostScreen extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value3Index: 0,
-      provinces: [],
-      seleted_province: -1,
-      districts: [],
-      selected_district: -1,
-      post_types: [],
-      selected_posttype: 1,
-      title: '',
-      address_detail: '',
-      description: '',
-      price: 1,
-      square: 4
-
-    };
+export default function AddPostScreen(props) {
+  const { token } = React.useContext(AuthContext)
+  let init_post = {
+    title: "day la tieu de bai post",
+    province_code: null,
+    district_code: null,
+    post_type_id: null,
+    address_detail: '',
+    description: '',
+    price: 1,
+    square: 1
   }
-  componentDidMount() {
-    this.get_posttypes()
-    this.get_province()
+  const [post_infor, set_post_infor] = useState(init_post)
 
-  }
-  get_province = () => {
-    // this.setState({ refreshing: true })
-    get_all_province()
-      .then((all_province) => {
-        this.setState({ provinces: all_province })
-        // this.setState({ seleted_province: all_province[0].code })
-        // this.setState({ refreshing: false });
-      }).catch(err => {
-        console.log(err)
-        this.setState({ provinces: [] })
-      })
-    // this.setState({ refreshing: false })
+  const [posttypes, set_posttypes] = useState([])
+  const [select_posttype, set_select_posttype] = useState(null)
+
+  const [provinces, set_provinces] = useState([{ name: "Tỉnh/ Thành phố", code: -1 }])
+  const [select_provinces, set_select_provinces] = useState(-1)
+
+  const [districts, set_districts] = useState([{ name: "Huyện/ Quận", code: -1 }])
+  const [select_districts, set_select_districts] = useState(-1)
+
+  useEffect(() => {
+    get_posttypes()
+    get_provinces()
+  }, [])
+
+  const get_posttypes = async () => {
+    try {
+      const res = await get_all_posttypes2()
+      if (res.error) {
+        return
+      } else {
+        set_posttypes(res.post_type)
+        set_post_infor((pre) => ({ ...pre, post_type_id: res.post_type[0]._id }))
+      }
+    } catch (ex) { }
   }
 
+  const get_provinces = async () => {
+    try {
+      const res = await get_all_province2()
+      if (res.error) {
+        return
+      } else {
+        let new_arr = res.data.provinces
+        new_arr.unshift({ "name": "Tỉnh/ Thành phố", "code": -1 })
+        set_provinces(new_arr)
 
-  get_posttypes = () => {
-    get_all_posttypes()
-      .then((all_posttypes) => {
-        this.setState({ post_types: all_posttypes })
-        this.setState({ selected_posttype: all_posttypes[0].code })
-      }).catch(err => {
-        this.setState({ post_types: [] })
-      })
+      }
+    } catch (ex) { }
   }
 
-  ///CHANGE SELECT DROP
-  change_province = (new_province_code) => {
-    if (new_province_code !== -1) {
-      this.setState({ seleted_province: new_province_code })
-      // alert(new_province_code)
-      //get danh sach quan huyen
-      get_district_with_province(new_province_code)
-        .then((all_district) => {
-          this.setState({ districts: all_district })
-          this.setState({ selected_district: all_district[0].code })
-        }).catch(err => {
-          console.log(err)
-          this.setState({ districts: [] })
-        })
-    } else {
-      this.setState({ selected_district: -1 })
-      this.setState({ districts: [] })
-    }
+  const change_province = async (item) => {
+    try {
+      set_select_provinces(item)
+      set_post_infor((pre) => ({ ...pre, province_code: item }))
+      if (item == -1) {
+        set_districts([{ name: "Huyện/ Quận", code: -1 }])
+        set_post_infor((pre) => ({ ...pre, district_code: item }))
+        set_select_districts(-1)
+        return
+      } else {
+        const all_district = await get_district_with_province(item)
+        let arr_district = all_district
+        all_district.unshift({ name: "Huyện/ Quận", code: -1 })
+        set_districts(arr_district)
+      }
 
-
-  }
-  change_district = (district_code) => {
-    this.setState({ selected_district: district_code })
-    // this.get_district()
-  }
-  change_posttypes = (posttype_id) => {
-    this.setState({ selected_posttype: posttype_id })
-    // this.get_district()
+    } catch (ex) { }
   }
 
+  const change_district = async (item) => {
+    set_select_districts(item)
+    set_post_infor((pre) => ({ ...pre, district_code: item }))
+  }
 
+  const change_posttype = async (item) => {
+    set_select_posttype(item)
+    set_post_infor((pre) => ({ ...pre, post_type_id: item }))
+  }
 
-  render() {
-    return (
-      <ScrollView
-        style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-        <Text
-          style={styles.txt_mota}>
-          Loại tin
+  const show = () => {
+    alert(post_infor.province_code)
+    alert(post_infor.district_code)
+    alert(post_infor.post_type_id)
+  }
+
+  return (
+    <ScrollView
+      style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+      <Text
+        style={styles.txt_mota}>
+        Loại tin
         </Text>
 
-        <View
-          style={styles.view_posttype}>
-          <Picker
-            style={styles.picker_posttype}
-            mode="dropdown"
-            selectedValue={this.state.selected_posttype}
-            onValueChange={(itemValue, itemIndex) => { this.change_posttypes(itemValue) }}
-          >
-            {Object.keys(this.state.post_types).map(key => {
-              return (
-                <Picker.Item
-                  label={this.state.post_types[key].name}
-                  value={this.state.post_types[key]._id}
-                  key={key}
-                />
-              )
-            })}
-          </Picker>
-        </View>
-
-        <Text
-          style={styles.txt_mota}>
-          Tiêu đề
-        </Text>
-        <TextInput
-          style={styles.txt_input}
-          placeholder="Nhập tiêu đề tin đăng"
-          multiline={true}
-          autoCorrect={false}
-          onChangeText={(text) => {
-            this.setState({ title: text })
-          }}
-        />
-
-        <Text
-          style={styles.txt_mota}>
-          Giá tiền / tháng
-        </Text>
-        <TextInput
-          style={styles.txt_input}
-          placeholder="Nhập giá tiền cho thuê"
-          returnKeyType="next"
-          keyboardType="numeric"
-          autoCorrect={false}
-          onSubmitEditing={() => this.refs.txtSquare.focus()}
-          onChangeText={(text) => {
-            this.setState({ price: text })
-          }}
-        />
-
-        <Text
-          style={styles.txt_mota}>
-          Diện tích
-        </Text>
-        <TextInput
-          style={styles.txt_input}
-          placeholder="Nhập diện tích (m2)"
-          returnKeyType="next"
-          keyboardType="numeric"
-          autoCorrect={false}
-          ref={'txtSquare'}
-          onChangeText={(text) => {
-            this.setState({ square: text })
-          }}
-          onSubmitEditing={() => this.refs.txtDescription.focus()}
-        />
-
-        <Text
-          style={styles.txt_mota}>
-          Mô tả
-        </Text>
-        <TextInput
-          style={styles.txt_input}
-          placeholder="Nhập mô tả tin đăng"
-          multiline={true}
-          autoCorrect={false}
-          ref={'txtDescription'}
-          onChangeText={(text) => {
-            this.setState({ description: text })
-          }}
-        />
-
-        <Text
-          style={styles.txt_address}>
-          Địa chỉ
-        </Text>
+      <View
+        style={styles.view_posttype}>
         <Picker
-          style={styles.picker_province}
+          style={styles.picker_posttype}
           mode="dropdown"
-          selectedValue={this.state.seleted_province}
-          onValueChange={(itemValue, itemIndex) => { this.change_province(itemValue) }}
-
+          selectedValue={select_posttype}
+          onValueChange={(itemValue, itemIndex) => { change_posttype(itemValue) }}
         >
-          <Picker.Item
-            label="Tỉnh/ thành phố"
-            value={this.seleted_province}
-            key={this.seleted_province}
-          />
-          {Object.keys(this.state.provinces).map(key => {
+          {Object.keys(posttypes).map(key => {
             return (
               <Picker.Item
-                label={this.state.provinces[key].name}
-                value={this.state.provinces[key].code}
-                key={this.state.provinces[key].code}
+                label={posttypes[key].name}
+                value={posttypes[key]._id}
+                key={key}
               />
             )
           })}
         </Picker>
+      </View>
 
-        <Picker
-          style={styles.picker_province}
-          mode="dropdown"
-          selectedValue={this.state.selected_district}
-          onValueChange={(itemValue, itemIndex) => { this.change_district(itemValue) }}
-        >
-          <Picker.Item
-            label="Quận/Huyện"
-            value={this.state.selected_district}
-            key={this.state.selected_district}
-          />
-          {Object.keys(this.state.districts).map(key => {
-            return (
-              <Picker.Item
-                label={this.state.districts[key].name}
-                value={this.state.districts[key].code}
-                key={this.state.districts[key].code}
-              />
-            )
-          })}
-        </Picker>
-
-        <Text
-          style={styles.txt_address}>
-          Địa chỉ chi tiết (thôn, xã / số nhà, đường, phường)
+      <Text
+        style={styles.txt_mota}>
+        Tiêu đề
         </Text>
-        <TextInput
-          style={styles.txt_input}
-          placeholder="Nhập địa chỉ chi tiết"
-          multiline={true}
-          autoCorrect={false}
-          onChangeText={(text) => {
-            this.setState({ address_detail: text })
-          }}
-        />
+      <TextInput
+        style={styles.txt_input}
+        placeholder="Nhập tiêu đề tin đăng"
+        multiline={true}
+        autoCorrect={false}
+        onChangeText={(text) => {
+          set_post_infor(preState => ({ ...preState, title: text }))
+        }}
+      />
 
-        <Text
-          style={styles.txt_mota}>
-          Số điện thoại
+      <Text
+        style={styles.txt_mota}>
+        Giá tiền / tháng
         </Text>
-        <TextInput
-          style={styles.txt_input}
-          placeholder="Nhập số điện thoại liên hệ"
-          returnKeyType="go"
-          keyboardType="numeric"
-          autoCorrect={false}
-          onChangeText={(text) => {
-            this.setState({ mobile: text })
-          }}
-        />
+      <TextInput
+        style={styles.txt_input}
+        placeholder="Nhập giá tiền cho thuê"
+        returnKeyType="next"
+        keyboardType="numeric"
+        autoCorrect={false}
+        onChangeText={(text) => {
+          set_post_infor(preState => ({ ...preState, price: text }))
+        }}
+      />
 
-        <TouchableHighlight
-          underlayColor={'#ffceb56e'}
-          style={styles.touch_next}
-          onPress={() => {
-            const post = {
-              title: "day la tieu de bai post",
-              province_id: this.state.seleted_province,
-              district_id: this.state.selected_district,
-              post_type_id: this.state.selected_posttype,
-              address_detail: this.state.address_detail,
-              description: this.state.description,
-              price: this.state.price,
-              square: this.state.square
-            }
- 
-            this.props.navigation.navigate('AddPostScreen2', {
-              post: post
-            });
-          }}>
-          <Text style={{ textAlign: 'center', fontSize: 18 }}>Tiếp theo</Text>
-        </TouchableHighlight>
-      </ScrollView>
-    );
-  }
+      <Text
+        style={styles.txt_mota}>
+        Diện tích
+        </Text>
+      <TextInput
+        style={styles.txt_input}
+        placeholder="Nhập diện tích (m2)"
+        returnKeyType="next"
+        keyboardType="numeric"
+        autoCorrect={false}
+        onChangeText={(text) => {
+          set_post_infor(preState => ({ ...preState, square: text }))
+        }}
+      />
+
+      <Text
+        style={styles.txt_mota}>
+        Mô tả
+        </Text>
+      <TextInput
+        style={styles.txt_input}
+        placeholder="Nhập mô tả tin đăng"
+        multiline={true}
+        autoCorrect={false}
+        onChangeText={(text) => {
+          set_post_infor(preState => ({ ...preState, description: text }))
+        }}
+      />
+
+      <Text
+        style={styles.txt_address}>
+        Địa chỉ
+        </Text>
+      <Picker
+        style={styles.picker_province}
+        mode="dropdown"
+        selectedValue={select_provinces}
+        onValueChange={(itemValue, itemIndex) => { change_province(itemValue) }}
+      >
+
+        {Object.keys(provinces).map(key => {
+          return (
+            <Picker.Item
+              label={provinces[key].name}
+              value={provinces[key].code}
+              key={provinces[key].code}
+            />
+          )
+        })}
+      </Picker>
+
+      <Picker
+        style={styles.picker_province}
+        mode="dropdown"
+        selectedValue={select_districts}
+        onValueChange={(itemValue, itemIndex) => { change_district(itemValue) }}
+      >
+        {Object.keys(districts).map(key => {
+          return (
+            <Picker.Item
+              label={districts[key].name}
+              value={districts[key].code}
+              key={districts[key].code}
+            />
+          )
+        })}
+      </Picker>
+
+      <Text
+        style={styles.txt_address}>
+        Địa chỉ chi tiết (thôn, xã / số nhà, đường, phường)
+        </Text>
+      <TextInput
+        style={styles.txt_input}
+        placeholder="Nhập địa chỉ chi tiết"
+        multiline={true}
+        autoCorrect={false}
+        onChangeText={(text) => {
+          set_post_infor(preState => ({ ...preState, address_detail: text }))
+        }}
+      />
+
+      <Text
+        style={styles.txt_mota}>
+        Số điện thoại
+        </Text>
+      <TextInput
+        style={styles.txt_input}
+        placeholder="Nhập số điện thoại liên hệ"
+        returnKeyType="go"
+        keyboardType="numeric"
+        autoCorrect={false}
+        onChangeText={(text) => {
+          set_post_infor(preState => ({ ...preState, mobile: text }))
+        }}
+      />
+
+      <TouchableHighlight
+        underlayColor={'#ffceb56e'}
+        style={styles.touch_next}
+        onPress={() => {
+          props.navigation.navigate('AddPostScreen2', {
+            post: post_infor
+          })
+
+        }}>
+        <Text style={{ textAlign: 'center', fontSize: 18 }}>Tiếp theo</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        underlayColor={'#ffceb56e'}
+        style={styles.touch_next}
+        onPress={() => {
+          show()
+        }}>
+        <Text style={{ textAlign: 'center', fontSize: 18 }}>Test token</Text>
+      </TouchableHighlight>
+    </ScrollView>
+  );
 }
+
 
 
 
@@ -334,11 +314,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: 18,
   },
-  // txt_phone: {
-  //   marginHorizontal: 10,
-  //   marginTop: 10,
-  //   fontSize: 18,
-  // },
   txt_input: {
     fontSize: 16,
     marginRight: 10,

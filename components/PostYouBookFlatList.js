@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
-
 import PostYouBookFlatListItem from './PostYouBookFlatListItem';
-
 import { getPostsFromServer } from '../networking/Server';
 // import Snackbar from 'react-native-snackbar';
 // import Button from 'react-native-button';
@@ -47,17 +45,7 @@ export default class PostYouBookFlatList extends Component {
     this.refreshDataFromServer();
   };
 
-  // refreshFlatList = () => {
-  //     this.setState((prev) => {
-  //         return {
-  //             deleted1: !prev.deleted1
-  //         }
-  //     })
-  //     //this.refs.flatList.scrollToEnd();
-  // }
-  // add() {
-  //     this.refs.addModal.showAddModal();
-  // }
+
   render() {
     return (
       <>

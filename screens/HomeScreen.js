@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
-import { Text, View, Picker, Button, ScrollView } from 'react-native';
-import Carousel from '../components/Carousel';
-import { dummyData } from '../data/DataCarousel';
-import HomeFlatList from '../components/HomeFlatList';
-//import { Dropdown } from 'react-native-material-dropdown';
-export default class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
+import React, { Component, useState, } from 'react';
+import { ScrollView } from 'react-native'
+import Carousel from '../components/Carousel'
+import { dummyData } from '../data/DataCarousel'
+import HomeFlatList from '../components/HomeFlatList'
 
-  render() {
-    return (
-      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-        <Carousel data={dummyData} />
-        <HomeFlatList
-          navigation={this.props.navigation}
-          title="Phòng trọ HOT"
-        />
-      </View>
-    );
-  }
+export default function HomeScreen(props) {
+  return (
+    <ScrollView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+      <Carousel data={dummyData} />
+      
+      <HomeFlatList
+        navigation={props.navigation}
+        title="Phòng trọ HOT"
+      />
+    </ScrollView>
+  )
 }

@@ -1,190 +1,165 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react'
 import {
   StyleSheet,
   Dimensions,
   Alert,
   Text,
   View,
+  TouchableOpacity,
   TouchableHighlight,
   FlatList,
   ScrollView,
   Image,
-} from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
-import AsyncStorage from '@react-native-community/async-storage';
-import { post_post } from '../networking/Server'
-export default class AddPostScreen2 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      images: [],
-      post: ''
-    };
-    this.openImagePicker = this.openImagePicker.bind(this);
-  }
-  componentDidMount() {
-    this.set_id_test()
-  }
-  set_id_test = () => {
-    const { post } = this.props.route.params || {};
-    this.setState({ post: post })
-  }
-  getMyStringValue = async () => {
-    try {
-      var x = await AsyncStorage.getItem('user');
-      alert(x);
-      return x;
-    } catch (e) {
-      console.log(e);
-    }
+} from 'react-native'
+import ImagePicker from 'react-native-image-crop-picker'
+import AsyncStorage from '@react-native-community/async-storage'
+import { post_post, add_post } from '../networking/Server'
+import { AuthContext } from '../components/MyTabs'
 
-    console.log('Done.777');
-  };
-  setStringValue = async () => {
-    try {
-      await AsyncStorage.setItem('user', 'ngu vcl');
-    } catch (e) {
-      // save error
-    }
 
-    console.log('Done.');
-  };
-  openImagePicker() {
-    const newData = this.state.images;
+export default function AddPostScreen2(props) {
+  const { token } = React.useContext(AuthContext)
+  const [images, set_images] = useState([])
+  const [post, set_post] = useState(null)
+
+  useEffect(() => {
+    get_post_infor()
+  }, [])
+
+  const get_post_infor = () => {
+    try {
+      const { post } = props.route.params
+      set_post(post)
+    }
+    catch (ex) { }
+  }
+
+  const openImagePicker = () => {
     ImagePicker.openPicker({
-      //multiple: true,
       mediaType: 'photo',
-    }).then(images1 => {
+    }).then(image => {
       let item = {
-        width: images1.width,
-        height: images1.height,
-        uri: images1.path,
+        width: image.width,
+        height: image.height,
+        uri: image.path,
         id: Date.now(),
-      };
-      newData.push(item);
-      this.setState({ images: newData });
-      console.log(this.state.images);
-    });
-  }
-
-  post_a_post = async () => {
-    const n_post = {
-      title: "post from mobile",
-      province_id: "5edb1304dc02a80f643de182",
-      district_id: "5edb12b7dc02a80f643ddf25",
-      post_type_id: "5ee48b21b48a4136ac219846",
-      address_detail: "Số 150 Lê Lợi, Đà Nẵng",
-      description: "3 lầu, 3 mặt tiền, diện tích rộng lớn, có thể mở quán cà phê hoặc kinh doanh quần áo đều được",
-      price: 20000000,
-      square: 200
-    }
-    // alert(this.state.post.title)
-    // alert('dang tin')
-    post_post(n_post).then(res => {
-      // alert('co nhay vao ko')
-      if (res.success == false) {
-        alert('Dang Nhap that bai')
-        return
       }
-
-      if (res.error) {
-        alert('ko the tao bai dang')
-        return
-      }
-      alert('tao bai dang thanh cong')
-
-
-
-
-      // alert('sau do')
-    }).catch(err => {
-      alert(err)
-
-      console.log(err)
+      set_images((prev) => ([...prev, item]))
     })
   }
 
-
-  render() {
-    var width1 = Dimensions.get('window').width;
-    let a = <View />;
-    if (this.state.images.length != 0) {
-      a = (
-        <Image
-          style={{ width: 100, height: 70 }}
-          source={{ uri: this.state.images[0] }}
-        />
-      );
+  const delete_image = (item) => {
+    const arr_img = [...images]
+    for (var i = 0; i < arr_img.length; i++) {
+      if (arr_img[i].id == item.id) {
+        arr_img.splice(i, 1);
+      }
     }
-    return (
-      <ScrollView style={{ backgroundColor: '#fff' }}>
-        <FlatList
-          data={this.state.images}
-          renderItem={({ item, index }) => {
-            return (
-              <TouchableHighlight
-                onLongPress={() => {
-                  Alert.alert('Alert', 'Are you sure to delete this image?', [
-                    { text: 'no', onPress: () => { }, style: 'cancel' },
-                    {
-                      text: 'yes',
-                      onPress: () => {
-                        const newData = this.state.images;
-                        for (var i = 0; i < newData.length; i++) {
-                          if (newData[i].id == item.id) {
-                            newData.splice(i, 1);
-                          }
-                        }
-                        this.setState({ images: newData });
-                      },
-                      style: 'cancel',
-                    },
-                  ]);
-                }}
-                style={{
-                  marginBottom: 10,
-                  marginTop: 10,
-                  marginLeft: 10,
-                  marginRight: 10,
-                }}>
-                <Image
-                  resizeMode="cover"
-                  style={{
-                    overflow: 'visible',
-                    height: (item.height * 1 * width1) / item.width,
-                    width: 0.95 * width1,
-                  }}
-                  source={{ uri: item.uri }}
-                />
-              </TouchableHighlight>
-            );
-          }}
-        />
-        <TouchableHighlight
-          underlayColor={'#ffceb56e'}
-          disabled={this.state.images.length == 5 ? true : false}
-          style={styles.touch_dangtin}
-          onPress={this.openImagePicker}>
-          <Text style={{ textAlign: 'center' }}>{`Thêm ảnh (Còn lại: ${5 -
-            this.state.images.length} ảnh)`}</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor={'#ffceb56e'}
-          // disabled={this.state.images.length == 0 ? true : false}
-          style={styles.touch_dangtin}
-          onPress={() => {
-            // alert(this.state.post.title)
-            this.post_a_post()
-
-          }}>
-          <Text style={{ textAlign: 'center' }}>Đăng tin</Text>
-        </TouchableHighlight>
-      </ScrollView>
-    );
+    set_images(arr_img)
   }
+
+  const show_image = () => {
+    return (
+      <FlatList
+        data={images}
+        renderItem={({ item, index }) => {
+          return (
+            <TouchableHighlight
+              onLongPress={() => {
+                Alert.alert('Alert', 'Are you sure to delete this image?', [
+                  { text: 'no', onPress: () => { }, style: 'cancel' },
+                  {
+                    text: 'yes',
+                    onPress: () => {
+                      delete_image(item)
+                    },
+                    style: 'cancel',
+                  },
+                ]);
+              }}
+              style={styles.touch_image}>
+              <Image
+                resizeMode="cover"
+                style={{
+                  overflow: 'visible',
+                  height: (item.height * 1 * width1) / item.width,
+                  width: 0.95 * width1,
+                }}
+                source={{ uri: item.uri }}
+              />
+            </TouchableHighlight>
+          );
+        }}
+      />)
+  }
+
+  const post_a_post = async () => {
+    try {
+      // const n_post = {
+      //   title: "post from mobile 19/06",
+      //   province_code: 77,
+      //   district_code: 751,
+      //   post_type_id: "5ee48b21b48a4136ac219846",
+      //   address_detail: "dia chi tu mobile",
+      //   description: "mo ta tu mobile",
+      //   price: 100,
+      //   square: 50
+      // }
+      const rs = await add_post(post, token)
+      if (rs.error) {
+        alert('Đăng bài không thành công!')
+        return
+      }
+      if (rs.message) {
+        alert('Đăng bài thành công')
+        props.navigation.navigate('ListYourPostScreen')
+        return
+      }
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  var width1 = Dimensions.get('window').width;
+
+  return (
+    <ScrollView style={{ backgroundColor: '#fff' }}>
+      {/* show anh */}
+      {show_image()}
+      {/* chon anh */}
+      <TouchableHighlight
+        underlayColor={'#ffceb56e'}
+        disabled={images.length == 5 ? true : false}
+        style={styles.touch_dangtin}
+        onPress={() => { openImagePicker() }}
+      >
+        <Text style={{ textAlign: 'center' }}>
+          {`Thêm ảnh (Còn lại: ${5 - images.length} ảnh)`}
+        </Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        underlayColor={'#ffceb56e'}
+        disabled={images.length == 0 ? true : false}
+        style={styles.touch_dangtin}
+        onPress={() => {
+          post_a_post()
+        }}>
+        <Text style={{ textAlign: 'center' }}>Đăng tin</Text>
+      </TouchableHighlight>
+    </ScrollView>
+  )
 }
 
+
 const styles = StyleSheet.create({
+  touch_image: {
+    marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
   touch_dangtin: {
     marginBottom: 10,
     marginTop: 10,
@@ -196,3 +171,4 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   }
 })
+

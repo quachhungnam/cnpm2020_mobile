@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableHighlight, ScrollView } from 'react-native';
+import React, { Component, useState, useEffect } from 'react';
+import { Text, View, TouchableHighlight, ScrollView, StyleSheet } from 'react-native';
 import PostYouBookFlatList from '../components/PostYouBookFlatList';
 import AsyncStorage from '@react-native-community/async-storage'
-export default class ListYourPost extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+export default function ListYourPost(props) {
 
-      tokenz: ''
-    };
-  }
+  const [tokenz, set_tokenz] = useState(null)
   add_post = () => {
     AsyncStorage.getItem('user').then(value => {
-      this.setState({ tokenz: value })
-      console.log(this.state.tokenz)
-      alert(this.state.tokenz)
-    }
-    );
+      set_tokenz(value)
+    });
   }
-  render() {
-    return (
-      <ScrollView
-        style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+
+  useEffect(() => {
+
+  }, [])
+  return (
+    <View
+      style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
+      <ScrollView>
         <PostYouBookFlatList
-          navigation={this.props.navigation}
           title="Danh sách tin đăng của bạn"
         />
-        <TouchableHighlight
-          underlayColor="#ffceb588"
-          style={{
-            marginLeft: 10,
-            marginRight: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            backgroundColor: '#ffceb5',
-            borderRadius: 8,
-            marginBottom: 30,
-          }}
-          onPress={() => {
-            // this.add_post()
-            this.props.navigation.navigate('AddPostScreen');
-          }}>
-          <Text style={{ textAlign: 'center' }}>Thêm tin đăng</Text>
-        </TouchableHighlight>
       </ScrollView>
-    );
-  }
+
+      <TouchableHighlight
+        underlayColor="#ffceb588"
+        style={styles.touch_view}
+        onPress={() => {
+          props.navigation.navigate('AddPostScreen');
+        }}>
+        <Text style={{ textAlign: 'center' }}>Thêm tin đăng</Text>
+      </TouchableHighlight>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  touch_view: {
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: '#ffceb5',
+    borderRadius: 8,
+    marginBottom: 30,
+  }
+})
