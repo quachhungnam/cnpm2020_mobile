@@ -1,5 +1,5 @@
 const axios = require('axios');
-const yourIP = 'http://192.168.0.102';
+const yourIP = 'http://192.168.1.2';
 const api_posts = `${yourIP}:3000/posts`;
 const api_rates = `${yourIP}:3000/rates`;
 const api_provinces = `${yourIP}:3000/provinces`;
@@ -7,6 +7,7 @@ const api_districts = `${yourIP}:3000/districts`;
 const api_posttypes = `${yourIP}:3000/posttypes`;
 const api_accounts = `${yourIP}:3000/accounts`;
 const api_feedbacks = `${yourIP}:3000/feedbacks`;
+const api_transactions = `${yourIP}:3000/transactions`;
 
 async function add_post(new_post, token) {
   try {
@@ -15,7 +16,7 @@ async function add_post(new_post, token) {
       headers: {
         Accept: 'application/json',
         Authorization: token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         title: new_post.title,
@@ -25,24 +26,23 @@ async function add_post(new_post, token) {
         address_detail: new_post.address_detail,
         description: new_post.description,
         price: new_post.price,
-        square: new_post.square
-      })
-    })
-    let resultJson = await result.json()
-    return resultJson
+        square: new_post.square,
+      }),
+    });
+    let resultJson = await result.json();
+    return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`)
+    console.log(`Error is: ${err}`);
   }
-
 }
 
 async function getPostsFromServerByType(typeId) {
   try {
-    let response = await fetch(`${api_posts}/type/${typeId}/account`)
-    let responseJson = await response.json()
-    return responseJson.post
+    let response = await fetch(`${api_posts}/type/${typeId}/account`);
+    let responseJson = await response.json();
+    return responseJson.post;
   } catch (error) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 
@@ -58,11 +58,11 @@ async function getPostsFromServer() {
 
 async function getPostsFromServerWithPage(pageNumber) {
   try {
-    let response = await fetch(`${api_posts}/page/${pageNumber}`)
-    let responseJson = await response.json()
-    return responseJson
+    let response = await fetch(`${api_posts}/page/${pageNumber}`);
+    let responseJson = await response.json();
+    return responseJson;
   } catch (error) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 
@@ -97,39 +97,39 @@ async function get_all_province() {
 }
 async function get_all_province2() {
   try {
-    let res = await fetch(`${api_provinces}`)
-    let resJson = await res.json()
-    return resJson //tat ca mang province
+    let res = await fetch(`${api_provinces}`);
+    let resJson = await res.json();
+    return resJson; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 
 async function get_one_province(provinceCode) {
   try {
-    let res = await fetch(`${api_provinces}/${provinceCode}`)
-    let resJson = await res.json()
-    return resJson.province //tat ca mang province
+    let res = await fetch(`${api_provinces}/${provinceCode}`);
+    let resJson = await res.json();
+    return resJson.province; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 async function get_one_district(districtCode) {
   try {
-    let res = await fetch(`${api_districts}/one/${districtCode}`)
-    let resJson = await res.json()
-    return resJson.districts //tat ca mang province
+    let res = await fetch(`${api_districts}/one/${districtCode}`);
+    let resJson = await res.json();
+    return resJson.districts; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 async function get_one_posttype(posttypeId) {
   try {
-    let res = await fetch(`${api_posttypes}/${posttypeId}`)
-    let resJson = await res.json()
-    return resJson.post_type //tat ca mang province
+    let res = await fetch(`${api_posttypes}/${posttypeId}`);
+    let resJson = await res.json();
+    return resJson.post_type; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 async function get_all_posttypes() {
@@ -143,11 +143,11 @@ async function get_all_posttypes() {
 }
 async function get_all_posttypes2() {
   try {
-    let res = await fetch(`${api_posttypes}`)
-    let resJson = await res.json()
-    return resJson //tat ca mang province
+    let res = await fetch(`${api_posttypes}`);
+    let resJson = await res.json();
+    return resJson; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 
@@ -162,11 +162,11 @@ async function get_district_with_province(provinceCode) {
 }
 async function get_district_with_province2(provinceCode) {
   try {
-    let res = await fetch(`${api_districts}/${provinceCode}`)
-    let resJson = await res.json()
-    return resJson //tat ca distric co privince code = 
+    let res = await fetch(`${api_districts}/${provinceCode}`);
+    let resJson = await res.json();
+    return resJson; //tat ca distric co privince code =
   } catch (err) {
-    console.error(`Error is: ${error}`)
+    console.error(`Error is: ${error}`);
   }
 }
 
@@ -341,49 +341,95 @@ async function send_feed_back(user, user_token, feedback) {
   }
 }
 
-
 async function searchByAddress(address) {
   try {
     let result = await fetch(`${api_posts}/finds/address`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        address: address
-      })
-    })
-    let resultJson = await result.json()
-    return resultJson
+        address: address,
+      }),
+    });
+    let resultJson = await result.json();
+    return resultJson;
   } catch (err) {
-    console.error(`Error is: ${err}`)
-    return err
+    console.error(`Error is: ${err}`);
+    return err;
   }
 }
 
-export { getPostsFromServer }
-export { getPost }
-export { getRateOfPost }
-export { get_all_province }
-export { get_all_province2 }
-export { get_district_with_province }
-export { get_district_with_province2 }
-export { get_all_posttypes }
-export { get_all_posttypes2 }
-export { login }
-export { signup }
-export { get_account_infor }
-export { post_post }
-export { update_account_infor }
-export { check_account_password }
-export { update_account_password }
-export { send_feed_back }
-export { add_post }
+async function addTransaction(user, user_token, post_id) {
+  try {
+    let response = await fetch(api_transactions, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: user._id,
+        post_id: post_id,
+      }),
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.error(`Error is: ${error}`);
+  }
+}
+
+async function getTransactions() {
+  try {
+    let response = await fetch(api_transactions);
+    let responseJson = await response.json();
+    return responseJson.transaction;
+  } catch (error) {
+    console.error(`Error is: ${error}`);
+  }
+}
+
+async function delTransaction(tranId) {
+  try {
+    let response = await fetch(`${api_transactions}/${tranId}`, {
+      method: 'DELETE',
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.error(`Error is: ${error}`);
+  }
+}
+
+export {getPostsFromServer};
+export {getPost};
+export {getRateOfPost};
+export {get_all_province};
+export {get_all_province2};
+export {get_district_with_province};
+export {get_district_with_province2};
+export {get_all_posttypes};
+export {get_all_posttypes2};
+export {login};
+export {signup};
+export {get_account_infor};
+export {post_post};
+export {update_account_infor};
+export {check_account_password};
+export {update_account_password};
+export {send_feed_back};
+export {add_post};
 //cua khanh
-export { getPostsFromServerByType }
-export { searchByAddress }
-export { get_one_posttype }
-export { get_one_district }
-export { get_one_province }
-export { getPostsFromServerWithPage }
+export {getPostsFromServerByType};
+export {searchByAddress};
+export {get_one_posttype};
+export {get_one_district};
+export {get_one_province};
+export {getPostsFromServerWithPage};
+// duyen
+export {addTransaction};
+export {getTransactions};
+export {delTransaction};
