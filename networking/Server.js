@@ -1,5 +1,5 @@
 const axios = require('axios');
-const yourIP = 'http://192.168.1.2';
+const yourIP = 'http://192.168.1.11';
 const api_posts = `${yourIP}:3000/posts`;
 const api_rates = `${yourIP}:3000/rates`;
 const api_provinces = `${yourIP}:3000/provinces`;
@@ -409,6 +409,30 @@ async function delTransaction(user_token, tranId) {
   }
 }
 
+async function addRate(user, user_token, post_id, newRate) {
+  try {
+    let response = await fetch(api_rates, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: newRate.name,
+        account_id: user._id,
+        post_id: post_id,
+        description: newRate.description,
+        star: newRate.star,
+      }),
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.error(`Error is: ${error}`);
+  }
+}
+
 export {getPostsFromServer};
 export {getPost};
 export {getRateOfPost};
@@ -438,3 +462,4 @@ export {getPostsFromServerWithPage};
 export {addTransaction};
 export {getTransactions};
 export {delTransaction};
+export {addRate};
