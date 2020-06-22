@@ -5,12 +5,13 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Picker,
+  // Picker,
   TouchableHighlight,
   RefreshControl,
   ScrollView,
   TouchableOpacity
 } from 'react-native';
+import {Picker} from '@react-native-community/picker';
 import HomeFlatListItem from './HomeFlatListItem';
 import {
   getPostsFromServer,

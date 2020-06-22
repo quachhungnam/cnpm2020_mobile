@@ -1,5 +1,5 @@
 const axios = require('axios');
-const yourIP = 'http://192.168.1.2';
+const yourIP = 'http://192.168.0.102';
 const api_posts = `${yourIP}:3000/posts`;
 const api_rates = `${yourIP}:3000/rates`;
 const api_provinces = `${yourIP}:3000/provinces`;
@@ -51,6 +51,15 @@ async function getPostsFromServer() {
     let response = await fetch(api_posts);
     let responseJson = await response.json();
     return responseJson.post;
+  } catch (error) {
+    console.error(`Error is: ${error}`);
+  }
+}
+async function getPostsFromServer2() {
+  try {
+    let response = await fetch(api_posts);
+    let responseJson = await response.json();
+    return responseJson;
   } catch (error) {
     console.error(`Error is: ${error}`);
   }
@@ -410,6 +419,7 @@ async function delTransaction(user_token, tranId) {
 }
 
 export {getPostsFromServer};
+export {getPostsFromServer2};
 export {getPost};
 export {getRateOfPost};
 export {get_all_province};

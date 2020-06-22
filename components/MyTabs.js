@@ -22,7 +22,8 @@ import EditPostScreen2 from '../screens/EditPostScreen2';
 import SearchScreen from '../screens/SearchScreen'
 import { createStackNavigator } from '@react-navigation/stack';
 import { get_account_infor, login } from '../networking/Server'
-
+import ListPost from '../screens/ListPost'
+import PostDetail from '../screens/PostDetail';
 export const AuthContext = React.createContext(null);
 
 const Tab = createBottomTabNavigator();
@@ -76,7 +77,7 @@ function HomeStackScreen({ navigation }) {
   )
 }
 //TAB tin bạn đăng
-function ListYourPostStackScreen(props) {
+function ListYourPostStackScreen(navigation) {
   // const [is_login, set_is_login] = useState(false)
   // const [current_screen, set_current_screen] = useState('SignIn')
   useEffect(() => {
@@ -111,7 +112,8 @@ function ListYourPostStackScreen(props) {
         }}>
         <ListYourPostStack.Screen
           name="ListYourPostScreen"
-          component={ListYourPostScreen}
+          component={ListPost}
+          // component={ListYourPostScreen}
           options={{
             title: 'Overview',
             headerShown: false,
@@ -119,7 +121,8 @@ function ListYourPostStackScreen(props) {
         />
         <ListYourPostStack.Screen
           name="YourPostDetails"
-          component={YourPostDetail}
+          // component={YourPostDetail}
+          component={PostDetail}
           options={{
             title: 'Chi tiết phòng',
             headerTintColor: '#333',

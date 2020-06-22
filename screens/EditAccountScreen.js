@@ -37,6 +37,7 @@ export default function EditAccountScreen(props) {
       update_account_infor(account_infor, account_token).then((res) => {
         if (res.success == true) {
           alert('Cập nhật thông tin thành công')
+          props.navigation.navigate('YourAccountScreen')
           return
         }
         if (res.success == false) {
