@@ -7,7 +7,7 @@ export default function PostItem(props) {
         <TouchableOpacity
             style={{ backgroundColor: 'white' }}
             onPress={() => {
-                props.navigation.navigate('YourPostDetails', { post_item: post })
+                props.navigation.navigate('Details', { post_item: post })
             }}
         >
             <View

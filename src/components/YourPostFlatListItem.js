@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 
 export default class YourPostFlatListItem extends Component {
   constructor(props) {
@@ -15,6 +15,19 @@ export default class YourPostFlatListItem extends Component {
       <>
         <TouchableOpacity
           style={{ backgroundColor: 'white' }}
+          onLongPress={() => {
+            Alert.alert('Alert', 'Are you sure to delete this post?', [
+              { text: 'no', onPress: () => { }, style: 'cancel' },
+              {
+                text: 'yes',
+                onPress: () => {
+                  // delete_image(item)
+
+                },
+                style: 'cancel',
+              },
+            ]);
+          }}
           onPress={() => {
             this.props.navigation.navigate('YourPostDetails', {
               id: item._id,
@@ -57,7 +70,7 @@ export default class YourPostFlatListItem extends Component {
                   textTransform: 'uppercase',
                   fontSize: 12,
                 }}>
-                {item.post_type_id.name}
+                {/* {item.post_type_id.name} */}
               </Text>
               <Text
                 style={{
@@ -84,9 +97,9 @@ export default class YourPostFlatListItem extends Component {
                   color: 'black',
                   fontSize: 13,
                 }}>
-                {`${item.district_id.name_with_type}, ${
+                {/* {`${item.district_id.name_with_type}, ${
                   item.province_id.name_with_type
-                  }`}
+                  }`} */}
               </Text>
             </View>
           </View>

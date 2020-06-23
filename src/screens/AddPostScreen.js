@@ -32,19 +32,89 @@ export default function AddPostScreen(props) {
   }
   const [post_infor, set_post_infor] = useState(init_post)
 
-  const [posttypes, set_posttypes] = useState([])
-  const [select_posttype, set_select_posttype] = useState(null)
+  // const [posttypes, set_posttypes] = useState([])
+  // const [select_posttype, set_select_posttype] = useState(null)
+
+  // const [provinces, set_provinces] = useState([{ name: "Tỉnh/ Thành phố", code: -1 }])
+  // const [select_provinces, set_select_provinces] = useState(-1)
+
+  // const [districts, set_districts] = useState([{ name: "Huyện/ Quận", code: -1 }])
+  // const [select_districts, set_select_districts] = useState(-1)
+
+
+
+  const [posttypes, set_posttypes] = useState([{ "name": "LOẠI TIN", "_id": -1 }])
+  const [select_posttype, set_select_posttype] = useState(-1)
 
   const [provinces, set_provinces] = useState([{ name: "Tỉnh/ Thành phố", code: -1 }])
-  const [select_provinces, set_select_provinces] = useState(-1)
+  const [select_province, set_select_province] = useState(-1)
 
   const [districts, set_districts] = useState([{ name: "Huyện/ Quận", code: -1 }])
-  const [select_districts, set_select_districts] = useState(-1)
+  const [select_district, set_select_district] = useState(-1)
+
+
 
   useEffect(() => {
     get_posttypes()
     get_provinces()
   }, [])
+
+  // const get_posttypes = async () => {
+  //   try {
+  //     const res = await get_all_posttypes2()
+  //     if (res.error) {
+  //       return
+  //     } else {
+  //       set_posttypes(res.post_type)
+  //       set_post_infor((pre) => ({ ...pre, post_type_id: res.post_type[0]._id }))
+  //     }
+  //   } catch (ex) { }
+  // }
+
+  // const get_provinces = async () => {
+  //   try {
+  //     const res = await get_all_province2()
+  //     if (res.error) {
+  //       return
+  //     } else {
+  //       let new_arr = res.data.provinces
+  //       new_arr.unshift({ "name": "Tỉnh/ Thành phố", "code": -1 })
+  //       set_provinces(new_arr)
+
+  //     }
+  //   } catch (ex) { }
+  // }
+
+  // const change_province = async (item) => {
+  //   try {
+  //     set_select_provinces(item)
+  //     set_post_infor((pre) => ({ ...pre, province_code: item }))
+  //     if (item == -1) {
+  //       set_districts([{ name: "Huyện/ Quận", code: -1 }])
+  //       set_post_infor((pre) => ({ ...pre, district_code: item }))
+  //       set_select_districts(-1)
+  //       return
+  //     } else {
+  //       const all_district = await get_district_with_province(item)
+  //       let arr_district = all_district
+  //       all_district.unshift({ name: "Huyện/ Quận", code: -1 })
+  //       set_districts(arr_district)
+  //     }
+
+  //   } catch (ex) { }
+  // }
+
+  // const change_district = async (item) => {
+  //   set_select_districts(item)
+  //   set_post_infor((pre) => ({ ...pre, district_code: item }))
+  // }
+
+  // const change_posttype = async (item) => {
+  //   set_select_posttype(item)
+  //   set_post_infor((pre) => ({ ...pre, post_type_id: item }))
+  // }
+
+
 
   const get_posttypes = async () => {
     try {
@@ -52,8 +122,10 @@ export default function AddPostScreen(props) {
       if (res.error) {
         return
       } else {
-        set_posttypes(res.post_type)
-        set_post_infor((pre) => ({ ...pre, post_type_id: res.post_type[0]._id }))
+        let new_arr = res.post_type
+        new_arr.unshift({ "name": "LOẠI TIN", "_id": -1 })
+        set_posttypes(new_arr)
+        // set_post_infor((pre) => ({ ...pre, post_type_id: res.post_type[0]._id }))
       }
     } catch (ex) { }
   }
@@ -67,45 +139,57 @@ export default function AddPostScreen(props) {
         let new_arr = res.data.provinces
         new_arr.unshift({ "name": "Tỉnh/ Thành phố", "code": -1 })
         set_provinces(new_arr)
-
       }
     } catch (ex) { }
   }
 
   const change_province = async (item) => {
     try {
-      set_select_provinces(item)
-      set_post_infor((pre) => ({ ...pre, province_code: item }))
+      // const condition = {
+      //   province_code: item,
+      //   district_code: -1,
+      //   post_type_id: select_posttype
+      // }
+      set_select_province(item)
       if (item == -1) {
         set_districts([{ name: "Huyện/ Quận", code: -1 }])
-        set_post_infor((pre) => ({ ...pre, district_code: item }))
-        set_select_districts(-1)
+        // condition.district_code = -1
+        // props.filter_post(condition)
         return
       } else {
         const all_district = await get_district_with_province(item)
         let arr_district = all_district
         all_district.unshift({ name: "Huyện/ Quận", code: -1 })
         set_districts(arr_district)
+        // props.filter_post(condition)
       }
 
     } catch (ex) { }
   }
 
   const change_district = async (item) => {
-    set_select_districts(item)
-    set_post_infor((pre) => ({ ...pre, district_code: item }))
+    // const condition = {
+    //   province_code: select_province,
+    //   district_code: item,
+    //   post_type_id: select_posttype
+    // }
+    // props.filter_post(condition)
+    set_select_district(item)
   }
 
   const change_posttype = async (item) => {
+    // const condition = {
+    //   province_code: select_province,
+    //   district_code: select_district,
+    //   post_type_id: item
+    // }
+    // props.filter_post(condition)
     set_select_posttype(item)
-    set_post_infor((pre) => ({ ...pre, post_type_id: item }))
   }
 
-  const show = () => {
-    alert(post_infor.province_code)
-    alert(post_infor.district_code)
-    alert(post_infor.post_type_id)
-  }
+
+
+
 
   return (
     <ScrollView
@@ -200,7 +284,7 @@ export default function AddPostScreen(props) {
       <Picker
         style={styles.picker_province}
         mode="dropdown"
-        selectedValue={select_provinces}
+        selectedValue={select_province}
         onValueChange={(itemValue, itemIndex) => { change_province(itemValue) }}
       >
 
@@ -218,7 +302,7 @@ export default function AddPostScreen(props) {
       <Picker
         style={styles.picker_province}
         mode="dropdown"
-        selectedValue={select_districts}
+        selectedValue={select_district}
         onValueChange={(itemValue, itemIndex) => { change_district(itemValue) }}
       >
         {Object.keys(districts).map(key => {
@@ -273,14 +357,14 @@ export default function AddPostScreen(props) {
         <Text style={{ textAlign: 'center', fontSize: 18 }}>Tiếp theo</Text>
       </TouchableHighlight>
 
-      <TouchableHighlight
+      {/* <TouchableHighlight
         underlayColor={'#ffceb56e'}
         style={styles.touch_next}
         onPress={() => {
           show()
         }}>
         <Text style={{ textAlign: 'center', fontSize: 18 }}>Test token</Text>
-      </TouchableHighlight>
+      </TouchableHighlight> */}
     </ScrollView>
   );
 }

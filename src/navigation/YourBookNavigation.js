@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext, useMemo, useReducer } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { get_account_infor } from '../api/account_api'
 
 
 import ListPostYouBookScreen from '../screens/ListPostYouBook';
 import PostYouBookDetail from '../screens/PostYouBookDetail';
+import AsyncStorage from '@react-native-community/async-storage';
+
 //TAB tin bạn đặt
 const ListPostYouBookStack = createStackNavigator();
 export default function ListPostYouBookStackScreen({ navigation }) {

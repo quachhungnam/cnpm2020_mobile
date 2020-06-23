@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, RefreshControl } from 'react-native';
 import { Picker } from '@react-native-community/picker';
-// import Carousel from '../components/Carousel'
-// import { dummyData } from '../data/DataCarousel'
+import Carousel from '../components/Carousel'
+import { dummyData } from '../data/DataCarousel'
 import PostItem from './PostItem'
 
 import { getPostsFromServer2 } from '../api/post_api'
@@ -182,11 +182,7 @@ function Header_List(props) {
                         if (select_posttype === - 1 || select_province === -1) {
                             return alert("Vui lòng chọn tỉnh/thành và loại tin");
                         }
-                        // this.props.navigation.navigate('SearchScreen', {
-                        //     province: this.state.seleted_province,
-                        //     district: this.state.selected_district,
-                        //     posttypes: this.state.selected_posttype
-                        // });
+                        props.navigation.navigate('SearchScreen', {});
                     }}
                 >
                     <Text style={{ textAlign: 'center', paddingVertical: 10 }}>Tìm theo tên đường</Text>
@@ -252,6 +248,7 @@ export default function ListPost(props) {
                 }
                 ListHeaderComponent={
                     <Header_List
+                        navigation={props.navigation}
                         filter_post={filter_post}
                         search_address={2}
                     />

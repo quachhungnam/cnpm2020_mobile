@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo, useReducer } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import ListPost from '../screens/ListPost'
 import PostDetail from '../screens/PostDetail';
@@ -47,8 +48,8 @@ export default function ListYourPostStackScreen(navigation) {
                 }}>
                 <ListYourPostStack.Screen
                     name="ListYourPostScreen"
-                    component={ListPost}
-                    // component={ListYourPostScreen}
+                    // component={ListPost}
+                    component={ListYourPostScreen}
                     options={{
                         title: 'Overview',
                         headerShown: false,
@@ -56,8 +57,8 @@ export default function ListYourPostStackScreen(navigation) {
                 />
                 <ListYourPostStack.Screen
                     name="YourPostDetails"
-                    // component={YourPostDetail}
-                    component={PostDetail}
+                    component={YourPostDetail}
+                    // component={PostDetail}
                     options={{
                         title: 'Chi tiết phòng',
                         headerTintColor: '#333',
