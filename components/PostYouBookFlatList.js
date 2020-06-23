@@ -29,7 +29,7 @@ export default class PostYouBookFlatList extends Component {
     getTransactions()
       .then(trans => {
         this.setState({
-          transactions: trans.filter(
+          transactions: trans.transaction.filter(
             item => item.client_id._id === this.props.account._id,
           ),
         });

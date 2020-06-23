@@ -5,7 +5,6 @@ import {SliderBox} from 'react-native-image-slider-box';
 import AsyncStorage from '@react-native-community/async-storage';
 import {getPost} from '../networking/Server';
 import {getRateOfPost} from '../networking/Server';
-import {delTransaction} from '../networking/Server';
 
 //import { Dropdown } from 'react-native-material-dropdown';
 
@@ -80,65 +79,6 @@ export default class PostYouBookDetail extends Component {
       this.setState({
         user_token: '',
       });
-    }
-  };
-
-  delTran = () => {
-    delTransaction(this.state.user_token, this.props.route.params.tranId).then(
-      res => {
-        if (res.message === 'transaction deleted') {
-          Alert.alert(
-            'Thông báo',
-            'Hủy đặt thành công',
-            [
-              {
-                text: 'OK',
-                onPress: () => {},
-              },
-            ],
-            {cancelable: false},
-          );
-          return;
-        }
-        if (res.error) {
-          Alert.alert(
-            'Thông báo',
-            'Tin này không tồn tại',
-            [
-              {
-                text: 'OK',
-                onPress: () => {},
-              },
-            ],
-            {cancelable: false},
-          );
-        }
-      },
-    );
-  };
-
-  delPost = () => {
-    try {
-      Alert.alert(
-        'Thông báo',
-        'Bạn muốn hủy đặt tin này chứ?',
-        [
-          {
-            text: 'Không',
-            onPress: () => {},
-            style: 'cancel',
-          },
-          {
-            text: 'Có',
-            onPress: () => {
-              this.delTran();
-            },
-          },
-        ],
-        {cancelable: false},
-      );
-    } catch (err) {
-      console.error(err);
     }
   };
 
@@ -373,20 +313,6 @@ export default class PostYouBookDetail extends Component {
               marginHorizontal: 10,
               marginTop: 20,
             }}>
-            <TouchableHighlight
-              underlayColor="#ffceb588"
-              style={{
-                flex: 50,
-                marginBottom: 20,
-                padding: 10,
-                borderRadius: 8,
-                backgroundColor: '#ffceb5',
-              }}
-              onPress={() => {
-                this.delPost();
-              }}>
-              <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
-            </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
               style={{
@@ -674,20 +600,6 @@ export default class PostYouBookDetail extends Component {
               marginHorizontal: 10,
               marginTop: 20,
             }}>
-            <TouchableHighlight
-              underlayColor="#ffceb588"
-              style={{
-                flex: 50,
-                marginBottom: 20,
-                padding: 10,
-                borderRadius: 8,
-                backgroundColor: '#ffceb5',
-              }}
-              onPress={() => {
-                this.delPost();
-              }}>
-              <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
-            </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
               style={{

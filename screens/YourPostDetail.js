@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Text, View, Image, ScrollView} from 'react-native';
+import {Text, View, Image, ScrollView, Alert} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {SliderBox} from 'react-native-image-slider-box';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {getPost} from '../networking/Server';
 import {getRateOfPost} from '../networking/Server';
+import {updatePostStatus} from '../networking/Server';
 
 //import { Dropdown } from 'react-native-material-dropdown';
 
@@ -32,10 +33,12 @@ export default class YourPostDetail extends Component {
       ],
       post: {},
       rate: [],
+      user_token: '',
     };
   }
 
   componentDidMount() {
+    this.getToken();
     this.refreshDataFromServer();
   }
 
@@ -63,6 +66,145 @@ export default class YourPostDetail extends Component {
           rate: [],
         });
       });
+  };
+
+  getToken = async () => {
+    try {
+      const value_token = await AsyncStorage.getItem('user');
+      if (value_token !== null) {
+        this.setState({
+          user_token: value_token,
+        });
+      }
+    } catch (err) {
+      this.setState({
+        user_token: '',
+      });
+    }
+  };
+
+  delTran = () => {
+    statusCode = 1;
+    updatePostStatus(
+      this.state.user_token,
+      this.props.route.params.id,
+      statusCode,
+    ).then(res => {
+      if (res.message === 'updated status of post') {
+        Alert.alert(
+          'Thông báo',
+          'Hủy đặt thành công',
+          [
+            {
+              text: 'OK',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: false},
+        );
+        return;
+      }
+      if (res.error) {
+        Alert.alert(
+          'Thông báo',
+          'Tin này không tồn tại',
+          [
+            {
+              text: 'OK',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: false},
+        );
+      }
+    });
+  };
+
+  delPost = () => {
+    try {
+      Alert.alert(
+        'Thông báo',
+        'Bạn muốn hủy đặt tin này chứ?',
+        [
+          {
+            text: 'Không',
+            onPress: () => {},
+            style: 'cancel',
+          },
+          {
+            text: 'Có',
+            onPress: () => {
+              this.delTran();
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  rented = () => {
+    statusCode = 3;
+    updatePostStatus(
+      this.state.user_token,
+      this.props.route.params.id,
+      statusCode,
+    ).then(res => {
+      if (res.message === 'updated status of post') {
+        Alert.alert(
+          'Thông báo',
+          'Xác nhận đã cho thuê thành công',
+          [
+            {
+              text: 'OK',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: false},
+        );
+        return;
+      }
+      if (res.error) {
+        Alert.alert(
+          'Thông báo',
+          'Tin này không tồn tại',
+          [
+            {
+              text: 'OK',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: false},
+        );
+      }
+    });
+  };
+
+  confirmRent = () => {
+    try {
+      Alert.alert(
+        'Thông báo',
+        'Bạn muốn xác nhận đã cho thuê tin này chứ?',
+        [
+          {
+            text: 'Không',
+            onPress: () => {},
+            style: 'cancel',
+          },
+          {
+            text: 'Có',
+            onPress: () => {
+              this.rented();
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   render() {
@@ -296,11 +438,30 @@ export default class YourPostDetail extends Component {
               marginHorizontal: 10,
               marginTop: 20,
             }}>
+            {post.status_id.code === 2 && (
+              <TouchableHighlight
+                underlayColor="#ffceb588"
+                style={{
+                  flex: 50,
+                  marginBottom: 20,
+                  marginRight: 10,
+                  padding: 10,
+                  borderRadius: 8,
+                  backgroundColor: '#ffceb5',
+                }}
+                onPress={() => {
+                  this.delPost();
+                }}>
+                <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
+              </TouchableHighlight>
+            )}
+
             <TouchableHighlight
               underlayColor="#ffceb588"
               style={{
                 flex: 50,
                 marginBottom: 20,
+                marginRight: 10,
                 padding: 10,
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
@@ -314,7 +475,6 @@ export default class YourPostDetail extends Component {
               style={{
                 flex: 50,
                 marginBottom: 20,
-                marginLeft: 10,
                 padding: 10,
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
@@ -363,36 +523,38 @@ export default class YourPostDetail extends Component {
 
           <View
             style={{
-              marginBottom: 10,
               padding: 10,
               borderRadius: 20,
               backgroundColor: 'white',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              flex: 1,
             }}>
+            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+              Trạng thái tin
+            </Text>
             {post.status_id.code === 0 && (
-              <Text
-                style={{
-                  color: '#fff',
-                  padding: 10,
-                  backgroundColor: '#f58908',
-                  marginRight: 10,
-                  borderRadius: 8,
-                }}>
+              <Text>
                 {post.status_id.code === 0 ? 'Chưa duyệt' : 'Đã duyệt'}
               </Text>
             )}
+
             {post.status_id.code !== 0 && (
-              <Text
+              <Text>{post.status_id.code === 3 ? 'Đã thuê' : 'Chưa thuê'}</Text>
+            )}
+
+            {post.status_id.code !== 0 && post.status_id.code !== 3 && (
+              <TouchableHighlight
+                underlayColor="#ffceb588"
                 style={{
-                  color: '#fff',
+                  marginBottom: 20,
+                  marginTop: 20,
                   padding: 10,
-                  backgroundColor: '#5eba7d',
                   borderRadius: 8,
+                  backgroundColor: '#ffceb5',
+                }}
+                onPress={() => {
+                  this.confirmRent();
                 }}>
-                {post.status_id.code === 3 ? 'Đã thuê' : 'Chưa thuê'}
-              </Text>
+                <Text style={{textAlign: 'center'}}>Đã cho thuê</Text>
+              </TouchableHighlight>
             )}
           </View>
         </ScrollView>
@@ -627,11 +789,30 @@ export default class YourPostDetail extends Component {
               marginHorizontal: 10,
               marginTop: 20,
             }}>
+            {post.status_id.code === 2 && (
+              <TouchableHighlight
+                underlayColor="#ffceb588"
+                style={{
+                  flex: 50,
+                  marginBottom: 20,
+                  marginRight: 10,
+                  padding: 10,
+                  borderRadius: 8,
+                  backgroundColor: '#ffceb5',
+                }}
+                onPress={() => {
+                  this.delPost();
+                }}>
+                <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
+              </TouchableHighlight>
+            )}
+
             <TouchableHighlight
               underlayColor="#ffceb588"
               style={{
                 flex: 50,
                 marginBottom: 20,
+                marginRight: 10,
                 padding: 10,
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
@@ -645,7 +826,6 @@ export default class YourPostDetail extends Component {
               style={{
                 flex: 50,
                 marginBottom: 20,
-                marginLeft: 10,
                 padding: 10,
                 borderRadius: 8,
                 backgroundColor: '#ffceb5',
@@ -668,36 +848,38 @@ export default class YourPostDetail extends Component {
 
           <View
             style={{
-              marginBottom: 10,
               padding: 10,
               borderRadius: 20,
               backgroundColor: 'white',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              flex: 1,
             }}>
+            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+              Trạng thái tin
+            </Text>
             {post.status_id.code === 0 && (
-              <Text
-                style={{
-                  color: '#fff',
-                  padding: 10,
-                  backgroundColor: '#f58908',
-                  marginRight: 10,
-                  borderRadius: 8,
-                }}>
+              <Text>
                 {post.status_id.code === 0 ? 'Chưa duyệt' : 'Đã duyệt'}
               </Text>
             )}
+
             {post.status_id.code !== 0 && (
-              <Text
+              <Text>{post.status_id.code === 3 ? 'Đã thuê' : 'Chưa thuê'}</Text>
+            )}
+
+            {post.status_id.code !== 0 && post.status_id.code !== 3 && (
+              <TouchableHighlight
+                underlayColor="#ffceb588"
                 style={{
-                  color: '#fff',
+                  marginBottom: 20,
+                  marginTop: 20,
                   padding: 10,
-                  backgroundColor: '#5eba7d',
                   borderRadius: 8,
+                  backgroundColor: '#ffceb5',
+                }}
+                onPress={() => {
+                  this.confirmRent();
                 }}>
-                {post.status_id.code === 3 ? 'Đã thuê' : 'Chưa thuê'}
-              </Text>
+                <Text style={{textAlign: 'center'}}>Đã cho thuê</Text>
+              </TouchableHighlight>
             )}
           </View>
         </ScrollView>

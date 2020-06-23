@@ -18,6 +18,7 @@ import {getPost} from '../networking/Server';
 import {getRateOfPost} from '../networking/Server';
 import {addTransaction} from '../networking/Server';
 import {get_account_infor} from '../networking/Server';
+import {addRate} from '../networking/Server';
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -28,7 +29,19 @@ function formatDate(date) {
 
 function calStarAverage(rate) {
   const starSum = rate.reduce((sum, item) => sum + item.star, 0);
-  return starSum / rate.length;
+  const average = starSum / rate.length;
+  let result = 0;
+  if (average.toString().indexOf('.') === -1) {
+    result = average;
+  } else if (
+    average.toString().indexOf('.') ===
+    average.toString().length - 2
+  ) {
+    result = average.toFixed(1);
+  } else {
+    result = average.toFixed(2);
+  }
+  return result;
 }
 
 export default class HomeDetail extends Component {
@@ -41,7 +54,7 @@ export default class HomeDetail extends Component {
         'https://images.pexels.com/photos/1562/italian-landscape-mountains-nature.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         'https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // Network image
       ],
-      starCount: 0,
+      newRate: {name: '', description: '', star: 0},
       post: {},
       rate: [],
       is_login: false,
@@ -49,15 +62,19 @@ export default class HomeDetail extends Component {
       user_token: '',
     };
   }
-  onStarRatingPress(rating) {
-    this.setState({
-      starCount: rating,
-    });
-  }
 
   componentDidMount() {
     this.check_login();
     this.refreshDataFromServer();
+  }
+
+  onStarRatingPress(rating) {
+    this.setState(prevState => ({
+      newRate: {
+        ...prevState.newRate,
+        star: rating,
+      },
+    }));
   }
 
   refreshDataFromServer = () => {
@@ -191,6 +208,61 @@ export default class HomeDetail extends Component {
         ],
         {cancelable: false},
       );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  sendReview = () => {
+    try {
+      if (this.state.is_login === true) {
+        addRate(
+          this.state.user_infor,
+          this.state.user_token,
+          this.props.route.params.id,
+          this.state.newRate,
+        ).then(res => {
+          if (res.message === 'rate created') {
+            Alert.alert(
+              'Thông báo',
+              'Cảm ơn bạn đã đánh giá',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => {},
+                },
+              ],
+              {cancelable: false},
+            );
+            return;
+          }
+          if (res.error) {
+            Alert.alert(
+              'Thông báo',
+              'Không thể đánh giá',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => {},
+                },
+              ],
+              {cancelable: false},
+            );
+          }
+        });
+      } else {
+        Alert.alert(
+          'Thông báo',
+          'Bạn cần đăng nhập để đánh giá',
+          [
+            {
+              text: 'OK',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: false},
+        );
+      }
     } catch (err) {
       console.error(err);
     }
@@ -356,22 +428,41 @@ export default class HomeDetail extends Component {
             <StarRating
               disabled={false}
               maxStars={5}
-              rating={this.state.starCount}
+              rating={this.state.newRate.star}
               emptyStar={'md-star-outline'}
               fullStar={'md-star'}
               halfStar={'md-star-half'}
               iconSet={'Ionicons'}
               selectedStar={rating => {
                 this.onStarRatingPress(rating);
-                alert(this.state.starCount);
               }}
+              fullStarColor={'#ffb600'}
             />
             <TextInput
               style={styles.input_rate}
               placeholder="Nhập đánh giá của bạn"
               placeholderTextColor="#333"
+              onChangeText={text => {
+                this.setState(prevState => ({
+                  newRate: {
+                    ...prevState.newRate,
+                    name: text,
+                    description: text,
+                  },
+                }));
+              }}
             />
-            <TouchableHighlight style={styles.touch_rate}>
+            <TouchableHighlight
+              disabled={
+                this.state.newRate.description !== '' &&
+                this.state.newRate.star !== 0
+                  ? false
+                  : true
+              }
+              style={styles.touch_rate}
+              onPress={() => {
+                this.sendReview();
+              }}>
               <Text style={{textAlign: 'center'}}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
@@ -496,22 +587,41 @@ export default class HomeDetail extends Component {
             <StarRating
               disabled={false}
               maxStars={5}
-              rating={this.state.starCount}
+              rating={this.state.newRate.star}
               emptyStar={'md-star-outline'}
               fullStar={'md-star'}
               halfStar={'md-star-half'}
               iconSet={'Ionicons'}
               selectedStar={rating => {
                 this.onStarRatingPress(rating);
-                alert(this.state.starCount);
               }}
+              fullStarColor={'#ffb600'}
             />
             <TextInput
               style={styles.input_rate}
               placeholder="Nhập đánh giá của bạn"
               placeholderTextColor="#333"
+              onChangeText={text => {
+                this.setState(prevState => ({
+                  newRate: {
+                    ...prevState.newRate,
+                    name: text,
+                    description: text,
+                  },
+                }));
+              }}
             />
-            <TouchableHighlight style={styles.touch_rate}>
+            <TouchableHighlight
+              disabled={
+                this.state.newRate.description !== '' &&
+                this.state.newRate.star !== 0
+                  ? false
+                  : true
+              }
+              style={styles.touch_rate}
+              onPress={() => {
+                this.sendReview();
+              }}>
               <Text style={{textAlign: 'center'}}>Đánh giá</Text>
             </TouchableHighlight>
           </View>

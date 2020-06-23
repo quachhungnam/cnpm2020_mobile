@@ -32,7 +32,7 @@ async function add_post(new_post, token) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -41,8 +41,8 @@ async function getPostsFromServerByType(typeId) {
     let response = await fetch(`${api_posts}/type/${typeId}/account`);
     let responseJson = await response.json();
     return responseJson.post;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -51,8 +51,8 @@ async function getPostsFromServer() {
     let response = await fetch(api_posts);
     let responseJson = await response.json();
     return responseJson.post;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 async function getPostsFromServer2() {
@@ -70,8 +70,8 @@ async function getPostsFromServerWithPage(pageNumber) {
     let response = await fetch(`${api_posts}/page/${pageNumber}`);
     let responseJson = await response.json();
     return responseJson;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -80,8 +80,8 @@ async function getPost(postId) {
     let response = await fetch(`${api_posts}/${postId}`);
     let responseJson = await response.json();
     return responseJson.post;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -90,8 +90,8 @@ async function getRateOfPost(postId) {
     let response = await fetch(`${api_rates}/rateofpost/${postId}`);
     let responseJson = await response.json();
     return responseJson.rate;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -101,7 +101,7 @@ async function get_all_province() {
     let resJson = await res.json();
     return resJson.data.provinces; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function get_all_province2() {
@@ -110,7 +110,7 @@ async function get_all_province2() {
     let resJson = await res.json();
     return resJson; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -120,7 +120,7 @@ async function get_one_province(provinceCode) {
     let resJson = await res.json();
     return resJson.province; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function get_one_district(districtCode) {
@@ -129,7 +129,7 @@ async function get_one_district(districtCode) {
     let resJson = await res.json();
     return resJson.districts; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function get_one_posttype(posttypeId) {
@@ -138,7 +138,7 @@ async function get_one_posttype(posttypeId) {
     let resJson = await res.json();
     return resJson.post_type; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function get_all_posttypes() {
@@ -147,7 +147,7 @@ async function get_all_posttypes() {
     let resJson = await res.json();
     return resJson.post_type; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function get_all_posttypes2() {
@@ -156,7 +156,7 @@ async function get_all_posttypes2() {
     let resJson = await res.json();
     return resJson; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -166,7 +166,7 @@ async function get_district_with_province(provinceCode) {
     let resJson = await res.json();
     return resJson.districts; //tat ca distric co privince code =
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function get_district_with_province2(provinceCode) {
@@ -175,7 +175,7 @@ async function get_district_with_province2(provinceCode) {
     let resJson = await res.json();
     return resJson; //tat ca distric co privince code =
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -195,7 +195,7 @@ async function login(user) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.error(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
     return err;
   }
 }
@@ -220,7 +220,7 @@ async function signup(user) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 //GET INFOR
@@ -237,7 +237,7 @@ async function get_account_infor(user_token) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.error(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
     return err;
   }
 }
@@ -264,7 +264,7 @@ async function post_post(new_post) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -287,7 +287,7 @@ async function update_account_infor(user, user_token) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function update_account_password(user, user_token) {
@@ -306,7 +306,7 @@ async function update_account_password(user, user_token) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 async function check_account_password(user, user_token) {
@@ -325,7 +325,7 @@ async function check_account_password(user, user_token) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -346,7 +346,7 @@ async function send_feed_back(user, user_token, feedback) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.log(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -365,7 +365,7 @@ async function searchByAddress(address) {
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
-    console.error(`Error is: ${err}`);
+    console.log(`err is: ${err}`);
     return err;
   }
 }
@@ -386,8 +386,8 @@ async function addTransaction(user, user_token, post_id) {
     });
     let responseJson = await response.json();
     return responseJson;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -395,9 +395,9 @@ async function getTransactions() {
   try {
     let response = await fetch(api_transactions);
     let responseJson = await response.json();
-    return responseJson.transaction;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+    return responseJson;
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -413,8 +413,52 @@ async function delTransaction(user_token, tranId) {
     });
     let responseJson = await response.json();
     return responseJson;
-  } catch (error) {
-    console.error(`Error is: ${error}`);
+  } catch (err) {
+    console.log(`err is: ${err}`);
+  }
+}
+
+async function updatePostStatus(user_token, postId, statusCode) {
+  try {
+    let response = await fetch(`${api_posts}/status/${postId}`, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        status_code: statusCode,
+      }),
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (err) {
+    console.log(`err is: ${err}`);
+  }
+}
+
+async function addRate(user, user_token, post_id, newRate) {
+  try {
+    let response = await fetch(api_rates, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: newRate.name,
+        account_id: user._id,
+        post_id: post_id,
+        description: newRate.description,
+        star: newRate.star,
+      }),
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (err) {
+    console.log(`err is: ${err}`);
   }
 }
 
@@ -448,3 +492,5 @@ export {getPostsFromServerWithPage};
 export {addTransaction};
 export {getTransactions};
 export {delTransaction};
+export {addRate};
+export {updatePostStatus};
