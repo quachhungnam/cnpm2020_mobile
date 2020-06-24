@@ -31,10 +31,9 @@ function calStarAverage(rate) {
 export default function YourPostDetail(props) {
   const { token } = React.useContext(AuthContext)
   const { post_item } = props.route.params
-  const arr_image = post_item.post_image
+  const post_image = post_item.post_image
   const [rate, setRate] = useState([])
   const [img_post, set_img_post] = useState([])
-  const [newRate, set_newRate] = useState({ name: '', description: '', star: 0 })
 
   useEffect(() => {
     getAllRate()
@@ -52,7 +51,7 @@ export default function YourPostDetail(props) {
     }
     set_img_post(arr_uri)
   }
-  
+
   const getAllRate = async () => {
     try {
       const res = await getRateOfPost2(post_item._id)
@@ -218,6 +217,18 @@ export default function YourPostDetail(props) {
     ]);
   }
 
+  const go_edit_screen1 = () => {
+    for (let i = 0; i < post_image.length; i++) {
+      post_image[i].uri = img_post[i]
+      post_image[i].name = post_image[i]._id
+    }
+    props.navigation.navigate('EditPostScreen',
+      {
+        post_item: post_item,
+        img_post: img_post,
+        post_image: post_image
+      });
+  }
 
   return (
     <ScrollView
@@ -335,9 +346,7 @@ export default function YourPostDetail(props) {
           disabled={post_item.status_id.code === 2 ? true : false}
           underlayColor="#ffceb588"
           style={styles.touch_datngay}
-          onPress={() => {
-            props.navigation.navigate('EditPostScreen', { post_item: post_item });
-          }}
+          onPress={() => { go_edit_screen1() }}
         >
           <Text style={{ textAlign: 'center' }}>Sửa tin</Text>
         </TouchableHighlight>

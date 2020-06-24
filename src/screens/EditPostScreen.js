@@ -17,7 +17,7 @@ import { AuthContext } from '../navigation/MyTabs'
 
 export default function EditPostScreen(props) {
   const { token } = React.useContext(AuthContext)
-  const { post_item } = props.route.params
+  const { post_item, img_post, post_image } = props.route.params
 
   let init_post = {
     _id: post_item._id,
@@ -110,7 +110,25 @@ export default function EditPostScreen(props) {
   const change_posttype = async (item) => {
     set_select_posttype(item)
   }
-
+  const go_edit_screen2 = () => {
+    let edit_post = {
+      _id: post_infor._id,
+      title: post_infor.title,
+      province_code: select_province,
+      district_code: select_district,
+      post_type_id: select_posttype,
+      address_detail: post_infor.address_detail,
+      post_image: post_infor.post_image,
+      description: post_infor.description,
+      price: post_infor.price,
+      square: post_infor.square
+    }
+    props.navigation.navigate('EditPostScreen2', {
+      post: edit_post,
+      img_post: img_post,
+      post_image: post_image
+    })
+  }
 
   return (
     <ScrollView
@@ -276,23 +294,7 @@ export default function EditPostScreen(props) {
         underlayColor={'#ffceb56e'}
         style={styles.touch_next}
         onPress={() => {
-
-          let edit_post = {
-            _id: post_infor._id,
-            title: post_infor.title,
-            province_code: select_province,
-            district_code: select_district,
-            post_type_id: select_posttype,
-            address_detail: post_infor.address_detail,
-            post_image: post_infor.post_image,
-            description: post_infor.description,
-            price: post_infor.price,
-            square: post_infor.square
-          }
-          // alert(JSON.stringify(edit_post))
-          props.navigation.navigate('EditPostScreen2', {
-            post: edit_post
-          })
+          go_edit_screen2()
 
         }}>
         <Text style={{ textAlign: 'center', fontSize: 18 }}>Tiếp theo</Text>

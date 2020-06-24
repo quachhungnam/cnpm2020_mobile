@@ -13,18 +13,18 @@ import {
 } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 import AsyncStorage from '@react-native-community/async-storage'
-import { add_post_with_image, update_post } from '../api/post_api'
+import { add_post_with_image, update_post_with_image } from '../api/post_api'
 import { AuthContext } from '../navigation/MyTabs'
 import RNFetchBlob from 'rn-fetch-blob'
 import { your_ip } from '../api/your_ip'
 const api_posts = `${your_ip}:3000/posts`;
 
 export default function EditPostScreen2(props) {
-  const { post } = props.route.params
+  const { post, img_post, post_image } = props.route.params
   const { token } = React.useContext(AuthContext)
-  const arr_image = post.post_image
-  const [old_image, set_old_image] = useState([]) //mang anhh dien hien thi
-  const [images, set_images] = useState([])
+
+  const [old_image, set_old_image] = useState(post_image) //mang anhh dien hien thi
+  const [images, set_images] = useState(post_image)
   const [new_post, set_new_post] = useState(null)
 
   useEffect(() => {
@@ -65,7 +65,6 @@ export default function EditPostScreen2(props) {
     set_images(arr_img)
   }
 
-
   const show_image = () => {
     return (
       <FlatList
@@ -100,27 +99,49 @@ export default function EditPostScreen2(props) {
       />)
   }
 
-
   const update_post = async () => {
-    //gui len image/path cu
-    //gui len imagemoi
-    alert(JSON.stringify(new_post))
-    // try {
-    //   let result = await RNFetchBlob.fetch('PUT', `${api_posts}/${new_post._id}`, {
-    //     Authorization: token,
-    //   },
-    //     [
-    //       ...images,
-    //       {
-    //         name: 'post', data: JSON.stringify(new_post)
-    //       },
-    //     ]
-    //   )
-    //   let resultJson = await result.json();
-    //   return resultJson;
-    // } catch (err) {
-    //   console.log(`Error is: ${err}`);
-    // }
+    // alert(JSON.stringify(old_image) + ' === ' + JSON.stringify(images))
+    // kiem tra image old va new
+    try {
+
+      let img_delete = []
+      for (let i = 0; i < old_image.length; i++) {
+        let vitrixoa = -1
+        if (images.length == 0) {
+          img_delete = old_image
+          break
+        }
+        for (let j = 0; j < images.length; j++) {
+          //anh cua va moi giong nhau, bo qua
+          if (old_image[i].name != images[j].name) {
+            vitrixoa = i
+            continue
+            //chuyen sang anh cu thu 2
+          }
+          if (old_image[i].name == images[j].name) {
+            vitrixoa = -1
+            break
+            //chuyen sang anh cu thu 2
+          }
+        }
+        if (vitrixoa != -1) {
+          img_delete.push(old_image[vitrixoa])
+        }
+      }
+      // alert(JSON.stringify(img_delete) + ' <====> ' + JSON.stringify(images))
+      let send_post = new_post
+      if (img_delete.length > 0) {
+        send_post.delete_image = img_delete
+      }
+
+      const rs = await update_post_with_image(images, send_post, token)
+      if (rs.error) {
+        alert('Không thể sửa tin này, vui lòng trở lại sau!')
+      } else {
+        alert('Cập nhật thành công!')
+      }
+
+    } catch (ex) { console.log(ex) }
 
   };
 
@@ -128,8 +149,7 @@ export default function EditPostScreen2(props) {
   var width1 = Dimensions.get('window').width;
   return (
     <ScrollView style={{ backgroundColor: '#fff' }}>
-      {/* show anh */}
-      {/* chon anh */}
+
       <TouchableHighlight
         underlayColor={'#ffceb56e'}
         disabled={images.length == 5 ? true : false}

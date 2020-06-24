@@ -24,15 +24,13 @@ async function add_post_with_image(images, new_post, token) {
   }
 }
 
-async function update_post(new_post, token) {
-
-  //1 mang post
+async function update_post_with_image(images, new_post, token) {
   try {
     let result = await RNFetchBlob.fetch('PUT', `${api_posts}/${new_post._id}`, {
       Authorization: token,
     },
       [
-    
+        ...images,
         {
           name: 'post', data: JSON.stringify(new_post)
         },
@@ -237,6 +235,6 @@ export { add_post_with_image };
 export { updatePostStatus };
 export { get_post_of_account };
 export { delete_a_post };
-export { update_post };
+export { update_post_with_image };
 
 
