@@ -1,5 +1,5 @@
 
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, View, Text, StyleSheet, RefreshControl, SafeAreaView } from 'react-native';
 import PostYouBookFlatListItem from '../components/PostYouBookFlatListItem';
 import { get_all_tran_of_account } from '../api/transaction_api';
@@ -32,6 +32,7 @@ export default function PostYouBookFlatList(props) {
     try {
       const res = await get_all_tran_of_account(token)
       if (res.error) {
+        set_arr_trans([])
         return
       } else {
         const all_trans = res.transaction
@@ -44,19 +45,15 @@ export default function PostYouBookFlatList(props) {
 
   return (
     <SafeAreaView>
-      <View style={{}}>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            paddingVertical: 10,
-            letterSpacing: 1,
-            backgroundColor: '#eee',
-          }}>
-          {props.title}
-        </Text>
-      </View>
       <FlatList
+        ListHeaderComponent={
+          <View style={{}}>
+            <Text
+              style={styles.txt_title}>
+              {props.title}
+            </Text>
+          </View>
+        }
         refreshControl={
           <RefreshControl refreshing={refreshing}
             onRefresh={onRefresh}
@@ -77,3 +74,14 @@ export default function PostYouBookFlatList(props) {
     </SafeAreaView>
   );
 }
+
+
+const styles = StyleSheet.create({
+  txt_title: {
+    fontSize: 18,
+    textAlign: 'center',
+    paddingVertical: 10,
+    letterSpacing: 1,
+    backgroundColor: '#eee',
+  }
+})

@@ -68,14 +68,15 @@ export default function YourAccount(props) {
         Thông tin tài khoản
         </Text>
       <View
-        style={styles.view_account}>
+        style={styles.view_account}
+      >
         <View>
           <Text style={{ fontSize: 15, marginBottom: 10 }}>
-            Tên chủ tài khoản
+            Username
             </Text>
-          <Text style={{ fontSize: 18 }}>{user_infor.name}</Text>
+          <Text style={{ fontSize: 18 }}>{user_infor.username}</Text>
         </View>
-
+      
         <TouchableHighlight
           style={{ borderRadius: 30 }}
           onPress={() => {
@@ -92,6 +93,11 @@ export default function YourAccount(props) {
         </TouchableHighlight>
       </View>
 
+      <View
+        style={styles.view_email}>
+        <Text style={{ fontSize: 15, marginBottom: 10 }}>Tên chủ tài khoản</Text>
+        <Text style={{ fontSize: 18 }}>{user_infor.name}</Text>
+      </View>
       <View
         style={styles.view_email}>
         <Text style={{ fontSize: 15, marginBottom: 10 }}>Email</Text>

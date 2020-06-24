@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { FlatList, View, Text, StyleSheet, RefreshControl, SafeAreaView } from 'react-native';
 import YourPostFlatListItem from './YourPostFlatListItem';
-import { get_post_of_account } from '../api/post_api';
+import { get_post_of_account, delete_a_post } from '../api/post_api';
 import { AuthContext } from '../navigation/MyTabs';
 
 function wait(timeout) {
@@ -39,21 +39,31 @@ export default function YourPostFlatList(props) {
     }
   }
 
+  const delete_post = async (post_id) => {
+    try {
+      const rs = await delete_a_post(token, post_id)
+      if (rs.error) {
+        alert('Bạn không thể xóa post này')
+        return
+      } else {
+        onRefresh()
+        alert('Thành công!')
+      }
+    } catch (ex) { }
+  }
+
+
   return (
     <SafeAreaView>
-      <View style={{}}>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            paddingVertical: 10,
-            letterSpacing: 1,
-            backgroundColor: '#eee',
-          }}>
-          {props.title}
-        </Text>
-      </View>
       <FlatList
+        ListHeaderComponent={
+          <View style={{}}>
+            <Text
+              style={styles.txt_title}>
+              {props.title}
+            </Text>
+          </View>
+        }
         refreshControl={
           <RefreshControl refreshing={refreshing}
             onRefresh={onRefresh}
@@ -62,6 +72,7 @@ export default function YourPostFlatList(props) {
         data={arr_post}
         renderItem={({ item }) => (
           <YourPostFlatListItem
+            delete_post={() => { delete_post(item._id) }}
             navigation={props.navigation}
             post={item}
           />
@@ -76,19 +87,11 @@ export default function YourPostFlatList(props) {
 }
 
 const styles = StyleSheet.create({
-  picker_pro_dis: {
-    fontSize: 8,
-    flex: 1,
-    alignItems: 'center',
-  },
-  buttonSearch: {
-    backgroundColor: '#ffceb5',
-    paddingBottom: 0,
-    paddingTop: 0,
+  txt_title: {
+    fontSize: 18,
+    textAlign: 'center',
     paddingVertical: 10,
-    marginTop: 0,
-    borderRadius: 8,
-    flex: 1,
-    textAlign: 'center'
-  }
+    letterSpacing: 1,
+    backgroundColor: '#eee',
+  },
 })

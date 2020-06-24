@@ -1,14 +1,11 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
   TouchableHighlight,
-  ScrollView,
   StyleSheet,
 } from 'react-native';
-import { get_account_infor } from '../api/account_api';
 import YourPostFlatList from '../components/YourPostFlatList';
-import AsyncStorage from '@react-native-community/async-storage';
 export default function ListYourPost(props) {
 
   useEffect(() => {

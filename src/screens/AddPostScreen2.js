@@ -111,7 +111,7 @@ export default function AddPostScreen2(props) {
     //   square: 50
     // }
     try {
-      const rs = await add_post_with_image(images, post, token)
+      const rs = await add_post_with_image(images, new_post, token)
       if (rs.error) {
           alert('Không thể đăng tin!')
       } else {

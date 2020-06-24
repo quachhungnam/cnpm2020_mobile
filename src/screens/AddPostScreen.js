@@ -43,8 +43,14 @@ export default function AddPostScreen(props) {
   }, [])
 
 
-  const check_data = () => {
-    
+  const check_data = (data) => {
+    let rs = true
+    for (const [key, value] of Object.entries(data)) {
+      if (value == null || value == '' || value == -1) {
+        rs = false
+      }
+    }
+    return rs
   }
 
   const get_posttypes = async () => {
@@ -258,7 +264,13 @@ export default function AddPostScreen(props) {
         underlayColor={'#ffceb56e'}
         style={styles.touch_next}
         onPress={() => {
-        
+          post_infor.post_type_id = select_posttype
+          post_infor.province_code = select_province
+          post_infor.district_code = select_district
+          if (check_data(post_infor) == false) {
+            alert('Vui lòng điền đầy đủ thông tin!')
+            return
+          }
           props.navigation.navigate('AddPostScreen2', {
             post: post_infor
           })

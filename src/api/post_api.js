@@ -23,6 +23,28 @@ async function add_post_with_image(images, new_post, token) {
     console.log(`Error is: ${err}`);
   }
 }
+
+async function update_post(new_post, token) {
+
+  //1 mang post
+  try {
+    let result = await RNFetchBlob.fetch('PUT', `${api_posts}/${new_post._id}`, {
+      Authorization: token,
+    },
+      [
+    
+        {
+          name: 'post', data: JSON.stringify(new_post)
+        },
+      ]
+    )
+    let resultJson = await result.json();
+    return resultJson;
+  } catch (err) {
+    console.log(`Error is: ${err}`);
+  }
+}
+
 async function add_post(new_post, token) {
   try {
     let result = await fetch(`${api_posts}/addnewpost`, {
@@ -87,6 +109,7 @@ async function getPostsFromServer() {
     console.error(`Error is: ${error}`);
   }
 }
+
 async function getPostsFromServer2() {
   try {
     let response = await fetch(api_posts);
@@ -183,6 +206,25 @@ async function updatePostStatus(user_token, postId, statusCode) {
   }
 }
 
+async function delete_a_post(user_token, post_id) {
+  try {
+    let response = await fetch(`${api_posts}/${post_id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        Authorization: user_token,
+        'Content-Type': 'application/json',
+      },
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.error(`Error is: ${error}`);
+  }
+}
+
+
+
 export { getPostsFromServer };
 export { getPostsFromServer2 };
 export { getPost };
@@ -194,5 +236,7 @@ export { searchByAddress };
 export { add_post_with_image };
 export { updatePostStatus };
 export { get_post_of_account };
+export { delete_a_post };
+export { update_post };
 
 

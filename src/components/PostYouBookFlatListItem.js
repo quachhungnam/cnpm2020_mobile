@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
-export default class PostYouBookFlatListtrans extends Component {
+export default class PostYouBookFlatListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
