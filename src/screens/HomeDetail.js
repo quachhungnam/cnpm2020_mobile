@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -9,15 +9,15 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import { SliderBox } from 'react-native-image-slider-box';
+import {TouchableHighlight} from 'react-native-gesture-handler';
+import {SliderBox} from 'react-native-image-slider-box';
 import StarRating from 'react-native-star-rating';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { getPost } from '../api/post_api';
-import { getRateOfPost, addRate } from '../api/rate_api';
-import { addTransaction } from '../api/transaction_api';
-import { get_account_infor } from '../api/account_api';
+import {getPost} from '../api/post_api';
+import {getRateOfPost, addRate} from '../api/rate_api';
+import {addTransaction} from '../api/transaction_api';
+import {get_account_infor} from '../api/account_api';
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -53,7 +53,7 @@ export default class HomeDetail extends Component {
         'https://images.pexels.com/photos/1562/italian-landscape-mountains-nature.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         'https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // Network image
       ],
-      newRate: { name: '', description: '', star: 0 },
+      newRate: {name: '', description: '', star: 0},
       post: {},
       rate: [],
       is_login: false,
@@ -77,7 +77,7 @@ export default class HomeDetail extends Component {
   }
 
   refreshDataFromServer = () => {
-    const { id } = this.props.route.params;
+    const {id} = this.props.route.params;
     getPost(id)
       .then(post => {
         this.setState({
@@ -151,10 +151,10 @@ export default class HomeDetail extends Component {
             [
               {
                 text: 'OK',
-                onPress: () => { },
+                onPress: () => {},
               },
             ],
-            { cancelable: false },
+            {cancelable: false},
           );
           return;
         }
@@ -165,10 +165,10 @@ export default class HomeDetail extends Component {
             [
               {
                 text: 'OK',
-                onPress: () => { },
+                onPress: () => {},
               },
             ],
-            { cancelable: false },
+            {cancelable: false},
           );
         }
       });
@@ -179,10 +179,10 @@ export default class HomeDetail extends Component {
         [
           {
             text: 'OK',
-            onPress: () => { },
+            onPress: () => {},
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
     }
   };
@@ -195,7 +195,7 @@ export default class HomeDetail extends Component {
         [
           {
             text: 'Không',
-            onPress: () => { },
+            onPress: () => {},
             style: 'cancel',
           },
           {
@@ -205,7 +205,7 @@ export default class HomeDetail extends Component {
             },
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
     } catch (err) {
       console.error(err);
@@ -228,10 +228,10 @@ export default class HomeDetail extends Component {
               [
                 {
                   text: 'OK',
-                  onPress: () => { },
+                  onPress: () => {},
                 },
               ],
-              { cancelable: false },
+              {cancelable: false},
             );
             return;
           }
@@ -242,10 +242,10 @@ export default class HomeDetail extends Component {
               [
                 {
                   text: 'OK',
-                  onPress: () => { },
+                  onPress: () => {},
                 },
               ],
-              { cancelable: false },
+              {cancelable: false},
             );
           }
         });
@@ -256,10 +256,10 @@ export default class HomeDetail extends Component {
           [
             {
               text: 'OK',
-              onPress: () => { },
+              onPress: () => {},
             },
           ],
-          { cancelable: false },
+          {cancelable: false},
         );
       }
     } catch (err) {
@@ -268,11 +268,11 @@ export default class HomeDetail extends Component {
   };
 
   render() {
-    const { post, rate } = this.state;
+    const {post, rate} = this.state;
     if (Object.keys(post).length !== 0 && rate !== undefined) {
       return (
         <ScrollView
-          style={{ backgroundColor: '#fff' }}
+          style={{backgroundColor: '#fff'}}
           showsVerticalScrollIndicator={true}>
           {/* hoat anh */}
           <SliderBox images={this.state.images} />
@@ -289,17 +289,17 @@ export default class HomeDetail extends Component {
               <View style={styles.view_square}>
                 <Image
                   source={require('../assets/images/cube.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
                 <Text style={styles.txt_square}>{`${post.square} m2`}</Text>
               </View>
               <View style={styles.view_status}>
                 <Image
                   source={require('../assets/images/question.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
                 <Text style={styles.txt_square}>
-                  {`${post.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
+                  {`${post.status_id.code === 2 ? 'Đã đặt' : 'Chưa đặt'}`}
                 </Text>
               </View>
             </View>
@@ -315,7 +315,7 @@ export default class HomeDetail extends Component {
             <Text style={styles.txt_detail}>Địa chỉ chi tiết</Text>
             <View style={styles.view_diachichitiet}>
               <View style={styles.view_province}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Số nhà, Đường
                 </Text>
                 <Text style={styles.txt_address_detail}>
@@ -323,13 +323,13 @@ export default class HomeDetail extends Component {
                 </Text>
               </View>
               <View style={styles.view_province}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Quận / Huyện
                 </Text>
                 <Text style={styles.txt_province}>{post.district_id.name}</Text>
               </View>
               <View style={styles.view_province}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Tỉnh / Thành phố
                 </Text>
                 <Text style={styles.txt_province}>{post.province_id.name}</Text>
@@ -353,8 +353,8 @@ export default class HomeDetail extends Component {
 
           {/* nguoi dang*/}
           <TouchableHighlight style={styles.touch_hostid}>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
                 <Text style={styles.txt_nguoidang}>Người đăng</Text>
                 <Text>{post.host_id.name}</Text>
               </View>
@@ -370,7 +370,7 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 this.bookPost();
               }}>
-              <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
+              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -385,28 +385,28 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
+              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
           {/* danh gia cua nguoi dung */}
-          <View style={{ paddingHorizontal: 10 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+          <View style={{paddingHorizontal: 10}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               {`Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
             </Text>
             {rate.map(item => {
               return (
                 <View>
-                  <View style={{ paddingTop: 10, flex: 1, flexDirection: 'row' }}>
-                    <Text style={{ marginRight: 10, fontSize: 16 }}>
+                  <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
+                    <Text style={{marginRight: 10, fontSize: 16}}>
                       {`${item.account_id.name} đã đánh giá:`}
                     </Text>
-                    <Text style={{ fontSize: 16 }}>{item.star}</Text>
+                    <Text style={{fontSize: 16}}>{item.star}</Text>
                     <Image
                       source={require('../assets/images/star.png')}
-                      style={{ width: 10, height: 10 }}
+                      style={{width: 10, height: 10}}
                     />
                   </View>
-                  <Text style={{ fontSize: 12, color: 'gray', marginBottom: 7 }}>
+                  <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
                     {formatDate(new Date(item.created_at))}
                   </Text>
                   <Text
@@ -454,7 +454,7 @@ export default class HomeDetail extends Component {
             <TouchableHighlight
               disabled={
                 this.state.newRate.description !== '' &&
-                  this.state.newRate.star !== 0
+                this.state.newRate.star !== 0
                   ? false
                   : true
               }
@@ -462,7 +462,7 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 this.sendReview();
               }}>
-              <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
+              <Text style={{textAlign: 'center'}}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>
@@ -472,7 +472,7 @@ export default class HomeDetail extends Component {
     if (Object.keys(post).length !== 0 && rate === undefined) {
       return (
         <ScrollView
-          style={{ backgroundColor: '#fff' }}
+          style={{backgroundColor: '#fff'}}
           showsVerticalScrollIndicator={true}>
           <SliderBox images={this.state.images} />
           <View style={styles.view_2rowdau}>
@@ -485,17 +485,17 @@ export default class HomeDetail extends Component {
               <View style={styles.view_img}>
                 <Image
                   source={require('../assets/images/cube.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
                 <Text style={styles.txt_square2}>{`${post.square} m2`}</Text>
               </View>
               <View style={styles.view_img}>
                 <Image
                   source={require('../assets/images/question.png')}
-                  style={{ width: 30, height: 30 }}
+                  style={{width: 30, height: 30}}
                 />
                 <Text style={styles.txt_square2}>
-                  {`${post.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
+                  {`${post.status_id.code === 2 ? 'Đã đặt' : 'Chưa đặt'}`}
                 </Text>
               </View>
             </View>
@@ -513,7 +513,7 @@ export default class HomeDetail extends Component {
                 justifyContent: 'space-between',
               }}>
               <View style={styles.view_diachi}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Số nhà, Đường
                 </Text>
                 <Text style={styles.txt_province}>
@@ -521,13 +521,13 @@ export default class HomeDetail extends Component {
                 </Text>
               </View>
               <View style={styles.view_diachi}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Quận / Huyện
                 </Text>
                 <Text style={styles.txt_province}>{post.district_id.name}</Text>
               </View>
               <View style={styles.view_diachi}>
-                <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                <Text style={{textAlign: 'center', fontSize: 14}}>
                   Tỉnh / Thành phố
                 </Text>
                 <Text style={styles.txt_province}>{post.province_id.name}</Text>
@@ -548,8 +548,8 @@ export default class HomeDetail extends Component {
             </Text>
           </View>
           <TouchableHighlight style={styles.touch_nguoidang}>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{flex: 1, flexDirection: 'column'}}>
                 <Text style={styles.txt_nguoidang}>Người đăng</Text>
                 <Text>{post.host_id.name}</Text>
               </View>
@@ -563,7 +563,7 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 this.bookPost();
               }}>
-              <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
+              <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -571,12 +571,12 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
+              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
 
           <View style={styles.view_contact}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               Chưa có đánh giá nào
             </Text>
           </View>
@@ -613,7 +613,7 @@ export default class HomeDetail extends Component {
             <TouchableHighlight
               disabled={
                 this.state.newRate.description !== '' &&
-                  this.state.newRate.star !== 0
+                this.state.newRate.star !== 0
                   ? false
                   : true
               }
@@ -621,7 +621,7 @@ export default class HomeDetail extends Component {
               onPress={() => {
                 this.sendReview();
               }}>
-              <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
+              <Text style={{textAlign: 'center'}}>Đánh giá</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>
@@ -757,7 +757,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingLeft: 0,
   },
-  txt_detail: { fontSize: 18, marginBottom: 10, fontWeight: 'bold' },
+  txt_detail: {fontSize: 18, marginBottom: 10, fontWeight: 'bold'},
   txt_posttype: {
     color: 'gray',
     textTransform: 'uppercase',

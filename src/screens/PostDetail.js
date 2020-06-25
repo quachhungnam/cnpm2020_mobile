@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -9,20 +9,19 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import { SliderBox } from 'react-native-image-slider-box';
+import {TouchableHighlight} from 'react-native-gesture-handler';
+import {SliderBox} from 'react-native-image-slider-box';
 import StarRating from 'react-native-star-rating';
-import { getRateOfPost2, addRate } from '../api/rate_api';
-import { addTransaction } from '../api/transaction_api';
-import { AuthContext } from '../navigation/MyTabs';
+import {getRateOfPost2, addRate} from '../api/rate_api';
+import {addTransaction} from '../api/transaction_api';
+import {AuthContext} from '../navigation/MyTabs';
 
 var images = [
   'https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   'https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   'https://images.pexels.com/photos/1562/italian-landscape-mountains-nature.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   'https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // Network image
-]
-
+];
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -49,35 +48,34 @@ function calStarAverage(rate) {
 }
 
 export default function PostDetail(props) {
-  const { token } = React.useContext(AuthContext)
-  const { post_item } = props.route.params
+  const {token} = React.useContext(AuthContext);
+  const {post_item} = props.route.params;
 
-  const [rate, setRate] = useState([])
-  const [img_post, set_img_post] = useState(post_item.post_image)
-  const [newRate, set_newRate] = useState({ name: '', description: '', star: 0 })
+  const [rate, setRate] = useState([]);
+  const [img_post, set_img_post] = useState(post_item.post_image);
+  const [newRate, set_newRate] = useState({name: '', description: '', star: 0});
 
   useEffect(() => {
-    getAllRate()
-  }, [])
+    getAllRate();
+  }, []);
 
-  const onStarRatingPress = (rating) => {
-    set_newRate((prevState) => ({ ...prevState, star: rating }))
-  }
+  const onStarRatingPress = rating => {
+    set_newRate(prevState => ({...prevState, star: rating}));
+  };
 
   const getAllRate = async () => {
     try {
-      const res = await getRateOfPost2(post_item._id)
+      const res = await getRateOfPost2(post_item._id);
       if (res.error) {
       } else {
-        setRate(res.rate)
+        setRate(res.rate);
       }
-
-    } catch (ex) { }
+    } catch (ex) {}
   };
 
   const addTran = async () => {
     try {
-      const res = await addTransaction(token, post_item._id)
+      const res = await addTransaction(token, post_item._id);
       //Dang nhap that bai
       if (res.success == false) {
         Alert.alert(
@@ -86,10 +84,10 @@ export default function PostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => { },
+              onPress: () => {},
             },
           ],
-          { cancelable: false },
+          {cancelable: false},
         );
       }
       //tra ve thanh cong
@@ -102,12 +100,12 @@ export default function PostDetail(props) {
             [
               {
                 text: 'OK',
-                onPress: () => { },
+                onPress: () => {},
               },
             ],
-            { cancelable: false },
+            {cancelable: false},
           );
-          return
+          return;
         }
         //dat thanh cong
         if (res.message) {
@@ -117,17 +115,17 @@ export default function PostDetail(props) {
             [
               {
                 text: 'OK',
-                onPress: () => { },
+                onPress: () => {},
               },
             ],
-            { cancelable: false },
+            {cancelable: false},
           );
         }
       }
     } catch (ex) {
-      console.log(ex)
+      console.log(ex);
     }
-  }
+  };
 
   const bookPost = () => {
     try {
@@ -137,7 +135,7 @@ export default function PostDetail(props) {
         [
           {
             text: 'Không',
-            onPress: () => { },
+            onPress: () => {},
             style: 'cancel',
           },
           {
@@ -147,17 +145,16 @@ export default function PostDetail(props) {
             },
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
     } catch (err) {
       console.error(err);
     }
   };
 
-
   const sendReview = async () => {
     try {
-      const res = await addRate(token, post_item._id, newRate)
+      const res = await addRate(token, post_item._id, newRate);
       //chua dang nhap
       if (res.success == false) {
         Alert.alert(
@@ -166,10 +163,10 @@ export default function PostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => { },
+              onPress: () => {},
             },
           ],
-          { cancelable: false },
+          {cancelable: false},
         );
       } else {
         //tra ve loi
@@ -180,12 +177,12 @@ export default function PostDetail(props) {
             [
               {
                 text: 'OK',
-                onPress: () => { },
+                onPress: () => {},
               },
             ],
-            { cancelable: false },
-          )
-          return
+            {cancelable: false},
+          );
+          return;
         }
         //ok
         Alert.alert(
@@ -194,10 +191,10 @@ export default function PostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => { },
+              onPress: () => {},
             },
           ],
-          { cancelable: false },
+          {cancelable: false},
         );
       }
     } catch (err) {
@@ -207,7 +204,7 @@ export default function PostDetail(props) {
 
   return (
     <ScrollView
-      style={{ backgroundColor: '#fff' }}
+      style={{backgroundColor: '#fff'}}
       showsVerticalScrollIndicator={true}>
       {/* hoat anh */}
       <SliderBox images={images} />
@@ -224,17 +221,17 @@ export default function PostDetail(props) {
           <View style={styles.view_square}>
             <Image
               source={require('../assets/images/cube.png')}
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
             <Text style={styles.txt_square}>{`${post_item.square} m2`}</Text>
           </View>
           <View style={styles.view_status}>
             <Image
               source={require('../assets/images/question.png')}
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
             <Text style={styles.txt_square}>
-              {`${post_item.status_id.code === 1 ? 'Chưa đặt' : 'Đã đặt'}`}
+              {`${post_item.status_id.code === 2 ? 'Đã đặt' : 'Chưa đặt'}`}
             </Text>
           </View>
         </View>
@@ -250,24 +247,28 @@ export default function PostDetail(props) {
         <Text style={styles.txt_detail}>Địa chỉ chi tiết</Text>
         <View style={styles.view_diachichitiet}>
           <View style={styles.view_province}>
-            <Text style={{ textAlign: 'center', fontSize: 14 }}>
+            <Text style={{textAlign: 'center', fontSize: 14}}>
               Số nhà, Đường
-                </Text>
+            </Text>
             <Text style={styles.txt_address_detail}>
               {post_item.address_detail.split(',')[0]}
             </Text>
           </View>
           <View style={styles.view_province}>
-            <Text style={{ textAlign: 'center', fontSize: 14 }}>
+            <Text style={{textAlign: 'center', fontSize: 14}}>
               Quận / Huyện
-                </Text>
-            <Text style={styles.txt_province}>{post_item.district_id.name}</Text>
+            </Text>
+            <Text style={styles.txt_province}>
+              {post_item.district_id.name}
+            </Text>
           </View>
           <View style={styles.view_province}>
-            <Text style={{ textAlign: 'center', fontSize: 14 }}>
+            <Text style={{textAlign: 'center', fontSize: 14}}>
               Tỉnh / Thành phố
-                </Text>
-            <Text style={styles.txt_province}>{post_item.province_id.name}</Text>
+            </Text>
+            <Text style={styles.txt_province}>
+              {post_item.province_id.name}
+            </Text>
           </View>
         </View>
       </View>
@@ -288,8 +289,8 @@ export default function PostDetail(props) {
 
       {/* nguoi dang*/}
       <TouchableHighlight style={styles.touch_hostid}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <View style={{ flex: 1, flexDirection: 'column' }}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={{flex: 1, flexDirection: 'column'}}>
             <Text style={styles.txt_nguoidang}>Người đăng</Text>
             <Text>{post_item.host_id.name}</Text>
           </View>
@@ -303,10 +304,9 @@ export default function PostDetail(props) {
           underlayColor="#ffceb588"
           style={styles.touch_datngay}
           onPress={() => {
-            bookPost()
-          }}
-        >
-          <Text style={{ textAlign: 'center' }}>Đặt ngay</Text>
+            bookPost();
+          }}>
+          <Text style={{textAlign: 'center'}}>Đặt ngay</Text>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor="#ffceb588"
@@ -321,41 +321,47 @@ export default function PostDetail(props) {
           onPress={() => {
             Linking.openURL(`tel:${post_item.host_id.mobile}`);
           }}>
-          <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
+          <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
         </TouchableHighlight>
       </View>
       {/* danh gia cua nguoi dung */}
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-          {rate.length == 0 ? '' : `Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
+      <View style={{paddingHorizontal: 10}}>
+        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+          {rate.length == 0
+            ? ''
+            : `Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
         </Text>
-        {rate.length == 0 ? <Text /> : rate.map(item => {
-          return (
-            <View>
-              <View style={{ paddingTop: 10, flex: 1, flexDirection: 'row' }}>
-                <Text style={{ marginRight: 10, fontSize: 16 }}>
-                  {`${item.account_id.name} đã đánh giá:`}
+        {rate.length == 0 ? (
+          <Text />
+        ) : (
+          rate.map(item => {
+            return (
+              <View>
+                <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
+                  <Text style={{marginRight: 10, fontSize: 16}}>
+                    {`${item.account_id.name} đã đánh giá:`}
+                  </Text>
+                  <Text style={{fontSize: 16}}>{item.star}</Text>
+                  <Image
+                    source={require('../assets/images/star.png')}
+                    style={{width: 10, height: 10}}
+                  />
+                </View>
+                <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
+                  {formatDate(new Date(item.created_at))}
                 </Text>
-                <Text style={{ fontSize: 16 }}>{item.star}</Text>
-                <Image
-                  source={require('../assets/images/star.png')}
-                  style={{ width: 10, height: 10 }}
-                />
+                <Text
+                  style={{
+                    paddingBottom: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'silver',
+                  }}>
+                  {item.description}
+                </Text>
               </View>
-              <Text style={{ fontSize: 12, color: 'gray', marginBottom: 7 }}>
-                {formatDate(new Date(item.created_at))}
-              </Text>
-              <Text
-                style={{
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'silver',
-                }}>
-                {item.description}
-              </Text>
-            </View>
-          );
-        })}
+            );
+          })
+        )}
       </View>
       {/* danh gia cua ban */}
       <View style={styles.view_contact}>
@@ -378,29 +384,25 @@ export default function PostDetail(props) {
           style={styles.input_rate}
           placeholder="Nhập đánh giá của bạn"
           placeholderTextColor="#333"
-          onChangeText={(text) => {
-            set_newRate((pre) => ({ ...pre, name: text, description: text }))
+          onChangeText={text => {
+            set_newRate(pre => ({...pre, name: text, description: text}));
           }}
         />
         <TouchableHighlight
-          underlayColor='palegreen'
+          underlayColor="palegreen"
           disabled={
-            (newRate.description !== ''
-              && newRate.star !== 0) ? false : true
+            newRate.description !== '' && newRate.star !== 0 ? false : true
           }
           style={styles.touch_rate}
           onPress={() => {
             sendReview();
           }}>
-          <Text style={{ textAlign: 'center' }}>Đánh giá</Text>
+          <Text style={{textAlign: 'center'}}>Đánh giá</Text>
         </TouchableHighlight>
       </View>
     </ScrollView>
   );
 }
-
-
-
 
 const styles = StyleSheet.create({
   view_img: {
@@ -528,7 +530,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingLeft: 0,
   },
-  txt_detail: { fontSize: 18, marginBottom: 10, fontWeight: 'bold' },
+  txt_detail: {fontSize: 18, marginBottom: 10, fontWeight: 'bold'},
   txt_posttype: {
     color: 'gray',
     textTransform: 'uppercase',
