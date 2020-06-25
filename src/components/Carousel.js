@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import CarouselItem from './CarouselItem';
 
-const { width, heigth } = Dimensions.get('window');
+const {width, heigth} = Dimensions.get('window');
 let flatList;
 
 function infiniteScroll(dataList) {
@@ -17,7 +17,7 @@ function infiniteScroll(dataList) {
   let scrollValue = 0,
     scrolled = 0;
 
-  setInterval(function () {
+  setInterval(function() {
     scrolled++;
     if (scrolled < numberOfData) scrollValue = scrollValue + width;
     else {
@@ -25,11 +25,11 @@ function infiniteScroll(dataList) {
       scrolled = 0;
     }
 
-    this.flatList.scrollToOffset({ animated: true, offset: scrollValue });
-  }, 3000);
+    this.flatList.scrollToOffset({animated: true, offset: scrollValue});
+  }, 6000);
 }
 
-const Carousel = ({ data }) => {
+const Carousel = ({data}) => {
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
   const [dataList, setDataList] = useState(data);
@@ -55,11 +55,11 @@ const Carousel = ({ data }) => {
           scrollEventThrottle={16}
           decelerationRate={'fast'}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => {
+          renderItem={({item}) => {
             return <CarouselItem item={item} />;
           }}
           onScroll={Animated.event([
-            { nativeEvent: { contentOffset: { x: scrollX } } },
+            {nativeEvent: {contentOffset: {x: scrollX}}},
           ])}
         />
 
@@ -95,7 +95,7 @@ const Carousel = ({ data }) => {
 };
 
 const styles = StyleSheet.create({
-  dotView: { flexDirection: 'row', justifyContent: 'center' },
+  dotView: {flexDirection: 'row', justifyContent: 'center'},
 });
 
 export default Carousel;
