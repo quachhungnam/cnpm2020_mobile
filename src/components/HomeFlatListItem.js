@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
+import {your_ip} from '../api/your_ip';
+
 export default class HomeFlatListItem extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +13,7 @@ export default class HomeFlatListItem extends Component {
 
   render() {
     const {item} = this.props;
+    console.log('img: ' + item);
     return (
       <>
         <TouchableOpacity
@@ -19,6 +22,7 @@ export default class HomeFlatListItem extends Component {
             this.props.navigation.navigate('Details', {
               id: item._id,
               statusCode: item.status_id.code,
+              post_item: item,
             });
           }}>
           <View
@@ -31,18 +35,31 @@ export default class HomeFlatListItem extends Component {
               borderBottomColor: 'white',
               borderBottomWidth: 2,
             }}>
-            <Image
-              //   source={{
-              //     uri: this.props.item.imageUrl,
-              //   }}
-              source={require('../assets/images/room.jpg')}
-              style={{
-                width: 100,
-                height: 100,
-                margin: 10,
-                borderRadius: 5,
-              }}
-            />
+            {item.post_image[0] === undefined && (
+              <Image
+                source={require('../assets/images/room.jpg')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  margin: 10,
+                  borderRadius: 5,
+                }}
+              />
+            )}
+            {item.post_image[0] !== undefined && (
+              <Image
+                source={{
+                  uri: your_ip + ':3000/' + item.post_image[0].path,
+                }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  margin: 10,
+                  borderRadius: 5,
+                }}
+              />
+            )}
+
             <View
               style={{
                 flex: 1,

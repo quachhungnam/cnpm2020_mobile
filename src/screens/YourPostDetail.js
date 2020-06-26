@@ -48,6 +48,12 @@ export default function YourPostDetail(props) {
   }, []);
 
   const set_post_img = () => {
+    if (post_item.post_image.length === 0) {
+      post_item.post_image.push({
+        _id: new Date(),
+        path: 'uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+      });
+    }
     let arr_images = post_item.post_image;
     let arr_uri = [];
     for (let i = 0; i < arr_images.length; i++) {

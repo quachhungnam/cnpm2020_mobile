@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {your_ip} from '../api/your_ip';
 
 export default class PostYouBookFlatListItem extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class PostYouBookFlatListItem extends Component {
 
   render() {
     const {trans} = this.props;
+    console.log('hihi: ' + JSON.stringify(trans));
     return (
       <>
         <TouchableOpacity
@@ -19,6 +21,7 @@ export default class PostYouBookFlatListItem extends Component {
             this.props.navigation.navigate('PostYouBookDetails', {
               id: trans.post_id._id,
               tranId: trans._id,
+              post_item: trans.post_id,
             });
           }}>
           <View
@@ -31,18 +34,34 @@ export default class PostYouBookFlatListItem extends Component {
               borderBottomColor: 'white',
               borderBottomWidth: 2,
             }}>
-            <Image
-              //   source={{
-              //     uri: this.props.trans.imageUrl,
-              //   }}
-              source={require('../assets/images/room.jpg')}
-              style={{
-                width: 100,
-                height: 100,
-                margin: 10,
-                borderRadius: 5,
-              }}
-            />
+            {trans.post_id.post_image.length === 0 && (
+              <Image
+                source={{
+                  uri:
+                    your_ip +
+                    ':3000/uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+                }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  margin: 10,
+                  borderRadius: 5,
+                }}
+              />
+            )}
+            {trans.post_id.post_image[0] !== undefined && (
+              <Image
+                source={{
+                  uri: your_ip + ':3000/' + trans.post_id.post_image[0].path,
+                }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  margin: 10,
+                  borderRadius: 5,
+                }}
+              />
+            )}
             <View
               style={{
                 flex: 1,

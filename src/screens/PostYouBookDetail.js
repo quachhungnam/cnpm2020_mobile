@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {getPost} from '../api/post_api';
 import {getRateOfPost} from '../api/rate_api';
 import {delTransaction} from '../api/transaction_api';
-
-//import { Dropdown } from 'react-native-material-dropdown';
+import {AuthContext} from '../navigation/MyTabs';
+import {your_ip} from '../api/your_ip';
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -25,22 +25,36 @@ export default class PostYouBookDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: [
-        'https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-        'https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-        'https://images.pexels.com/photos/1562/italian-landscape-mountains-nature.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-        'https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // Network image
-      ],
       post: {},
       rate: [],
       user_token: '',
+      img_post: [],
     };
   }
 
   componentDidMount() {
     this.getToken();
     this.refreshDataFromServer();
+    this.set_post_img();
   }
+
+  set_post_img = () => {
+    const {post_item} = this.props.route.params;
+    if (post_item.post_image.length === 0) {
+      post_item.post_image.push({
+        _id: new Date(),
+        path: 'uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+      });
+    }
+    let arr_images = post_item.post_image;
+    let arr_uri = [];
+    for (let i = 0; i < arr_images.length; i++) {
+      let uri = your_ip + ':3000/' + arr_images[i].path;
+      arr_uri.push(uri);
+    }
+    this.setState({img_post: arr_uri});
+    //set_img_post(arr_uri);
+  };
 
   refreshDataFromServer = () => {
     const {id} = this.props.route.params;
@@ -149,7 +163,7 @@ export default class PostYouBookDetail extends Component {
         <ScrollView
           style={{backgroundColor: '#fff'}}
           showsVerticalScrollIndicator={true}>
-          <SliderBox images={this.state.images} />
+          <SliderBox images={this.state.img_post} />
           <View
             style={{
               marginTop: 10,
@@ -450,7 +464,7 @@ export default class PostYouBookDetail extends Component {
         <ScrollView
           style={{backgroundColor: '#fff'}}
           showsVerticalScrollIndicator={true}>
-          <SliderBox images={this.state.images} />
+          <SliderBox images={this.state.img_post} />
           <View
             style={{
               marginTop: 10,

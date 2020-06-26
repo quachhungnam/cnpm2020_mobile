@@ -15,13 +15,7 @@ import StarRating from 'react-native-star-rating';
 import {getRateOfPost2, addRate} from '../api/rate_api';
 import {addTransaction} from '../api/transaction_api';
 import {AuthContext} from '../navigation/MyTabs';
-
-var images = [
-  'https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://images.pexels.com/photos/1562/italian-landscape-mountains-nature.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500', // Network image
-];
+import {your_ip} from '../api/your_ip';
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -50,14 +44,30 @@ function calStarAverage(rate) {
 export default function PostDetail(props) {
   const {token} = React.useContext(AuthContext);
   const {post_item} = props.route.params;
-
   const [rate, setRate] = useState([]);
   const [img_post, set_img_post] = useState(post_item.post_image);
   const [newRate, set_newRate] = useState({name: '', description: '', star: 0});
 
   useEffect(() => {
     getAllRate();
+    set_post_img();
   }, []);
+
+  const set_post_img = () => {
+    if (post_item.post_image.length === 0) {
+      post_item.post_image.push({
+        _id: new Date(),
+        path: 'uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+      });
+    }
+    let arr_images = post_item.post_image;
+    let arr_uri = [];
+    for (let i = 0; i < arr_images.length; i++) {
+      let uri = your_ip + ':3000/' + arr_images[i].path;
+      arr_uri.push(uri);
+    }
+    set_img_post(arr_uri);
+  };
 
   const onStarRatingPress = rating => {
     set_newRate(prevState => ({...prevState, star: rating}));
@@ -207,7 +217,7 @@ export default function PostDetail(props) {
       style={{backgroundColor: '#fff'}}
       showsVerticalScrollIndicator={true}>
       {/* hoat anh */}
-      <SliderBox images={images} />
+      <SliderBox images={img_post} />
       {/* view 2 hang dau */}
       <View style={styles.view_2rowdau}>
         {/* tieu de post, loai post, va gia */}

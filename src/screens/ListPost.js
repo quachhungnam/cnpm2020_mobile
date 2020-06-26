@@ -25,7 +25,7 @@ function wait(timeout) {
 }
 
 function Header_List(props) {
-  const [posttypes, set_posttypes] = useState([{name: 'LOẠI TIN', _id: -1}]);
+  const [posttypes, set_posttypes] = useState([{name: 'Loại tin', _id: -1}]);
   const [select_posttype, set_select_posttype] = useState(-1);
 
   const [provinces, set_provinces] = useState([
@@ -50,7 +50,7 @@ function Header_List(props) {
         return;
       } else {
         let new_arr = res.post_type;
-        new_arr.unshift({name: 'LOẠI TIN', _id: -1});
+        new_arr.unshift({name: 'Loại tin', _id: -1});
         set_posttypes(new_arr);
         // set_post_infor((pre) => ({ ...pre, post_type_id: res.post_type[0]._id }))
       }
@@ -194,7 +194,7 @@ function Header_List(props) {
           autoCorrect={false}
           onPress={() => {
             if (select_posttype === -1 || select_province === -1) {
-              return alert('Vui lòng chọn tỉnh/thành và loại tin');
+              return alert('Vui lòng chọn tỉnh/ thành phố và loại tin');
             }
             props.navigation.navigate('SearchScreen', {});
           }}>
