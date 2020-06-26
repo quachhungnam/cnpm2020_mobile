@@ -26,7 +26,7 @@ function infiniteScroll(dataList) {
     }
 
     this.flatList.scrollToOffset({animated: true, offset: scrollValue});
-  }, 6000);
+  }, 5000);
 }
 
 const Carousel = ({data}) => {
@@ -58,9 +58,10 @@ const Carousel = ({data}) => {
           renderItem={({item}) => {
             return <CarouselItem item={item} />;
           }}
-          onScroll={Animated.event([
-            {nativeEvent: {contentOffset: {x: scrollX}}},
-          ])}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {x: scrollX}}}],
+            {useNativeDriver: false},
+          )}
         />
 
         <View style={styles.dotView}>

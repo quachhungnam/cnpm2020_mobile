@@ -337,9 +337,13 @@ export default function PostDetail(props) {
       {/* danh gia cua nguoi dung */}
       <View style={{paddingHorizontal: 10}}>
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-          {rate.length == 0
-            ? ''
-            : `Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
+          {rate.length == 0 ? (
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+              Chưa có đánh giá nào
+            </Text>
+          ) : (
+            `Đánh giá của người dùng: ${calStarAverage(rate)}/5`
+          )}
         </Text>
         {rate.length == 0 ? (
           <Text />

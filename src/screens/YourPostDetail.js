@@ -375,11 +375,16 @@ export default function YourPostDetail(props) {
       {/* danh gia cua nguoi dung */}
       <View style={{paddingHorizontal: 10}}>
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-          Đánh giá của người dùng
-          {rate.length == 0 ? '' : `${calStarAverage(rate)}/5`}
+          {rate.length == 0 ? (
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+              Chưa có đánh giá nào
+            </Text>
+          ) : (
+            `Đánh giá của người dùng: ${calStarAverage(rate)}/5`
+          )}
         </Text>
         {rate.length == 0 ? (
-          <Text>Chưa có đánh giá nào</Text>
+          <Text />
         ) : (
           rate.map(item => {
             return (
