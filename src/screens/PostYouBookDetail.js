@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Text, View, ScrollView, Image, Linking, Alert} from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
-import {SliderBox} from 'react-native-image-slider-box';
+import React, { Component } from 'react';
+import { Text, View, ScrollView, Image, Linking, Alert } from 'react-native';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { SliderBox } from 'react-native-image-slider-box';
 import AsyncStorage from '@react-native-community/async-storage';
-import {getPost} from '../api/post_api';
-import {getRateOfPost} from '../api/rate_api';
-import {delTransaction} from '../api/transaction_api';
-import {AuthContext} from '../navigation/MyTabs';
-import {your_ip} from '../api/your_ip';
+import { getPost } from '../api/post_api';
+import { getRateOfPost } from '../api/rate_api';
+import { delTransaction } from '../api/transaction_api';
+import { AuthContext } from '../navigation/MyTabs';
+import { your_ip } from '../api/your_ip';
 
 function formatDate(date) {
   const day = `0${date.getDate()}`.slice(-2);
@@ -39,25 +39,25 @@ export default class PostYouBookDetail extends Component {
   }
 
   set_post_img = () => {
-    const {post_item} = this.props.route.params;
+    const { post_item } = this.props.route.params;
     if (post_item.post_image.length === 0) {
       post_item.post_image.push({
         _id: new Date(),
-        path: 'uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+        path: 'uploads/home.jpg',
       });
     }
     let arr_images = post_item.post_image;
     let arr_uri = [];
     for (let i = 0; i < arr_images.length; i++) {
-      let uri = your_ip + ':3000/' + arr_images[i].path;
+      let uri = your_ip + '/' + arr_images[i].path;
       arr_uri.push(uri);
     }
-    this.setState({img_post: arr_uri});
+    this.setState({ img_post: arr_uri });
     //set_img_post(arr_uri);
   };
 
   refreshDataFromServer = () => {
-    const {id} = this.props.route.params;
+    const { id } = this.props.route.params;
     getPost(id)
       .then(post => {
         this.setState({
@@ -107,10 +107,10 @@ export default class PostYouBookDetail extends Component {
             [
               {
                 text: 'OK',
-                onPress: () => {},
+                onPress: () => { },
               },
             ],
-            {cancelable: false},
+            { cancelable: false },
           );
           return;
         }
@@ -121,10 +121,10 @@ export default class PostYouBookDetail extends Component {
             [
               {
                 text: 'OK',
-                onPress: () => {},
+                onPress: () => { },
               },
             ],
-            {cancelable: false},
+            { cancelable: false },
           );
         }
       },
@@ -139,7 +139,7 @@ export default class PostYouBookDetail extends Component {
         [
           {
             text: 'Không',
-            onPress: () => {},
+            onPress: () => { },
             style: 'cancel',
           },
           {
@@ -149,7 +149,7 @@ export default class PostYouBookDetail extends Component {
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } catch (err) {
       console.error(err);
@@ -157,11 +157,11 @@ export default class PostYouBookDetail extends Component {
   };
 
   render() {
-    const {post, rate} = this.state;
+    const { post, rate } = this.state;
     if (Object.keys(post).length !== 0 && rate !== undefined) {
       return (
         <ScrollView
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: '#fff' }}
           showsVerticalScrollIndicator={true}>
           <SliderBox images={this.state.img_post} />
           <View
@@ -213,7 +213,7 @@ export default class PostYouBookDetail extends Component {
                 }}>
                 <Image
                   source={require('../assets/images/cube.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -233,7 +233,7 @@ export default class PostYouBookDetail extends Component {
                 }}>
                 <Image
                   source={require('../assets/images/question.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -253,7 +253,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Mô tả chi tiết
             </Text>
             <Text>{post.description}</Text>
@@ -264,7 +264,7 @@ export default class PostYouBookDetail extends Component {
               paddingHorizontal: 10,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Địa chỉ chi tiết
             </Text>
             <View
@@ -279,7 +279,7 @@ export default class PostYouBookDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Số nhà, Đường
                 </Text>
                 <Text
@@ -297,7 +297,7 @@ export default class PostYouBookDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Quận / Huyện
                 </Text>
                 <Text
@@ -315,7 +315,7 @@ export default class PostYouBookDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Tỉnh / Thành phố
                 </Text>
                 <Text
@@ -336,7 +336,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Số điện thoại liên hệ
             </Text>
 
@@ -349,7 +349,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Ngày đăng
             </Text>
             <Text>
@@ -364,8 +364,8 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Text
                   style={{
                     fontSize: 18,
@@ -399,7 +399,7 @@ export default class PostYouBookDetail extends Component {
               onPress={() => {
                 this.delPost();
               }}>
-              <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
+              <Text style={{ textAlign: 'center' }}>Hủy đặt</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -414,7 +414,7 @@ export default class PostYouBookDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
+              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
 
@@ -425,23 +425,23 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
               {`Đánh giá của người dùng: ${calStarAverage(rate)}/5`}
             </Text>
             {rate.map(item => {
               return (
                 <View>
-                  <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
-                    <Text style={{marginRight: 10, fontSize: 16}}>
+                  <View style={{ paddingTop: 10, flex: 1, flexDirection: 'row' }}>
+                    <Text style={{ marginRight: 10, fontSize: 16 }}>
                       {`${item.account_id.name} đã đánh giá:`}
                     </Text>
-                    <Text style={{fontSize: 16}}>{item.star}</Text>
+                    <Text style={{ fontSize: 16 }}>{item.star}</Text>
                     <Image
                       source={require('../assets/images/star.png')}
-                      style={{width: 10, height: 10}}
+                      style={{ width: 10, height: 10 }}
                     />
                   </View>
-                  <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
+                  <Text style={{ fontSize: 12, color: 'gray', marginBottom: 7 }}>
                     {formatDate(new Date(item.created_at))}
                   </Text>
                   <Text
@@ -462,7 +462,7 @@ export default class PostYouBookDetail extends Component {
     if (Object.keys(post).length !== 0 && rate === undefined) {
       return (
         <ScrollView
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: '#fff' }}
           showsVerticalScrollIndicator={true}>
           <SliderBox images={this.state.img_post} />
           <View
@@ -514,7 +514,7 @@ export default class PostYouBookDetail extends Component {
                 }}>
                 <Image
                   source={require('../assets/images/cube.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -534,7 +534,7 @@ export default class PostYouBookDetail extends Component {
                 }}>
                 <Image
                   source={require('../assets/images/question.png')}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
                 <Text
                   style={{
@@ -554,7 +554,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Mô tả chi tiết
             </Text>
             <Text>{post.description}</Text>
@@ -565,7 +565,7 @@ export default class PostYouBookDetail extends Component {
               paddingHorizontal: 10,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Địa chỉ chi tiết
             </Text>
             <View
@@ -580,7 +580,7 @@ export default class PostYouBookDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Số nhà, Đường
                 </Text>
                 <Text
@@ -598,7 +598,7 @@ export default class PostYouBookDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Quận / Huyện
                 </Text>
                 <Text
@@ -616,7 +616,7 @@ export default class PostYouBookDetail extends Component {
                   flexDirection: 'column',
                   textAlign: 'center',
                 }}>
-                <Text style={{textAlign: 'center', fontSize: 14}}>
+                <Text style={{ textAlign: 'center', fontSize: 14 }}>
                   Tỉnh / Thành phố
                 </Text>
                 <Text
@@ -637,7 +637,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Số điện thoại liên hệ
             </Text>
 
@@ -650,7 +650,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
               Ngày đăng
             </Text>
             <Text>
@@ -665,8 +665,8 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Text
                   style={{
                     fontSize: 18,
@@ -700,7 +700,7 @@ export default class PostYouBookDetail extends Component {
               onPress={() => {
                 this.delPost();
               }}>
-              <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
+              <Text style={{ textAlign: 'center' }}>Hủy đặt</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="#ffceb588"
@@ -715,7 +715,7 @@ export default class PostYouBookDetail extends Component {
               onPress={() => {
                 Linking.openURL(`tel:${post.host_id.mobile}`);
               }}>
-              <Text style={{textAlign: 'center'}}>Gọi điện thoại</Text>
+              <Text style={{ textAlign: 'center' }}>Gọi điện thoại</Text>
             </TouchableHighlight>
           </View>
 
@@ -726,7 +726,7 @@ export default class PostYouBookDetail extends Component {
               borderRadius: 20,
               backgroundColor: 'white',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
               Chưa có đánh giá nào
             </Text>
           </View>

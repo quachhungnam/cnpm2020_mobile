@@ -1,5 +1,5 @@
-import { your_ip } from './your_ip'
-const api_posttypes = `${your_ip}:3000/posttypes`;
+import {your_ip} from './your_ip';
+const api_posttypes = `${your_ip}/posttypes`;
 
 async function get_one_posttype(posttypeId) {
   try {
@@ -31,6 +31,6 @@ async function get_all_posttypes2() {
   }
 }
 
-export { get_all_posttypes };
-export { get_all_posttypes2 };
-export { get_one_posttype };
+export {get_all_posttypes};
+export {get_all_posttypes2};
+export {get_one_posttype};

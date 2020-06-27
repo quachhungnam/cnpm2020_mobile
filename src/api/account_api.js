@@ -1,5 +1,5 @@
 import {your_ip} from './your_ip';
-const api_accounts = `${your_ip}:3000/accounts`;
+const api_accounts = `${your_ip}/accounts`;
 import RNFetchBlob from 'rn-fetch-blob';
 
 async function login(user) {

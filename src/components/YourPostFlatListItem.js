@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,14 @@ import {
   Alert,
 } from 'react-native';
 
-import {your_ip} from '../api/your_ip';
+import { your_ip } from '../api/your_ip';
 
 export default function YourPostFlatListItem(props) {
   const post = props.post;
 
   const on_delete_post = () => {
     Alert.alert('Alert', 'Bạn muốn xóa tin này?', [
-      {text: 'Hủy', onPress: () => {}, style: 'cancel'},
+      { text: 'Hủy', onPress: () => { }, style: 'cancel' },
       {
         text: 'Xóa',
         onPress: () => {
@@ -28,26 +28,25 @@ export default function YourPostFlatListItem(props) {
 
   return (
     <TouchableOpacity
-      style={{backgroundColor: 'white'}}
+      style={{ backgroundColor: 'white' }}
       onLongPress={() => {
         on_delete_post();
       }}
       onPress={() => {
-        props.navigation.navigate('YourPostDetails', {post_item: post});
+        props.navigation.navigate('YourPostDetails', { post_item: post });
       }}>
       <View style={styles.view_out}>
         {props.post.post_image[0] === undefined && (
           <Image
             source={{
-              uri:
-                your_ip + ':3000/uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+              uri: your_ip + '/uploads/home.jpg',
             }}
             style={styles.view_image}
           />
         )}
         {props.post.post_image[0] !== undefined && (
           <Image
-            source={{uri: your_ip + ':3000/' + props.post.post_image[0].path}}
+            source={{ uri: your_ip + '/' + props.post.post_image[0].path }}
             style={styles.view_image}
           />
         )}
@@ -60,7 +59,7 @@ export default function YourPostFlatListItem(props) {
           <Text style={styles.txt_address}>
             {`${props.post.address_detail}, ${
               props.post.district_id.name_with_type
-            }, ${props.post.province_id.name_with_type}`}
+              }, ${props.post.province_id.name_with_type}`}
           </Text>
         </View>
       </View>

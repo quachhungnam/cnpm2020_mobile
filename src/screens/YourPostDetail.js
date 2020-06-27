@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -9,12 +9,12 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
-import {SliderBox} from 'react-native-image-slider-box';
-import {updatePostStatus, delete_a_post} from '../api/post_api';
-import {getRateOfPost2} from '../api/rate_api';
-import {AuthContext} from '../navigation/MyTabs';
-import {your_ip} from '../api/your_ip';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { SliderBox } from 'react-native-image-slider-box';
+import { updatePostStatus, delete_a_post } from '../api/post_api';
+import { getRateOfPost2 } from '../api/rate_api';
+import { AuthContext } from '../navigation/MyTabs';
+import { your_ip } from '../api/your_ip';
 
 var images = [
   'https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -36,8 +36,8 @@ function calStarAverage(rate) {
 }
 
 export default function YourPostDetail(props) {
-  const {token} = React.useContext(AuthContext);
-  const {post_item} = props.route.params;
+  const { token } = React.useContext(AuthContext);
+  const { post_item } = props.route.params;
   const post_image = post_item.post_image;
   const [rate, setRate] = useState([]);
   const [img_post, set_img_post] = useState([]);
@@ -51,13 +51,13 @@ export default function YourPostDetail(props) {
     if (post_item.post_image.length === 0) {
       post_item.post_image.push({
         _id: new Date(),
-        path: 'uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+        path: 'uploads/home.jpg',
       });
     }
     let arr_images = post_item.post_image;
     let arr_uri = [];
     for (let i = 0; i < arr_images.length; i++) {
-      let uri = your_ip + ':3000/' + arr_images[i].path;
+      let uri = your_ip + '/' + arr_images[i].path;
       arr_uri.push(uri);
     }
     set_img_post(arr_uri);
@@ -70,7 +70,7 @@ export default function YourPostDetail(props) {
       } else {
         setRate(res.rate);
       }
-    } catch (ex) {}
+    } catch (ex) { }
   };
 
   //xac nhan cho thue
@@ -88,10 +88,10 @@ export default function YourPostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => {},
+              onPress: () => { },
             },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
         return;
       }
@@ -102,10 +102,10 @@ export default function YourPostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => {},
+              onPress: () => { },
             },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
       }
     });
@@ -119,7 +119,7 @@ export default function YourPostDetail(props) {
         [
           {
             text: 'Không',
-            onPress: () => {},
+            onPress: () => { },
             style: 'cancel',
           },
           {
@@ -129,7 +129,7 @@ export default function YourPostDetail(props) {
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } catch (err) {
       console.error(err);
@@ -147,10 +147,10 @@ export default function YourPostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => {},
+              onPress: () => { },
             },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
         return;
       }
@@ -161,10 +161,10 @@ export default function YourPostDetail(props) {
           [
             {
               text: 'OK',
-              onPress: () => {},
+              onPress: () => { },
             },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
       }
     });
@@ -178,7 +178,7 @@ export default function YourPostDetail(props) {
         [
           {
             text: 'Không',
-            onPress: () => {},
+            onPress: () => { },
             style: 'cancel',
           },
           {
@@ -188,7 +188,7 @@ export default function YourPostDetail(props) {
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } catch (err) {
       console.error(err);
@@ -205,12 +205,12 @@ export default function YourPostDetail(props) {
         alert('Thành công!');
         props.navigation.navigate('ListYourPostScreen');
       }
-    } catch (ex) {}
+    } catch (ex) { }
   };
 
   const on_delete_post = () => {
     Alert.alert('Alert', 'Bạn muốn xóa tin này?', [
-      {text: 'no', onPress: () => {}, style: 'cancel'},
+      { text: 'no', onPress: () => { }, style: 'cancel' },
       {
         text: 'yes',
         onPress: () => {
@@ -235,7 +235,7 @@ export default function YourPostDetail(props) {
 
   return (
     <ScrollView
-      style={{backgroundColor: '#fff'}}
+      style={{ backgroundColor: '#fff' }}
       showsVerticalScrollIndicator={true}>
       {/* hoat anh */}
       <SliderBox images={img_post} />
@@ -252,14 +252,14 @@ export default function YourPostDetail(props) {
           <View style={styles.view_square}>
             <Image
               source={require('../assets/images/cube.png')}
-              style={{width: 30, height: 30}}
+              style={{ width: 30, height: 30 }}
             />
             <Text style={styles.txt_square}>{`${post_item.square} m2`}</Text>
           </View>
           <View style={styles.view_status}>
             <Image
               source={require('../assets/images/question.png')}
-              style={{width: 30, height: 30}}
+              style={{ width: 30, height: 30 }}
             />
             <Text style={styles.txt_square}>
               {`${post_item.status_id.code === 2 ? 'Đã đặt' : 'Chưa đặt'}`}
@@ -278,7 +278,7 @@ export default function YourPostDetail(props) {
         <Text style={styles.txt_detail}>Địa chỉ chi tiết</Text>
         <View style={styles.view_diachichitiet}>
           <View style={styles.view_province}>
-            <Text style={{textAlign: 'center', fontSize: 14}}>
+            <Text style={{ textAlign: 'center', fontSize: 14 }}>
               Số nhà, Đường
             </Text>
             <Text style={styles.txt_address_detail}>
@@ -286,7 +286,7 @@ export default function YourPostDetail(props) {
             </Text>
           </View>
           <View style={styles.view_province}>
-            <Text style={{textAlign: 'center', fontSize: 14}}>
+            <Text style={{ textAlign: 'center', fontSize: 14 }}>
               Quận / Huyện
             </Text>
             <Text style={styles.txt_province}>
@@ -294,7 +294,7 @@ export default function YourPostDetail(props) {
             </Text>
           </View>
           <View style={styles.view_province}>
-            <Text style={{textAlign: 'center', fontSize: 14}}>
+            <Text style={{ textAlign: 'center', fontSize: 14 }}>
               Tỉnh / Thành phố
             </Text>
             <Text style={styles.txt_province}>
@@ -320,8 +320,8 @@ export default function YourPostDetail(props) {
 
       {/* nguoi dang*/}
       <TouchableHighlight style={styles.touch_hostid}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <View style={{flex: 1, flexDirection: 'column'}}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ flex: 1, flexDirection: 'column' }}>
             <Text style={styles.txt_nguoidang}>Người đăng</Text>
             <Text>{post_item.host_id.name}</Text>
           </View>
@@ -344,7 +344,7 @@ export default function YourPostDetail(props) {
             onPress={() => {
               delPost();
             }}>
-            <Text style={{textAlign: 'center'}}>Hủy đặt</Text>
+            <Text style={{ textAlign: 'center' }}>Hủy đặt</Text>
           </TouchableHighlight>
         )}
         <TouchableHighlight
@@ -354,7 +354,7 @@ export default function YourPostDetail(props) {
           onPress={() => {
             go_edit_screen1();
           }}>
-          <Text style={{textAlign: 'center'}}>Sửa tin</Text>
+          <Text style={{ textAlign: 'center' }}>Sửa tin</Text>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor="#ffceb588"
@@ -369,51 +369,51 @@ export default function YourPostDetail(props) {
           onPress={() => {
             on_delete_post();
           }}>
-          <Text style={{textAlign: 'center'}}>Xóa tin</Text>
+          <Text style={{ textAlign: 'center' }}>Xóa tin</Text>
         </TouchableHighlight>
       </View>
       {/* danh gia cua nguoi dung */}
-      <View style={{paddingHorizontal: 10}}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+      <View style={{ paddingHorizontal: 10 }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
           {rate.length == 0 ? (
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
               Chưa có đánh giá nào
             </Text>
           ) : (
-            `Đánh giá của người dùng: ${calStarAverage(rate)}/5`
-          )}
+              `Đánh giá của người dùng: ${calStarAverage(rate)}/5`
+            )}
         </Text>
         {rate.length == 0 ? (
           <Text />
         ) : (
-          rate.map(item => {
-            return (
-              <View>
-                <View style={{paddingTop: 10, flex: 1, flexDirection: 'row'}}>
-                  <Text style={{marginRight: 10, fontSize: 16}}>
-                    {`${item.account_id.name} đã đánh giá:`}
+            rate.map(item => {
+              return (
+                <View>
+                  <View style={{ paddingTop: 10, flex: 1, flexDirection: 'row' }}>
+                    <Text style={{ marginRight: 10, fontSize: 16 }}>
+                      {`${item.account_id.name} đã đánh giá:`}
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>{item.star}</Text>
+                    <Image
+                      source={require('../assets/images/star.png')}
+                      style={{ width: 10, height: 10 }}
+                    />
+                  </View>
+                  <Text style={{ fontSize: 12, color: 'gray', marginBottom: 7 }}>
+                    {formatDate(new Date(item.created_at))}
                   </Text>
-                  <Text style={{fontSize: 16}}>{item.star}</Text>
-                  <Image
-                    source={require('../assets/images/star.png')}
-                    style={{width: 10, height: 10}}
-                  />
+                  <Text
+                    style={{
+                      paddingBottom: 10,
+                      borderBottomWidth: 1,
+                      borderBottomColor: 'silver',
+                    }}>
+                    {item.description}
+                  </Text>
                 </View>
-                <Text style={{fontSize: 12, color: 'gray', marginBottom: 7}}>
-                  {formatDate(new Date(item.created_at))}
-                </Text>
-                <Text
-                  style={{
-                    paddingBottom: 10,
-                    borderBottomWidth: 1,
-                    borderBottomColor: 'silver',
-                  }}>
-                  {item.description}
-                </Text>
-              </View>
-            );
-          })
-        )}
+              );
+            })
+          )}
       </View>
       {/* trang thai*/}
       <View
@@ -422,7 +422,7 @@ export default function YourPostDetail(props) {
           borderRadius: 20,
           backgroundColor: 'white',
         }}>
-        <Text style={{fontSize: 18, marginBottom: 10, fontWeight: 'bold'}}>
+        <Text style={{ fontSize: 18, marginBottom: 10, fontWeight: 'bold' }}>
           Trạng thái tin
         </Text>
         {post_item.status_id.code === 0 && (
@@ -444,7 +444,7 @@ export default function YourPostDetail(props) {
             onPress={() => {
               confirmRent();
             }}>
-            <Text style={{textAlign: 'center'}}>Đã cho thuê</Text>
+            <Text style={{ textAlign: 'center' }}>Đã cho thuê</Text>
           </TouchableHighlight>
         )}
       </View>
@@ -585,7 +585,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingLeft: 0,
   },
-  txt_detail: {fontSize: 18, marginBottom: 10, fontWeight: 'bold'},
+  txt_detail: { fontSize: 18, marginBottom: 10, fontWeight: 'bold' },
   txt_posttype: {
     color: 'gray',
     textTransform: 'uppercase',

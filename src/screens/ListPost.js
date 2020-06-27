@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -8,15 +8,15 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import { Picker } from '@react-native-community/picker';
 import Carousel from '../components/Carousel';
-import {dummyData} from '../data/DataCarousel';
+import { dummyData } from '../data/DataCarousel';
 import PostItem from './PostItem';
 
-import {getPostsFromServer2} from '../api/post_api';
-import {get_all_posttypes2} from '../api/posttype_api';
-import {get_all_province2} from '../api/province_api';
-import {get_district_with_province} from '../api/district_api';
+import { getPostsFromServer2 } from '../api/post_api';
+import { get_all_posttypes2 } from '../api/posttype_api';
+import { get_all_province2 } from '../api/province_api';
+import { get_district_with_province } from '../api/district_api';
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -25,16 +25,15 @@ function wait(timeout) {
 }
 
 function Header_List(props) {
-  const [posttypes, set_posttypes] = useState([{name: 'Loại tin', _id: -1}]);
+  const [posttypes, set_posttypes] = useState([{ name: 'Loại tin', _id: -1 }]);
   const [select_posttype, set_select_posttype] = useState(-1);
-
   const [provinces, set_provinces] = useState([
-    {name: 'Tỉnh/ Thành phố', code: -1},
+    { name: 'Tỉnh/ Thành phố', code: -1 },
   ]);
   const [select_province, set_select_province] = useState(-1);
 
   const [districts, set_districts] = useState([
-    {name: 'Huyện/ Quận', code: -1},
+    { name: 'Huyện/ Quận', code: -1 },
   ]);
   const [select_district, set_select_district] = useState(-1);
 
@@ -50,11 +49,11 @@ function Header_List(props) {
         return;
       } else {
         let new_arr = res.post_type;
-        new_arr.unshift({name: 'Loại tin', _id: -1});
+        new_arr.unshift({ name: 'Loại tin', _id: -1 });
         set_posttypes(new_arr);
         // set_post_infor((pre) => ({ ...pre, post_type_id: res.post_type[0]._id }))
       }
-    } catch (ex) {}
+    } catch (ex) { }
   };
 
   const get_provinces = async () => {
@@ -64,10 +63,10 @@ function Header_List(props) {
         return;
       } else {
         let new_arr = res.data.provinces;
-        new_arr.unshift({name: 'Tỉnh/ Thành phố', code: -1});
+        new_arr.unshift({ name: 'Tỉnh/ Thành phố', code: -1 });
         set_provinces(new_arr);
       }
-    } catch (ex) {}
+    } catch (ex) { }
   };
 
   const change_province = async item => {
@@ -79,18 +78,18 @@ function Header_List(props) {
       };
       set_select_province(item);
       if (item == -1) {
-        set_districts([{name: 'Huyện/ Quận', code: -1}]);
+        set_districts([{ name: 'Huyện/ Quận', code: -1 }]);
         condition.district_code = -1;
         props.filter_post(condition);
         return;
       } else {
         const all_district = await get_district_with_province(item);
         let arr_district = all_district;
-        all_district.unshift({name: 'Huyện/ Quận', code: -1});
+        all_district.unshift({ name: 'Huyện/ Quận', code: -1 });
         set_districts(arr_district);
         props.filter_post(condition);
       }
-    } catch (ex) {}
+    } catch (ex) { }
   };
 
   const change_district = async item => {
@@ -123,7 +122,7 @@ function Header_List(props) {
           flex: 1,
           flexDirection: 'column',
         }}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
           {/* drop down province */}
           <Picker
             style={styles.picker_pro_dis}
@@ -165,7 +164,7 @@ function Header_List(props) {
           </Picker>
         </View>
 
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {/* Hien thi post type */}
           <Picker
             style={{
@@ -193,12 +192,17 @@ function Header_List(props) {
           returnKeyType="go"
           autoCorrect={false}
           onPress={() => {
-            if (select_posttype === -1 || select_province === -1) {
-              return alert('Vui lòng chọn tỉnh/ thành phố và loại tin');
+            // if (select_posttype === -1 || select_province === -1) {
+            //   return alert('Vui lòng chọn tỉnh/ thành phố và loại tin');
+            // }
+            let condi = {
+              province_code: select_province,
+              district_code: select_district,
+              post_type_id: select_posttype,
             }
-            props.navigation.navigate('SearchScreen', {});
+            props.navigation.navigate('SearchScreen', { condition: condi });
           }}>
-          <Text style={{textAlign: 'center', paddingVertical: 10}}>
+          <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
             Tìm theo tên đường
           </Text>
         </TouchableOpacity>
@@ -209,7 +213,7 @@ function Header_List(props) {
 }
 
 export default function ListPost(props) {
-  const init_fil = {province_code: -1, district_code: -1, post_type_id: -1};
+  const init_fil = { province_code: -1, district_code: -1, post_type_id: -1 };
   const [refreshing, setRefreshing] = useState(false);
   const [arr_post, set_arr_post] = useState([]);
   const [save_post, set_save_post] = useState([]);
@@ -244,6 +248,7 @@ export default function ListPost(props) {
     }
   };
   const filter_post = condition => {
+
     const all_post = save_post;
     const post_filter = all_post.filter(
       post =>
@@ -274,7 +279,7 @@ export default function ListPost(props) {
           />
         }
         data={arr_post}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <PostItem
             // navigation={prop}
             navigation={props.navigation}
@@ -283,7 +288,7 @@ export default function ListPost(props) {
         )}
         keyExtractor={item => item._id}
         extraData={arr_post}
-        // ListFooterComponent={Flat_Header}
+      // ListFooterComponent={Flat_Header}
       />
     </SafeAreaView>
   );

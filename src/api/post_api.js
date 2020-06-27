@@ -1,22 +1,24 @@
-import { your_ip } from './your_ip'
-const api_posts = `${your_ip}:3000/posts`;
-import RNFetchBlob from 'rn-fetch-blob'
-
+import {your_ip} from './your_ip';
+const api_posts = `${your_ip}/posts`;
+import RNFetchBlob from 'rn-fetch-blob';
 
 async function add_post_with_image(images, new_post, token) {
-
   //1 mang post
   try {
-    let result = await RNFetchBlob.fetch('POST', `${api_posts}/addnewpost`, {
-      Authorization: token,
-    },
+    let result = await RNFetchBlob.fetch(
+      'POST',
+      `${api_posts}/addnewpost`,
+      {
+        Authorization: token,
+      },
       [
         ...images,
         {
-          name: 'post', data: JSON.stringify(new_post)
+          name: 'post',
+          data: JSON.stringify(new_post),
         },
-      ]
-    )
+      ],
+    );
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
@@ -26,16 +28,20 @@ async function add_post_with_image(images, new_post, token) {
 
 async function update_post_with_image(images, new_post, token) {
   try {
-    let result = await RNFetchBlob.fetch('PUT', `${api_posts}/${new_post._id}`, {
-      Authorization: token,
-    },
+    let result = await RNFetchBlob.fetch(
+      'PUT',
+      `${api_posts}/${new_post._id}`,
+      {
+        Authorization: token,
+      },
       [
         ...images,
         {
-          name: 'post', data: JSON.stringify(new_post)
+          name: 'post',
+          data: JSON.stringify(new_post),
         },
-      ]
-    )
+      ],
+    );
     let resultJson = await result.json();
     return resultJson;
   } catch (err) {
@@ -89,7 +95,6 @@ async function get_post_of_account(token) {
         Authorization: token,
         'Content-Type': 'application/json',
       },
-
     });
     let resultJson = await result.json();
     return resultJson;
@@ -221,20 +226,16 @@ async function delete_a_post(user_token, post_id) {
   }
 }
 
-
-
-export { getPostsFromServer };
-export { getPostsFromServer2 };
-export { getPost };
-export { getPostsFromServerByType };
-export { getPostsFromServerWithPage };
-export { add_post };
-export { post_post };
-export { searchByAddress };
-export { add_post_with_image };
-export { updatePostStatus };
-export { get_post_of_account };
-export { delete_a_post };
-export { update_post_with_image };
-
-
+export {getPostsFromServer};
+export {getPostsFromServer2};
+export {getPost};
+export {getPostsFromServerByType};
+export {getPostsFromServerWithPage};
+export {add_post};
+export {post_post};
+export {searchByAddress};
+export {add_post_with_image};
+export {updatePostStatus};
+export {get_post_of_account};
+export {delete_a_post};
+export {update_post_with_image};

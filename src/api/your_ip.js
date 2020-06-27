@@ -1,3 +1,3 @@
-const your_ip = 'http://192.168.1.9';
+const your_ip = 'http://funnyhouse.ga';
 
-export {your_ip};
+export { your_ip };

@@ -1,29 +1,28 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-import {your_ip} from '../api/your_ip';
+import { your_ip } from '../api/your_ip';
 
 export default function PostItem(props) {
   const post = props.post;
   return (
     <TouchableOpacity
-      style={{backgroundColor: 'white'}}
+      style={{ backgroundColor: 'white' }}
       onPress={() => {
-        props.navigation.navigate('Details', {post_item: post});
+        props.navigation.navigate('Details', { post_item: post });
       }}>
       <View style={styles.view_out}>
         {props.post.post_image[0] === undefined && (
           <Image
             source={{
-              uri:
-                your_ip + ':3000/uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+              uri: your_ip + '/uploads/home.jpg',
             }}
             style={styles.view_image}
           />
         )}
         {props.post.post_image[0] !== undefined && (
           <Image
-            source={{uri: your_ip + ':3000/' + props.post.post_image[0].path}}
+            source={{ uri: your_ip + '/' + props.post.post_image[0].path }}
             style={styles.view_image}
           />
         )}
@@ -36,7 +35,7 @@ export default function PostItem(props) {
           <Text style={styles.txt_address}>
             {`${props.post.address_detail}, ${
               props.post.district_id.name_with_type
-            }, ${props.post.province_id.name_with_type}`}
+              }, ${props.post.province_id.name_with_type}`}
           </Text>
         </View>
       </View>

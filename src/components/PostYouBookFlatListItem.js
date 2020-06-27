@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {your_ip} from '../api/your_ip';
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { your_ip } from '../api/your_ip';
 
 export default class PostYouBookFlatListItem extends Component {
   constructor(props) {
@@ -11,12 +11,12 @@ export default class PostYouBookFlatListItem extends Component {
   }
 
   render() {
-    const {trans} = this.props;
+    const { trans } = this.props;
     console.log('hihi: ' + JSON.stringify(trans));
     return (
       <>
         <TouchableOpacity
-          style={{backgroundColor: 'white'}}
+          style={{ backgroundColor: 'white' }}
           onPress={() => {
             this.props.navigation.navigate('PostYouBookDetails', {
               id: trans.post_id._id,
@@ -38,8 +38,7 @@ export default class PostYouBookFlatListItem extends Component {
               <Image
                 source={{
                   uri:
-                    your_ip +
-                    ':3000/uploads/2020-06-26T05-02-35.813Z418788080.jpg',
+                    your_ip + '/uploads/home.jpg',
                 }}
                 style={{
                   width: 100,
@@ -52,7 +51,7 @@ export default class PostYouBookFlatListItem extends Component {
             {trans.post_id.post_image[0] !== undefined && (
               <Image
                 source={{
-                  uri: your_ip + ':3000/' + trans.post_id.post_image[0].path,
+                  uri: your_ip + '/' + trans.post_id.post_image[0].path,
                 }}
                 style={{
                   width: 100,
@@ -106,7 +105,7 @@ export default class PostYouBookFlatListItem extends Component {
                 }}>
                 {`${trans.post_id.district_id.name_with_type}, ${
                   trans.post_id.province_id.name_with_type
-                }`}
+                  }`}
               </Text>
             </View>
           </View>

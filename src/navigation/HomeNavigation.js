@@ -6,6 +6,7 @@ import HomeDetail from '../screens/HomeDetail';
 import SearchScreen from '../screens/SearchScreen'
 import ListPost from '../screens/ListPost'
 import PostDetail from '../screens/PostDetail'
+import Search from '../screens/Search'
 //TAB trang chủ
 const HomeStack = createStackNavigator();
 export default function HomeStackScreen({ navigation }) {
@@ -32,7 +33,7 @@ export default function HomeStackScreen({ navigation }) {
             />
             <HomeStack.Screen
                 name="SearchScreen"
-                component={SearchScreen}
+                component={Search}
                 options={{
                     title: 'Chi tiết phòng',
                     headerShown: false,
