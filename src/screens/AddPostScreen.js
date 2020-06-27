@@ -227,7 +227,7 @@ export default function AddPostScreen(props) {
         }}
       />
 
-      <Text style={styles.txt_mota}>Số điện thoại</Text>
+      {/* <Text style={styles.txt_mota}>Số điện thoại</Text>
       <TextInput
         style={styles.txt_input}
         placeholder="Nhập số điện thoại liên hệ"
@@ -237,7 +237,7 @@ export default function AddPostScreen(props) {
         onChangeText={text => {
           set_post_infor(preState => ({...preState, mobile: text}));
         }}
-      />
+      /> */}
 
       <TouchableHighlight
         underlayColor={'#ffceb56e'}

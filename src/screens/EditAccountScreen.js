@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -6,70 +6,69 @@ import {
   TouchableHighlight,
   ScrollView,
 } from 'react-native';
-import { update_account_infor } from '../api/account_api'
+import {update_account_infor} from '../api/account_api';
 export default function EditAccountScreen(props) {
-
-  const [account_infor, set_account_infor] = useState({ _id: 1, name: '', email: '', mobile: '', address: '' })
-  const [account_token, set_account_token] = useState('')
+  const [account_infor, set_account_infor] = useState({
+    _id: 1,
+    name: '',
+    email: '',
+    mobile: '',
+    address: '',
+  });
+  const [account_token, set_account_token] = useState('');
 
   useEffect(() => {
-    get_account_infor()
-  }, [])
+    get_account_infor();
+  }, []);
 
   const get_account_infor = () => {
-    const { account, user_token } = props.route.params
+    const {account, user_token} = props.route.params;
     set_account_infor({
       _id: account._id,
       name: account.name,
       email: account.email,
       mobile: account.mobile,
-      address: account.address
-    })
-    set_account_token(user_token)
-  }
+      address: account.address,
+    });
+    set_account_token(user_token);
+  };
 
   const update_account = async () => {
     try {
-
-      update_account_infor(account_infor, account_token).then((res) => {
+      update_account_infor(account_infor, account_token).then(res => {
         if (res.success == true) {
-          alert('Cập nhật thông tin thành công')
-          props.navigation.navigate('YourAccountScreen')
-          return
+          alert('Cập nhật thông tin thành công');
+          props.navigation.navigate('YourAccountScreen');
+          return;
         }
         if (res.success == false) {
-          alert('Cập nhật thông tin thất bại')
-          return
+          alert('Cập nhật thông tin thất bại');
+          return;
         }
-      })
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-
+  };
 
   return (
     <ScrollView
-      style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-      <Text style={styles.text_infor}>
-        Tên chủ tài khoản
-      </Text>
+      style={{flex: 1, flexDirection: 'column', backgroundColor: '#fff'}}>
+      <Text style={styles.text_infor}>Tên chủ tài khoản</Text>
       <TextInput
         value={account_infor.name}
         style={styles.input_infor}
         returnKeyType="next"
         autoCorrect={false}
-        onChangeText={(text) => {
+        onChangeText={text => {
           set_account_infor(prevState => ({
             ...prevState,
-            name: text
-          }))
+            name: text,
+          }));
         }}
       />
 
-      <Text style={styles.text_infor}>
-        Email
-      </Text>
+      <Text style={styles.text_infor}>Email</Text>
       <TextInput
         value={account_infor.email}
         style={styles.input_infor}
@@ -77,62 +76,58 @@ export default function EditAccountScreen(props) {
         keyboardType="email-address"
         autoCorrect={false}
         // ref={'txtEmail'}
-        onChangeText={(text) => {
+        onChangeText={text => {
           set_account_infor(prevState => ({
             ...prevState,
-            email: text
-          }))
+            email: text,
+          }));
         }}
       />
 
-      <Text style={styles.text_infor}>
-        Số điện thoại
-      </Text>
+      <Text style={styles.text_infor}>Số điện thoại</Text>
       <TextInput
         style={styles.input_infor}
         value={account_infor.mobile}
         returnKeyType="next"
         keyboardType="numeric"
         autoCorrect={false}
-        onChangeText={(text) => {
+        onChangeText={text => {
           set_account_infor(prevState => ({
             ...prevState,
-            mobile: text
-          }))
+            mobile: text,
+          }));
         }}
       />
 
-      <Text style={styles.text_infor}>
-        Địa chỉ
-      </Text>
+      <Text style={styles.text_infor}>Địa chỉ</Text>
       <TextInput
         value={account_infor.address}
         style={styles.input_infor}
         multiline={true}
         returnKeyType="go"
         autoCorrect={false}
-        onChangeText={(text) => {
+        onChangeText={text => {
           set_account_infor(prevState => ({
             ...prevState,
-            address: text
-          }))
+            address: text,
+          }));
         }}
       />
 
       <TouchableHighlight
-        underlayColor='palegreen'
+        underlayColor="palegreen"
         style={styles.button_update}
         onPress={() => {
-          update_account()
+          update_account();
         }}>
-        <Text style={{ textAlign: 'center' }}>Cập nhật</Text>
+        <Text style={{textAlign: 'center'}}>Cập nhật</Text>
       </TouchableHighlight>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  text_infor: { marginRight: 10, marginLeft: 10, marginTop: 10 },
+  text_infor: {marginRight: 10, marginLeft: 10, marginTop: 10},
   input_infor: {
     marginRight: 10,
     marginLeft: 10,
@@ -144,8 +139,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 18,
   },
-  button_update:
-  {
+  button_update: {
     marginBottom: 10,
     marginTop: 20,
     marginLeft: 10,
@@ -154,6 +148,5 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: '#ffceb5',
     borderRadius: 8,
-  }
-
-})
+  },
+});
