@@ -63,7 +63,7 @@ export default function PostDetail(props) {
     let arr_images = post_item.post_image;
     let arr_uri = [];
     for (let i = 0; i < arr_images.length; i++) {
-      let uri = your_ip + ':3000/' + arr_images[i].path;
+      let uri = your_ip + '/' + arr_images[i].path;
       arr_uri.push(uri);
     }
     set_img_post(arr_uri);

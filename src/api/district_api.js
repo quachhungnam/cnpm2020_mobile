@@ -1,4 +1,4 @@
-import {your_ip} from './your_ip';
+import { your_ip } from './your_ip';
 const api_districts = `${your_ip}/districts`;
 
 async function get_one_district(districtCode) {
@@ -7,7 +7,7 @@ async function get_one_district(districtCode) {
     let resJson = await res.json();
     return resJson.districts; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.error(`Error is: ${err}`);
   }
 }
 
@@ -17,7 +17,7 @@ async function get_district_with_province(provinceCode) {
     let resJson = await res.json();
     return resJson.districts; //tat ca distric co privince code =
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.error(`Error is: ${err}`);
   }
 }
 
@@ -27,10 +27,10 @@ async function get_district_with_province2(provinceCode) {
     let resJson = await res.json();
     return resJson; //tat ca distric co privince code =
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.error(`Error is: ${err}`);
   }
 }
 
-export {get_district_with_province};
-export {get_district_with_province2};
-export {get_one_district};
+export { get_district_with_province };
+export { get_district_with_province2 };
+export { get_one_district };

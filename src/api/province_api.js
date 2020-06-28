@@ -1,4 +1,4 @@
-import {your_ip} from './your_ip';
+import { your_ip } from './your_ip';
 const api_provinces = `${your_ip}/provinces`;
 
 async function get_all_province() {
@@ -7,7 +7,7 @@ async function get_all_province() {
     let resJson = await res.json();
     return resJson.data.provinces; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.error(`Error is: ${err}`);
   }
 }
 async function get_all_province2() {
@@ -16,7 +16,7 @@ async function get_all_province2() {
     let resJson = await res.json();
     return resJson; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.error(`Error is: ${err}`);
   }
 }
 
@@ -26,10 +26,10 @@ async function get_one_province(provinceCode) {
     let resJson = await res.json();
     return resJson.province; //tat ca mang province
   } catch (err) {
-    console.error(`Error is: ${error}`);
+    console.error(`Error is: ${err}`);
   }
 }
 
-export {get_all_province};
-export {get_all_province2};
-export {get_one_province};
+export { get_all_province };
+export { get_all_province2 };
+export { get_one_province };
