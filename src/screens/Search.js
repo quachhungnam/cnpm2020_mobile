@@ -81,6 +81,8 @@ export default function Search(props) {
 
     const search_address = async (address) => {
         try {
+            // alert(JSON.stringify(condition))
+            // alert(JSON.stringify(address))
             const res = await searchByAddress(address);
             if (res.error) {
                 //alert('null');
